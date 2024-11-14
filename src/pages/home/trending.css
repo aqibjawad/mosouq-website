@@ -1,0 +1,25 @@
+.custom-card {
+  margin-right: 5rem; /* Adjust the margin as needed */
+  margin-bottom: 2rem; /* To give some space between rows */
+  width: 100%;
+  box-shadow: none; /* Remove default shadow on hover */
+  transition: none; /* Remove transition effect */
+}
+
+.custom-card img {
+  object-fit: cover; /* Ensures image covers the card */
+}
+
+.custom-card .card-body {
+  padding: 1.25rem;
+}
+
+.custom-card .btn {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.custom-card .btn:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}

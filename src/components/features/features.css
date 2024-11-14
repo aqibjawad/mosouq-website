@@ -1,0 +1,18 @@
+#features{
+    background-color: #FAFAFA;
+}
+
+#features h2 span{
+     font-size: 20px !important;
+}
+#features h2{
+    font-weight: 700 !important;
+    font-size: 45px !important  ;
+}
+
+#features p{
+    color: #686868;
+    font-size: 24px !important;
+    font-weight: 600;
+    
+}

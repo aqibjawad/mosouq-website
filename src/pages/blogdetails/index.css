@@ -1,0 +1,20 @@
+.image-blog-details{
+    width: 100%;
+    height: 376px;
+    border-radius: 10px;
+}
+
+.blog-detail-head{
+    font-weight: 700;
+    font-size: 32px;
+    text-align: justify;
+    margin-top: 3rem;
+}
+
+.blog-detail-descrp{
+    font-weight: 400;
+    font-size: 24px;
+    color:"#2F3336";
+    text-align: justify;
+    margin-top: 3rem;
+}

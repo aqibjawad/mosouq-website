@@ -1,0 +1,295 @@
+/* Profile Header CSS */
+.profile-pic-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* .edit-icon:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+} */
+
+
+.profile {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.written-by-you {
+  background: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* User Rdview  */
+.review {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.review-button {
+  background-color: #404EED;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 33px;
+  ;
+  cursor: pointer;
+  padding: 21px, 50px, 21px, 50px;
+  width: 215px;
+  height: 61px
+}
+
+.verifi-button {
+  background-color: #404EED;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 33px;
+  ;
+  cursor: pointer;
+  padding: 21px, 50px, 21px, 50px;
+  width: 215px;
+  height: 61px
+}
+
+/* User Notifications */
+
+.notification {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* User verification */
+
+.verification {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+
+/* User social setting */
+.social-settings {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+
+
+/* User Efdit CSS */
+
+.edit-user-container {
+  margin-top: 7rem;
+  overflow: hidden;
+  margin-right: 3rem;
+  margin-left: 3rem;
+}
+
+.profile-pic {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-image,
+.user-image-remove {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  font-family: 'Figtree';
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.2px;
+}
+
+.user-image {
+  background-color: #205CD4;
+  color: white;
+  border: 1px solid #EBEBEB;
+}
+
+.user-image-remove {
+  color: #686868;
+  border: 1px solid #EBEBEB;
+}
+
+.edit-profile-section {
+  width: 100%;
+  background: #FAFAFA;
+  margin-top: 5rem;
+  padding: 2rem;
+}
+
+.edit-head {
+  font-family: 'Figtree';
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.edit-form {
+  padding: 10px;
+}
+
+.label-edit {
+  font-family: 'Figtree';
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28.8px;
+  text-align: left;
+  color: #666666;
+}
+
+.edit-input {
+  border: 1px solid #66666659;
+  width: 100%;
+  height: 50px;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.edit-save-button {
+  width: 100%;
+  height: 50px;
+  border-radius: 33px;
+  background: #EFEFEF;
+  font-family: 'Figtree';
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  margin-top: 3rem;
+  cursor: pointer;
+}
+
+.logout-section {
+  width: 100%;
+  border-radius: 6.51px;
+  border: 1px solid #EAEAEA;
+  padding: 1rem;
+  margin-top: 3rem;
+}
+
+.logout-head {
+  font-family: 'Figtree';
+  font-size: 24px;
+  font-weight: 600;
+  text-align: left;
+  color: #454545;
+}
+
+.logout-descrp {
+  font-family: 'Figtree';
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  color: #454545;
+  margin-top: 1rem;
+}
+
+.logout-button,
+.delete-button {
+  width: 100%;
+  height: 50px;
+  border-radius: 33px;
+  font-family: 'Figtree';
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.logout-button {
+  color: #404EED;
+  border: 1px solid #404EED;
+}
+
+.delete-button {
+  background: #FF0000;
+  color: #FFFFFF;
+}
+
+@media (max-width: 992px) {
+  .edit-user-container {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .edit-head {
+    font-size: 24px;
+    padding: 1rem;
+  }
+
+  .label-edit {
+    font-size: 16px;
+  }
+
+  .edit-input {
+    height: 40px;
+  }
+
+  .edit-save-button,
+  .logout-button,
+  .delete-button {
+    height: 40px;
+  }
+}
+
+@media (max-width: 425px) {
+  .user-info{
+    text-align: center;
+  }
+} 

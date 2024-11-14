@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+.App {
+  text-align: center;
+}
+
+body{
+  font-family: "Figtree", sans-serif !important;
+  overflow-x: hidden !important;
+}
+.main-body{
+  margin: 0 !important;
+}
+
+#faq{
+  background-color: #FBFBFF;
+}
+
+#faq p{
+  color: #42526B !important;
+}
+
+#faq h1{
+  font-weight: 700;
+   font-size:50px;
+}
+
+.accordion-button::after {
+   display: none !important;
+}
+
+.accordion-button{
+  justify-content: space-between !important;
+  background-color: transparent !important;
+
+}
+.accordion-button span{
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+}
+.accordion-button p{
+
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 00;
+}
+.accordion-button:focus{
+  box-shadow: none !important;
+}
+
+.accordion-item{
+  margin-top: 12px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.accordion-button:not(.collapsed){
+  box-shadow: none !important;
+  border-bottom: 1px solid #FFFFFF;
+}
+ 
+table{
+  border-color: #E6E9F5 !important;
+}
+
+table th{
+  width: 380px !important;
+}
+
+
+.price_box_container{
+  display: flex;
+  gap: 15px;
+}
+.price_box_container h2{
+  font-weight: 600;
+}
+.price_box{
+  width:72px;
+  height:72px;
+  border-radius: 16px;
+  background-color: #ECEBFF; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table h3{
+  font-weight:700 !important;
+  color: black !important;
+  font-size: 24px !important;
+  text-align: left !important;
+}
+
+table p{
+  color: #858BA0 !important;
+  text-align: left !important;
+  font-weight: 500;
+}
+
+table th,td{
+  padding: 20px !important;
+  background-color: #E6E9F5;
+}
+
+table strong{
+  font-weight: 700 !important;
+  font-size:40px;
+}
+table  span{
+  color: #858BA0 !important;
+  font-weight: 600;
+}
+
+ table .first_th{
+  text-align: left !important;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+
+
+.btn{
+  background-color: #404EED !important;
+  color: white !important;
+}
+
+.btn2{
+  background-color: transparent !important;
+  color: #404EED;
+  outline: none;
+  border: 1px solid #404EED;
+  border-radius:6px;
+  font-weight: 500;
+  
+}
+
+.btn2:hover{
+  background-color: #404EED !important;
+  color: white;
+}
+
+.property{
+  background-color: #FAFAFA;
+}
+
+.property ul{
+  list-style: none;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+}
+.property ul li{
+  display: flex;
+   align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #F1F1F1;
+
+}
+
+.property ul  li h6{
+  font-size: 14px;
+}
+.property .rating{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.property p{
+  font-size: 13px;
+}
+
+.property h6{
+  font-weight: 600;
+}
+
+.property h4{
+  font-weight: 600;
+}
+
+.top_btn{
+  display: flex;
+  gap: 12px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+
+
+.carousel-caption{
+  left: 0 !important;
+  text-align: left !important;
+  top: 40%;
+  width: 100% !important;
+
+}
+
+.carousel-item {
+  height: 80vh;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+
+.carousel-indicators{
+  display: none !important;
+}
+
+.carousel-control-prev{
+  width: 50px !important;
+  height: 50px !important;
+  top: 50% !important;
+  border-radius:8px !important;
+  background-color: white !important;
+  left: 15px !important;
+  opacity: 1 !important;
+}
+
+.carousel-control-next{
+  width: 50px !important;
+  height: 50px !important;
+  top: 50% !important;
+  border-radius:8px !important;
+  background-color: white !important;
+  right:22px !important;
+  opacity: 1 !important;
+}
+
+@media screen and (max-width:767px) {
+
+table  .main_th_whitespace{
+  white-space: nowrap;
+}
+
+}
+
+@media screen and (max-width:567px) {
+
+
+  .carousel-caption{
+    top: 25% !important;
+  }
+  
+}

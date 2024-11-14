@@ -1,0 +1,108 @@
+#businessList{
+    margin-right: 4rem;
+    margin-left: 4rem;
+    overflow: hidden;
+}
+
+.business-header{
+    background-color: #F8F9FA;
+}
+
+.image-header-business{
+    height: 165px;
+    margin-top: 7rem;
+    margin-bottom: 7rem;
+}
+
+.business-name{
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 8rem;
+}
+
+.business-loc{
+    margin-top: 1rem;
+}
+
+.read-reviews{
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.button-business{
+    background-color: #404EED;
+    color: white;
+    text-align: center;
+    border: 1px solid #404EED;
+    padding: .375rem .75rem;
+    border-radius: 4px;
+}
+
+.business-detail-btn{
+    border: 1px solid #404EED;
+    color: #404EED;
+    text-align: center;
+    padding: .375rem .75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.details-business{
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.business-date{
+    font-size: 22px;
+    font-weight: 500; 
+}
+
+
+.business-location-sec{
+    border: 1px solid black;
+    padding: 20px;
+}
+
+.location{
+    font-weight: 400;
+    font-size: 19px;
+}
+
+.webandemail{
+    font-weight: 400;
+    font-size: 19px;
+}
+
+.other-info{
+    font-weight: 400;
+    border-color: 1px solid #dee2e6!important;
+    font-size: 22px;
+    margin-top: 25px;
+}
+
+.other-info-descrp{
+    color:#6c757d!important;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.business-images {
+    text-align: center;
+    margin: 20px;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Adjust gap between images */
+}
+
+.image-container img {
+    flex: 0 0 calc(33.33% - 20px); /* Each image takes up one-third of the container width */
+    max-width: 100%; /* Ensure images do not exceed their container width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 5px;
+    transition: transform 0.2s ease;
+}
+

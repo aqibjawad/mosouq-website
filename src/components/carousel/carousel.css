@@ -1,0 +1,23 @@
+.review_btn{
+    background-color: transparent !important;
+    /* color: white; */
+    outline: none;
+    border: 1px solid white;
+    border-radius: 5px ;
+    height: 50px !important;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+}
+
+.btn_container{
+    display: flex;
+    gap: 8px;
+}
+
+.carousel_card h1{
+
+    font-weight: 700;
+
+}

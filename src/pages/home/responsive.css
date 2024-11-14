@@ -1,0 +1,94 @@
+.custom-div {
+  border: 1px solid #EAEAEA;
+  border-radius: 7px;
+  height: 80px;
+  width: 100%;
+}
+
+.custom-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.custom-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+.cat-container {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .cat-container .card:hover {
+    transform: none;
+    box-shadow: none;
+    margin-top: 0;
+}
+  
+  /* For mobile screens (up to 767px), remove the margin-left */
+  @media (max-width: 767px) {
+    .row-margin {
+      margin-left: 0;
+    }
+  }
+  
+  /* For tablet and above (768px and up), apply margin-left */
+  @media (min-width: 768px) {
+    .cat-container {
+      margin-left: 4rem;
+      margin-right: 4rem;
+    }
+  }
+
+  @media (min-width: 425px) {
+    .cat-container {
+      margin-left: 4rem;
+      margin-right: 4rem;
+    }
+  }
+  
+
+  /* Deal CSS */
+
+  .deal-cont {
+    margin-left: 3rem !important;
+    margin-right: 3rem !important;
+    margin-top: 2rem;
+  }  
+
+@media (max-width: 768px) {
+  .card-img {
+      padding: 5px !important;
+  }
+
+  .card-title-text {
+      font-size: 10px !important;
+  }
+
+  .card-text-title {
+      font-size: 16px !important;
+  }
+
+  .card-text-subtitle {
+      font-size: 10px !important;
+  }
+
+  .rating-text {
+      font-size: 10px !important;
+  }
+}
+
+
+/* Trending CSS */
+
+
+
+
+.dubai-cont {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 2rem;
+}  

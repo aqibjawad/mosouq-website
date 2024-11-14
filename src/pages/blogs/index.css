@@ -1,0 +1,58 @@
+.main-blog{
+    margin-top: 10rem;
+   
+}
+
+
+.blog-head{
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.blog-descrp{
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 27px;
+    color:"#666666"
+}
+
+.blog-head-image{
+    width: 100%;
+    height: 306px;
+    border-radius: 12px;
+}
+
+/* Blogs Card */
+  
+  .blogs-cont-cards{
+    margin-top: 3rem;
+  }
+  
+  /* For mobile screens (up to 767px), remove the margin-left */
+  @media (max-width: 767px) {
+    .blogs-cont {
+      margin-left: 0;
+    }
+  }
+
+  
+  @media (max-width: 430px) {
+    .blogs-cont-cards{
+      margin-top: 2rem;
+    }
+  }
+
+  .blog-card-title{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 48px;
+    color:'#0D233E'
+  }
+
+  .blog-card-title{
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 27px;
+    color:"#666666"
+  }

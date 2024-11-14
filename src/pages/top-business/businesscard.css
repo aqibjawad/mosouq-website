@@ -1,0 +1,87 @@
+/* BusinessCards.css */
+
+.business-card-row {
+    overflow: hidden;
+  }
+  
+  .business-card-col {
+    margin-bottom: 1rem;
+  }
+  
+  .business-card {
+    width: 100%;
+    margin-right: 0;
+    overflow: hidden;
+  }
+  
+  .business-card-img-container {
+    position: relative;
+    text-align: right;
+    justify-content: center;
+  }
+  
+  .business-card-img {
+    object-fit: contain;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .discount-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 79px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 27px;
+    width: 105px;
+  }
+  
+  .discount-badge p {
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+    color: #404eed;
+  }
+  
+  .business-card-title {
+    color: #404eed;
+    font-size: 12px;
+  }
+  
+  .rating-container {
+    margin-top: -1rem;
+    background-color: #b9dcff99;
+    padding: 10px;
+    border-radius: 5px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating-container div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating-container div div {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  
+  .card-description {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .card-location {
+    font-weight: 400;
+    font-size: 12px;
+    color: #4d4d4d;
+  }
+  
+  .add-to-cart-button {
+    width: 100%;
+  }
+  

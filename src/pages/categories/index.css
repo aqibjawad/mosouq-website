@@ -1,0 +1,123 @@
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+
+.search-btn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: #45a049;
+}
+
+.custom-div {
+  
+  border-radius: 7px;
+  background-color: #FAFAFA !important;
+  height: 80px;
+  width: 100%;
+}
+
+.custom-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.custom-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.custom-div-container {
+  position: relative;
+  border: 1px solid #EAEAEA;
+  border-radius: 12px !important;
+  padding: 10px;
+}
+
+.subcategories {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  font-size: 20px
+}
+
+
+.chevron-custom {
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .row-custom {
+    margin-left: 1rem; /* Adjust as needed */
+    margin-right: 1rem; /* Adjust as needed */
+  }
+}
+
+
+.cat-name{
+  padding: 10px;
+}
+
+.cat-icon{
+  margin-top: 0.8rem;
+  cursor: pointer;
+}
+
+.subcategory-list {
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.subcategory {
+  padding: 5px 0;
+}
+
+.cate-search-button{
+  width: Hug (119px)px;
+  height: Hug (56px)px;
+  padding: 16px 32px 16px 32px;
+  gap: 12px;
+  border-radius: 4px 0px 0px 0px;
+  opacity: 0px;
+  background: #404EED;
+  color: white;
+  font-size: 16px;
+  font-weight: 600px;  
+}
+
+.sub-cat-image{
+  width: 20px;
+  height: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.sub-cat-name{
+  color: #686868;
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+
+
+@media (max-width: 425px) {
+  .category {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .cat-tag-line{
+    text-align: center;
+  }
+}

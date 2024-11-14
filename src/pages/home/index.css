@@ -1,0 +1,286 @@
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-item {
+  flex: 1 1 calc(25% - 10px);
+  padding: 20px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 5px;
+}
+
+.button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+
+
+.banner-image {
+  margin-top: 2rem;
+  height: 10px;
+  width: 50px;
+}
+
+.banner-descrp {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 140%;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.search-bar {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 120px;
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.search-bar input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+}
+
+.search-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 100px;
+  margin-left: 8px;
+  cursor: pointer;
+  width: 130px;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.outer-image-wrapper {
+  width: 50%;
+  overflow: hidden;
+}
+
+.outer-image {
+  width: 100%;
+}
+
+.inner-image-wrapper {
+  width: 50%;
+  position: relative;
+}
+
+.inner-image-clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
+.inner-image {
+  width: 200%;
+  margin-left: -50%;
+}
+
+/* ------------------Home Category-------------------------- */
+.cat-header {
+  position: static;
+  font-size: 50px;
+  font-weight: 400;
+  color: white;
+  background-color: #0b5cff;
+  margin-left: -10rem;
+  height: 150px;
+  width: 700px;
+  text-align: center;
+  padding-top: 2rem;
+  padding-left: 5rem;
+}
+
+.cat-descrp {
+  text-align: left;
+  font-size: 30px;
+  line-height: 120%;
+  font-weight: 600;
+  color: white;
+  margin-left: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.cat-sec {
+  width: auto;
+  border: 1px solid #243a4f; /* Border with solid style */
+  border-radius: 50px;
+  width: 300px;
+  margin-left: 8rem;
+  height: 50px;
+  padding: 7px 15px;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+  color: white;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  transition: 0.5s linear;
+}
+
+.review-descrp {
+  font-size: 20px;
+}
+
+/* -----------------Blog Sec --------------------------- */
+.blog-sec {
+  width: auto;
+  border: 1px solid #243a4f; /* Border with solid style */
+  border-radius: 50px;
+  width: 300px;
+  margin-left: 2rem;
+  margin-top: 5rem;
+  height: 50px;
+  padding: 7px 15px;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+  color: white;
+}
+
+/* Explore Dubai */
+
+.carousel-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.image-row {
+  display: flex; /* Use flexbox to align items in a row */
+  width: 70%;
+}
+
+.image-container {
+  position: relative; /* Ensure relative positioning */
+  flex: 1; /* Allow containers to grow and occupy available space */
+  margin-right: 10px; /* Optional: Adjust spacing between containers */
+}
+
+.image {
+  width: 90%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.image-container {
+  position: relative;
+  flex: 0 0 auto;
+  width: 340px;
+  height: 543px;
+  margin: 10px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.text {
+  font-size: 20px;
+}
+
+.view-all-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #656565;
+  border-radius: 62px;
+  text-decoration: none;
+  text-align: center;
+}
+
+
+.logo_second{
+  display: none !important;
+}
+
+.banner-text {
+  font-weight: 700;
+  font-size:60px;
+  line-height: 120%;
+  text-align: left;
+}
+
+.req-btn{
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+@media screen and (max-width:580px) {
+  .banner-text {
+    font-size:50px;
+    
+  }
+
+
+  .logo_first{
+    display: none !important;
+  }
+
+  .logo_second{
+    display: block !important;
+  }
+
+
+
+  
+}
+/* Home Trending */
+
+.business-card {
+  margin-right: 4rem;
+}
+
+
