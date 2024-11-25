@@ -36,33 +36,33 @@ const HomeDeals = () => {
     });
 
     // Get user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCurrentLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     setCurrentLocation({
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //     });
+    //   });
+    // }
   }, []);
 
-  useEffect(() => {
-    if (currentLocation && deals.length > 0) {
-      // Filter deals based on distance from current location
-      const maxDistance = 50; // maximum distance in kilometers
-      const filtered = deals.filter((deal) => {
-        const [dealLat, dealLon] = deal.location.split(",").map(Number);
-        const distance = calculateDistance(
-          currentLocation.latitude,
-          currentLocation.longitude,
-          dealLat,
-          dealLon
-        );
-        return distance <= maxDistance;
-      });
-      setFilteredDeals(filtered);
-    }
-  }, [currentLocation, deals]);
+  // useEffect(() => {
+  //   if (currentLocation && deals.length > 0) {
+  //     // Filter deals based on distance from current location
+  //     const maxDistance = 50; // maximum distance in kilometers
+  //     const filtered = deals.filter((deal) => {
+  //       const [dealLat, dealLon] = deal.location.split(",").map(Number);
+  //       const distance = calculateDistance(
+  //         currentLocation.latitude,
+  //         currentLocation.longitude,
+  //         dealLat,
+  //         dealLon
+  //       );
+  //       return distance <= maxDistance;
+  //     });
+  //     setFilteredDeals(filtered);
+  //   }
+  // }, [currentLocation, deals]);
 
   return (
     <div style={{ marginTop: "7rem", overflow: "hidden" }}>

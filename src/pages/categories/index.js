@@ -67,7 +67,7 @@ const Category = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/business/${category.name}/${category.id}`}
+                    to={`/business/${category.name}/${category._id}`}
                     style={{ color: "black", textDecoration: "none" }}
                   >
                     <div className="g-3 d-flex align-items-center">
@@ -85,12 +85,12 @@ const Category = () => {
                   <MdArrowDropDown size={20} color="black" />
                 </div>
 
-                {/* {expandedIndex === index && (
+                {expandedIndex === index && (
                   <Card.Body className="subcategories">
                     {subcategories
                       .filter(
                         (subcategory) =>
-                          subcategory?.category?.id === category._id
+                          subcategory.category._id === category._id
                       )
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
@@ -117,7 +117,7 @@ const Category = () => {
                         </div>
                       ))}
                   </Card.Body>
-                )} */}
+                )}
               </div>
             </Col>
           ))}

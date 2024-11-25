@@ -14,19 +14,19 @@ const CategoryDetails = ({ name }) => {
     });
   }, [id]);
 
-  const isBusinessOpen = (fromTime, toTime) => {
-    const currentTime = new Date();
-    const [fromHours, fromMinutes] = fromTime.split(":").map(Number);
-    const [toHours, toMinutes] = toTime.split(":").map(Number);
+  // const isBusinessOpen = (fromTime, toTime) => {
+  //   const currentTime = new Date();
+  //   const [fromHours, fromMinutes] = fromTime;
+  //   const [toHours, toMinutes] = toTime;
 
-    const openingTime = new Date(currentTime);
-    const closingTime = new Date(currentTime);
+  //   const openingTime = new Date(currentTime);
+  //   const closingTime = new Date(currentTime);
 
-    openingTime.setHours(fromHours, fromMinutes, 0);
-    closingTime.setHours(toHours, toMinutes, 0);
+  //   openingTime.setHours(fromHours, fromMinutes, 0);
+  //   closingTime.setHours(toHours, toMinutes, 0);
 
-    return currentTime >= openingTime && currentTime <= closingTime;
-  };
+  //   return currentTime >= openingTime && currentTime <= closingTime;
+  // };
 
   return (
     <>
@@ -34,7 +34,7 @@ const CategoryDetails = ({ name }) => {
       <div className="cat-descrp">Top 10 Contractors</div>
 
       {businesses.map((business, index) => {
-        const openStatus = isBusinessOpen(business.fromTime, business.toTime);
+        // const openStatus = isBusinessOpen(business.fromTime, business.toTime);
 
         return (
           <Link
@@ -85,7 +85,7 @@ const CategoryDetails = ({ name }) => {
                       <Link to={business.website}>Website</Link>
                     </div>
                     <Row>
-                      <Col lg={1} md={4} sm={12}>
+                      {/* <Col lg={1} md={4} sm={12}>
                         <div
                           className={`font-bold mt-1 ${
                             openStatus ? "text-green-500" : "text-red-500"
@@ -93,7 +93,7 @@ const CategoryDetails = ({ name }) => {
                         >
                           {openStatus ? "Open" : "Closed"}
                         </div>
-                      </Col>
+                      </Col> */}
                       <Col lg={3} md={4} sm={12}>
                         <div className="text-gray-500 text-sm">
                           {business.fromTime} AM - {business.toTime} PM
