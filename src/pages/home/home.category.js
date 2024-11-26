@@ -77,7 +77,7 @@ const HomeCategory = () => {
       >
         {selectedCategories.map((category, index) => (
           <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-            <Link  to={`/business/${category.name}/${category.id}`} style={{textDecoration:'none', color:'black'}}>
+            <Link  to={`/business/${category.name}/${category._id}`} style={{textDecoration:'none', color:'black'}}>
               <div className="custom-div bg-white d-flex align-items-center p-2">
                 <div className="me-3">
                   <img
