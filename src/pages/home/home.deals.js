@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactStars from "react-stars";
 import "./responsive.css";
@@ -28,7 +28,7 @@ const HomeDeals = () => {
   const [deals, setDeals] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [filteredDeals, setFilteredDeals] = useState([]);
-  
+
   useEffect(() => {
     // Get deals from API
     GET("deal/get-deals").then((result) => {
@@ -106,108 +106,116 @@ const HomeDeals = () => {
         >
           {deals.map((businesses, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-              <div
+              <Link
+                to={`/deals/${businesses._id}`}
                 style={{
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  height: "400px",
+                  color: "black",
+                  textDecoration: "none",
                 }}
               >
                 <div
                   style={{
-                    position: "relative",
-                    textAlign: "right",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img
-                    src={businesses.deal_image}
-                    style={{
-                      objectFit: "contain",
-                      width: "100%",
-                      padding: "10px",
-                      height: "180px",
-                    }}
-                    alt="Banner"
-                  />
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginTop: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    height: "400px",
                   }}
                 >
                   <div
                     style={{
-                      backgroundColor: "#B9DCFF99",
-                      padding: "5px",
-                      borderRadius: "5px",
-                      display: "flex",
-                      alignItems: "center",
+                      position: "relative",
+                      textAlign: "right",
+                      justifyContent: "center",
                     }}
                   >
-                    <ReactStars count={1} value={1} size={20} edit={false} />
-                    <div style={{ fontSize: "12px", marginLeft: "5px" }}>
-                      4.3 (200+)
+                    <img
+                      src={businesses.deal_image}
+                      style={{
+                        objectFit: "contain",
+                        width: "100%",
+                        padding: "10px",
+                        height: "180px",
+                      }}
+                      alt="Banner"
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "#B9DCFF99",
+                        padding: "5px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ReactStars count={1} value={1} size={20} edit={false} />
+                      <div style={{ fontSize: "12px", marginLeft: "5px" }}>
+                        4.3 (200+)
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        color: "#404EED",
+                        fontSize: "12px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      {businesses.name}
                     </div>
                   </div>
+
                   <div
                     style={{
-                      color: "#404EED",
-                      fontSize: "12px",
-                      marginLeft: "10px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      marginTop: "10px",
                     }}
                   >
-                    {businesses.name}
+                    {businesses.description.slice(0, 100)}...
                   </div>
-                </div>
 
-                <div
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    marginTop: "10px",
-                  }}
-                >
-                  {businesses.description.slice(0, 100)}...
-                </div>
-
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "#4D4D4D",
-                    marginTop: "5px",
-                  }}
-                >
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      businesses.location
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "#4D4D4D", textDecoration: "none" }}
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#4D4D4D",
+                      marginTop: "5px",
+                    }}
                   >
-                    {businesses.location}
-                  </a>
-                </div>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        businesses.location
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#4D4D4D", textDecoration: "none" }}
+                    >
+                      {businesses.location}
+                    </a>
+                  </div>
 
-                <Button
-                  style={{ width: "100%", marginTop: "10px" }}
-                  variant="primary"
-                >
-                  <Link
-                    to={businesses.consultation}
-                    target="_black"
-                    style={{ color: "white", textDecoration: "none" }}
+                  <Button
+                    style={{ width: "100%", marginTop: "10px" }}
+                    variant="primary"
                   >
-                    Request Consultation
-                  </Link>
-                </Button>
-              </div>
+                    <Link
+                      to={businesses.consultation}
+                      target="_black"
+                      style={{ color: "white", textDecoration: "none" }}
+                    >
+                      Request Consultation
+                    </Link>
+                  </Button>
+                </div>
+              </Link>
             </Col>
           ))}
         </Row>
