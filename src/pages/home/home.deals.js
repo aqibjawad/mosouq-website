@@ -107,7 +107,7 @@ const HomeDeals = () => {
           {deals.map((businesses, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <Link
-                to={`/deals/${businesses._id}`}
+                to={`/blog-details/${businesses._id}`}
                 style={{
                   color: "black",
                   textDecoration: "none",

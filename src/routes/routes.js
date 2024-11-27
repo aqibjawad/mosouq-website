@@ -32,7 +32,7 @@ const routes = [
 
   { path: "/blogs", element: <Blog />, exact: "true", type: "public" },
   
-  { path: "/blog-details", element: <BlogDetails />, exact: "true", type: "public" },
+  { path: "/blog-details/:id", element: <BlogDetails />, exact: "true", type: "public" },
 
   { path: "/deals", element: <Deals />, exact: "true", type: "public" },
 
