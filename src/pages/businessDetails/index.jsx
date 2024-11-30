@@ -16,13 +16,23 @@ import { POST, GET } from "../../apicontrollers/apiController";
 
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 
-import { FaWhatsapp } from "react-icons/fa"; 
+import { FaWhatsapp } from "react-icons/fa";
+
+import LocationSection from "./location";
 
 const BusinessDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const mapRef = useRef(null);
 
+  const allDays = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+  ];
   const [businesses, setBusinesses] = useState("");
   const [approvedReviews, setApprovedReviews] = useState([]);
   const [businessReviews, setBusinessesReviews] = useState([]);
@@ -81,82 +91,6 @@ const BusinessDetails = () => {
       totalReviews > 0 ? (totalStars / totalReviews).toFixed(1) : 0;
     setAverageRating(avgRating);
   };
-
-  useEffect(() => {
-    if (businesses && businesses.location) {
-      const loader = new Loader({
-        apiKey: "YOUR_GOOGLE_MAPS_API_KEY",
-        version: "weekly",
-      });
-
-      loader
-        .load()
-        .then((google) => {
-          try {
-            const map = new google.maps.Map(mapRef.current, {
-              center: {
-                lat: parseFloat(businesses.location.lat),
-                lng: parseFloat(businesses.location.lng),
-              },
-              zoom: 15,
-            });
-
-            new google.maps.Marker({
-              position: {
-                lat: parseFloat(businesses.location.lat),
-                lng: parseFloat(businesses.location.lng),
-              },
-              map: map,
-            });
-          } catch (error) {
-            console.error("Error creating map:", error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading Google Maps JavaScript API:", error);
-        });
-    }
-  }, [businesses]);
-
-  useEffect(() => {
-    if (businesses && businesses.location) {
-      const loader = new Loader({
-        apiKey: "YOUR_GOOGLE_MAPS_API_KEY",
-        version: "weekly",
-      });
-
-      loader
-        .load()
-        .then(() => {
-          try {
-            if (window.google && window.google.maps) {
-              const map = new window.google.maps.Map(mapRef.current, {
-                center: {
-                  lat: parseFloat(businesses.location.lat),
-                  lng: parseFloat(businesses.location.lng),
-                },
-                zoom: 15,
-              });
-
-              new window.google.maps.Marker({
-                position: {
-                  lat: parseFloat(businesses.location.lat),
-                  lng: parseFloat(businesses.location.lng),
-                },
-                map: map,
-              });
-            } else {
-              console.error("Google Maps JavaScript API not loaded");
-            }
-          } catch (error) {
-            console.error("Error creating map:", error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading Google Maps JavaScript API:", error);
-        });
-    }
-  }, [businesses]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -267,6 +201,22 @@ const BusinessDetails = () => {
     }
   };
 
+  const formatTime = (time) => {
+    if (!time) return "";
+    const [hours, minutes] = time.split(":");
+    const hr = parseInt(hours);
+    const ampm = hr >= 12 ? "PM" : "AM";
+    const hour12 = hr % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
+  };
+
+  // Create a map of existing business hours
+  const hoursMap =
+    businesses?.businesshours?.reduce((acc, curr) => {
+      acc[curr.day.toLowerCase()] = curr;
+      return acc;
+    }, {}) || {};
+
   return (
     <div className="property" style={{ marginTop: "10rem" }}>
       <CarouselComponent
@@ -304,7 +254,6 @@ const BusinessDetails = () => {
                 Follow
               </button>
             </div>
-
             <div
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
@@ -342,7 +291,6 @@ const BusinessDetails = () => {
                 </Col>
               </Row> */}
             </div>
-
             <div
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
@@ -375,7 +323,6 @@ const BusinessDetails = () => {
                 </Col>
               </Row>
             </div>
-
             {/* <div
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
@@ -413,7 +360,6 @@ const BusinessDetails = () => {
                 </Col>
               </Row>
             </div> */}
-
             <Modal show={show} onHide={handleClose} className="w-100" centered>
               <Modal.Header className="border-0" closeButton>
                 <Modal.Title>Overall Rating</Modal.Title>
@@ -458,7 +404,6 @@ const BusinessDetails = () => {
                 </button>
               </Modal.Footer>
             </Modal>
-
             <div className=" bg-white rounded-3 p-3">
               <div className=" d-flex justify-content-between">
                 <div>
@@ -508,7 +453,6 @@ const BusinessDetails = () => {
                 </div>
               ))}
             </div>
-
             {/* <div className="pt-4">
               <Row>
                 {businessReviews.map((review, index) => (
@@ -540,7 +484,6 @@ const BusinessDetails = () => {
                 ))}
               </Row>
             </div> */}
-
             {approvedReviews && approvedReviews.length > 0 ? (
               <div className="pt-4">
                 <Row>
@@ -578,17 +521,16 @@ const BusinessDetails = () => {
                 <p>No approved reviews available for this business yet.</p>
               </div>
             )}
-
             <div className=" pt-5">
               <div className="d-flex pb-4 align-items-center justify-content-between">
                 <div>
                   <h2>Location & Hours</h2>
-                  <p className=" m-0">
-                    Check out location and opening and closing Hours
-                  </p>
+                  <div>
+                    <LocationSection businesses={businesses} />
+                  </div>
                 </div>
                 <div>
-                  <button className=" px-4    border py-3 rounded-3 bg-white d-flex  align-items-center">
+                  <button className=" px-4 border py-3 rounded-3 bg-white d-flex  align-items-center">
                     <div className=" pe-2">
                       <img src="/w_camera.png" alt="" />
                     </div>
@@ -596,21 +538,37 @@ const BusinessDetails = () => {
                   </button>
                 </div>
               </div>
-              <div
-                ref={mapRef}
-                style={{ width: "100%", height: "400px" }}
-              ></div>
             </div>
+            <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
+                Business Hours
+              </h2>
 
-            <div className=" pt-4">
-              <span className="">OPENING AND CLOSING HOURS</span>
-              <h4>
-                {businesses.fromTime} A.M to{" "}
-                <span style={{ color: "#F10000" }}>
-                  {" "}
-                  {businesses.toTime} P.M{" "}
-                </span>
-              </h4>
+              <div className="flex flex-col space-y-3">
+                {allDays.map((day) => {
+                  const dayData = hoursMap[day.toLowerCase()];
+
+                  return (
+                    <div key={day} className="flex items-center">
+                      <div className="w-32 font-medium text-gray-700">
+                        {day}
+                      </div>
+                      <div className="flex-1">
+                        {dayData ? (
+                          <span className="text-green-600">
+                            {formatTime(dayData.fromTime)}–
+                            {formatTime(dayData.toTime)}
+                          </span>
+                        ) : (
+                          <span className="text-red-500 font-medium">
+                            Closed
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </Col>
 
@@ -740,7 +698,7 @@ const BusinessDetails = () => {
 
                   <li>
                     <div>
-                      <FaWhatsapp  size={24} className="mr-2" />
+                      <FaWhatsapp size={24} className="mr-2" />
                     </div>
                     <Link
                       to={`https://wa.me/${businesses?.phone}`}

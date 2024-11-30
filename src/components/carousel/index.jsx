@@ -51,7 +51,7 @@ function CarouselComponent({ businessData, businessReviewsData }) {
                         />
                       ))}
                     </div>
-                    <div className="d-sm-flex pt-sm-4 pt-0 justify-content-between">
+                    {/* <div className="d-sm-flex pt-sm-4 pt-0 justify-content-between">
                       <div>
                         <h5>American, Breakfast & brunch, Seafood</h5>
                         <h5>
@@ -68,7 +68,7 @@ function CarouselComponent({ businessData, businessReviewsData }) {
                           </h4>
                         </h5>
                       </div>
-                    </div>
+                    </div> */}
                   </Col>
                 </Row>
               </Container>

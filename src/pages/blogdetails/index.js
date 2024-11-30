@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import BlogSection from "./blog.details";
 
 import HomeDeals from "../home/home.deals";
+import LocationSection from "./location";
 
 import { useParams } from "react-router-dom";
 
@@ -60,12 +61,15 @@ const BlogDetails = () => {
           <Col className="mt-5 mb-5" lg={6} md={6} sm={12}>
             <BlogSection dealData={deals} />
           </Col>
-
           <Col lg={6} md={6} sm={12}>
             <img
               src="/blog deals page.jpg"
               style={{ marginTop: "2rem", width: "100%" }}
             />
+          </Col>
+
+          <Col className="mt-5 mb-5" lg={6} md={6} sm={6}>
+            <LocationSection dealData={deals} />
           </Col>
         </Row>
       </div>
