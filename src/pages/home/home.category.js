@@ -113,7 +113,7 @@ const HomeCategory = () => {
                 </div>
 
                 {expandedIndex === index && (
-                  <Card.Body className="subcategories">
+                  <Card.Body className="subcategories"> 
                     {subcategories
                       .filter(
                         (subcategory) =>

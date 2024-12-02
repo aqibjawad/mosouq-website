@@ -147,28 +147,33 @@ const BusinessDetails = () => {
     event.preventDefault();
 
     const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
 
     const user = JSON.parse(userString);
-    const userId = user._id;
+    const userId = user?._id;
 
     const statsEmailData = {
       type: "email",
-      userId: userId,
-      businessId: id,
+      userId,
+      businessId: id, // Make sure `id` is defined correctly in your component
     };
 
     try {
-      // POST request to add the review
+      // POST request to log the email view action
       const res = await POST("businessStats/addRecord", statsEmailData);
 
       if (!res.error) {
-        toast("Added Done");
+        toast.success("Email viewed successfully!");
+        setShowEmail(true); // Show the email
       } else {
-        toast.error(res.sqlMessage);
+        toast.error(res.sqlMessage || "Failed to view email.");
       }
     } catch (error) {
-      console.error("Error adding Reviews:", error);
-      toast.error("Failed to add reviews. Please try again.");
+      console.error("Error viewing email:", error);
+      toast.error("Failed to view email. Please try again.");
     }
   };
 
@@ -176,28 +181,33 @@ const BusinessDetails = () => {
     event.preventDefault();
 
     const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
 
     const user = JSON.parse(userString);
-    const userId = user._id;
+    const userId = user?._id;
 
-    const statsEmailData = {
+    const statsPhoneData = {
       type: "phone",
-      userId: userId,
-      businessId: id,
+      userId,
+      businessId: id, // Make sure `id` is defined correctly in your component
     };
 
     try {
-      // POST request to add the review
-      const res = await POST("businessStats/addRecord", statsEmailData);
+      // POST request to log the phone view action
+      const res = await POST("businessStats/addRecord", statsPhoneData);
 
       if (!res.error) {
-        toast("Added Done");
+        toast.success("Phone number viewed successfully!");
+        setShowPhone(true); // Show the phone number
       } else {
-        toast.error(res.sqlMessage);
+        toast.error(res.sqlMessage || "Failed to view phone number.");
       }
     } catch (error) {
-      console.error("Error adding Reviews:", error);
-      toast.error("Failed to add reviews. Please try again.");
+      console.error("Error viewing phone:", error);
+      toast.error("Failed to view phone. Please try again.");
     }
   };
 
@@ -261,9 +271,9 @@ const BusinessDetails = () => {
               <div className="d-flex pb-4 align-items-center justify-content-between">
                 <div>
                   <h2>Our Services</h2>
-                  <p className=" m-0">
-                    Pictures of business uploaded by consumers
-                  </p>
+                  <div style={{ fontSize: "20px" }} className=" m-0">
+                    {businesses.description}
+                  </div>
                 </div>
                 <div></div>
               </div>
@@ -295,7 +305,7 @@ const BusinessDetails = () => {
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
             >
-              <div className="d-flex pb-4 align-items-center justify-content-between">
+              {/* <div className="d-flex pb-4 align-items-center justify-content-between">
                 <div>
                   <h2>Recent Uploaded Photos</h2>
                   <p className=" m-0">
@@ -310,7 +320,7 @@ const BusinessDetails = () => {
                     All photo
                   </button>
                 </div>
-              </div>
+              </div> */}
               <Row>
                 <Col lg={4}>
                   <Image src="/photo1.png" className="w-100" alt="" />
@@ -521,58 +531,165 @@ const BusinessDetails = () => {
                 <p>No approved reviews available for this business yet.</p>
               </div>
             )}
-            <div className=" pt-5">
-              <div className="d-flex pb-4 align-items-center justify-content-between">
+
+            <div className="pt-5">
+              {/* <div className="d-flex pb-4 align-items-center justify-content-between">
                 <div>
                   <h2>Location & Hours</h2>
                   <div>
                     <LocationSection businesses={businesses} />
                   </div>
                 </div>
-                <div>
-                  <button className=" px-4 border py-3 rounded-3 bg-white d-flex  align-items-center">
-                    <div className=" pe-2">
-                      <img src="/w_camera.png" alt="" />
-                    </div>
-                    Visit Website
-                  </button>
+          
+              </div> */}
+
+              {/* Location and Hours in a Row */}
+              <div className="d-flex flex-wrap gap-4">
+                {/* Location Section */}
+                <div className="flex-grow-1 rounded-lg shadow-md p-4">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
+                    Location
+                  </h2>
+                  <LocationSection businesses={businesses} />
                 </div>
-              </div>
-            </div>
-            <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
-                Business Hours
-              </h2>
 
-              <div className="flex flex-col space-y-3">
-                {allDays.map((day) => {
-                  const dayData = hoursMap[day.toLowerCase()];
+                {/* Business Hours Section */}
+                <div className="flex-grow-1 rounded-lg shadow-md p-4">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
+                    Business Hours
+                  </h2>
+                  <div>
+                    {allDays.map((day) => {
+                      const capitalize = (word) =>
+                        word.charAt(0).toUpperCase() +
+                        word.slice(1).toLowerCase();
 
-                  return (
-                    <div key={day} className="flex items-center">
-                      <div className="w-32 font-medium text-gray-700">
-                        {day}
-                      </div>
-                      <div className="flex-1">
-                        {dayData ? (
-                          <span className="text-green-600">
-                            {formatTime(dayData.fromTime)}–
-                            {formatTime(dayData.toTime)}
-                          </span>
-                        ) : (
-                          <span className="text-red-500 font-medium">
-                            Closed
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+                      const dayData = hoursMap[day.toLowerCase()];
+
+                      return (
+                        <div
+                          key={day}
+                          className="d-flex justify-content-between mb-2"
+                        >
+                          {/* Day Name */}
+                          <div className="font-medium text-gray-700 capitalize">
+                            {capitalize(day)}
+                          </div>
+                          {/* Hours */}
+                          <div>
+                            {businesses.isOpen24_7 ? (
+                              <span className="text-green-600">
+                                Open 24 Hours a Day 7 Days a Week
+                              </span>
+                            ) : dayData ? (
+                              <span className="text-green-600">
+                                {formatTime(dayData.fromTime)} –{" "}
+                                {formatTime(dayData.toTime)}
+                              </span>
+                            ) : (
+                              <span className="text-red-500 font-medium">
+                                Closed
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </Col>
 
           <Col lg={4}>
+            <div className=" bg-white p-4 rounded-3 border">
+              <div className="">
+                <h5 className=" m-0"> {businesses.businessName} </h5>
+
+                <p>Information written by the company</p>
+
+                <img src={businesses.logo} alt="" className=" w-100" />
+
+                {/* <p className="">{businesses.description}</p> */}
+              </div>
+
+              <div className=" pt-3">
+                <h5 className=" m-0">Contact</h5>
+
+                <ul className="pt-4">
+                  {/* Email Section */}
+                  <li>
+                    <div>
+                      <MdEmail size={24} className="mr-2" />
+                    </div>
+                    <Link
+                      style={{ color: "black", textDecoration: "none" }}
+                      to="#"
+                      onClick={handleViewEmail}
+                    >
+                      {showEmail
+                        ? businesses?.email
+                        : businesses?.email
+                        ? businesses.email.slice(0, 3) + "***"
+                        : "N/A"}
+                    </Link>
+                  </li>
+
+                  {/* Phone Section */}
+                  <li>
+                    <div>
+                      <MdPhone size={24} className="mr-2" />
+                    </div>
+                    <Link
+                      style={{ color: "black", textDecoration: "none" }}
+                      to="#"
+                      onClick={handleViewPhone}
+                    >
+                      {showPhone
+                        ? businesses?.phone
+                        : businesses?.phone
+                        ? businesses.phone.slice(0, 3) + "***"
+                        : "N/A"}
+                    </Link>
+                  </li>
+
+                  <li>
+                    <div>
+                      <FaWhatsapp size={24} className="mr-2" />
+                    </div>
+                    <Link
+                      style={{ color: "black", textDecoration: "none" }}
+                      to={`https://wa.me/${businesses?.phone}`}
+                      className="text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </Link>
+                  </li>
+
+                  {/* Location Section */}
+                  {/* <li className="">
+                    <div>
+                      <img src="/location.png" alt="Location" />
+                    </div>
+                    <p className="mt-3">
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                          businesses?.location || ""
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        Business Location
+                      </a>
+                    </p>
+                  </li> */}
+                </ul>
+              </div>
+            </div>
+
             <div className=" bg-white p-4 rounded-3 border">
               <h4 className=" m-0">Request quote & availability</h4>
               <p className="">Request your right away and availability</p>
@@ -648,85 +765,6 @@ const BusinessDetails = () => {
                     <h6 className=" m-0">
                       Replies to negative reviews in {`<`} 2 days{" "}
                     </h6>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className=" bg-white p-4 rounded-3 border">
-              <div className="">
-                <h5 className=" m-0"> {businesses.businessName} </h5>
-
-                <p>Information written by the company</p>
-
-                <img src={businesses.logo} alt="" className=" w-100" />
-
-                <p className="">{businesses.description}</p>
-              </div>
-
-              <div className=" pt-3">
-                <h5 className=" m-0">Contact</h5>
-
-                <ul className="pt-4">
-                  {/* Email Section */}
-                  <li>
-                    <div>
-                      <MdEmail size={24} className="mr-2" />
-                    </div>
-                    <Link to="#" onClick={handleViewEmail}>
-                      {showEmail
-                        ? businesses?.email
-                        : businesses?.email
-                        ? businesses.email.slice(0, 3) + "***"
-                        : "N/A"}
-                    </Link>
-                  </li>
-
-                  {/* Phone Section */}
-                  <li>
-                    <div>
-                      <MdPhone size={24} className="mr-2" />
-                    </div>
-                    <Link to="#" onClick={handleViewPhone}>
-                      {showPhone
-                        ? businesses?.phone
-                        : businesses?.phone
-                        ? businesses.phone.slice(0, 3) + "***"
-                        : "N/A"}
-                    </Link>
-                  </li>
-
-                  <li>
-                    <div>
-                      <FaWhatsapp size={24} className="mr-2" />
-                    </div>
-                    <Link
-                      to={`https://wa.me/${businesses?.phone}`}
-                      className="text-sm"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      WhatsApp
-                    </Link>
-                  </li>
-
-                  {/* Location Section */}
-                  <li className="">
-                    <div>
-                      <img src="/location.png" alt="Location" />
-                    </div>
-                    <p className="mt-3">
-                      <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                          businesses?.location || ""
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        Business Location
-                      </a>
-                    </p>
                   </li>
                 </ul>
               </div>

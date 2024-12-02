@@ -33,7 +33,7 @@ function CarouselComponent({ businessData, businessReviewsData }) {
               <Container fluid className="">
                 <Row className="carousel_card mx-auto">
                   <Col lg={11} className="mx-auto">
-                    <h1 className="m-0 text-black">
+                    <h1 className="m-0">
                       {businessData.businessName}
                     </h1>
                     <h6 className="">Where stay is Unique</h6>

@@ -7,11 +7,30 @@ import { useParams, Link } from "react-router-dom";
 const CategoryDetails = ({ name }) => {
   const { id } = useParams();
   const [businesses, setBusinesses] = useState([]);
+  const [dataSource, setDataSource] = useState("category");
 
   useEffect(() => {
-    GET(`business-profile/category-business?category=${id}`).then((result) => {
-      setBusinesses(result);
-    });
+    // Try category API first
+    GET(`business-profile/category-business?category=${id}`)
+      .then((result) => {
+        if (result && result.length > 0) {
+          setBusinesses(result);
+          setDataSource("category");
+        } else {
+          // If no results, try subcategory API
+          return GET(`business-profile/subcategory-business?subcategory=${id}`);
+        }
+        return result;
+      })
+      .then((subResult) => {
+        if (subResult && subResult.length > 0) {
+          setBusinesses(subResult);
+          setDataSource("subcategory");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching businesses:", error);
+      });
   }, [id]);
 
   // const isBusinessOpen = (fromTime, toTime) => {
@@ -77,9 +96,7 @@ const CategoryDetails = ({ name }) => {
                       <AiOutlineStar className="text-yellow-500" />
                       <span className="ml-2 text-gray-700">4.8</span>
                     </div>
-                    <p className="text-gray-700 mt-2">
-                      {business.description}
-                    </p>
+                    <p className="text-gray-700 mt-2">{business.description}</p>
 
                     <div className="text-gray-500">
                       <Link to={business.website}>Website</Link>
