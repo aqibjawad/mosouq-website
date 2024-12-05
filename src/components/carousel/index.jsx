@@ -1,88 +1,126 @@
-import { useState } from "react";
-import {
-  Carousel as BootstrapCarousel,
-  Col,
-  Container,
-  Image,
-  Row,
-} from "react-bootstrap";
-import { IoStar } from "react-icons/io5";
-import "./carousel.css";
+import React from "react";
+import { Container, Row, Col, Button, Card, Nav } from "react-bootstrap";
+import { FaFacebookMessenger, FaSearch, FaThumbsUp } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
-function CarouselComponent({ businessData, businessReviewsData }) {
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-
-  // Calculate average rating
-  const averageRating =
-    businessReviewsData.length > 0
-      ? businessReviewsData.reduce((sum, review) => sum + review.rating, 0) /
-        businessReviewsData.length
-      : 0;
-
+const FacebookStyleHeader = ({ businessData }) => {
   return (
-    <BootstrapCarousel activeIndex={index} onSelect={handleSelect}>
-      {businessData && businessData.images && businessData.images.length > 0 ? (
-        businessData.images.map((image, idx) => (
-          <BootstrapCarousel.Item key={idx}>
-            <Image src={image} alt={`Slide ${idx + 1}`} className="w-100" />
-            <BootstrapCarousel.Caption>
-              <Container fluid className="">
-                <Row className="carousel_card mx-auto">
-                  <Col lg={11} className="mx-auto">
-                    <h1 className="m-0">
-                      {businessData.businessName}
-                    </h1>
-                    <h6 className="">Where stay is Unique</h6>
-                    <div className="pt-2 pb-sm-5 pb-4 rating">
-                      <span>{businessReviewsData.length || 0} reviews</span>
-                      {[...Array(5)].map((_, i) => (
-                        <IoStar
-                          key={i}
-                          size={20}
-                          color={
-                            i < Math.round(averageRating)
-                              ? "#FFB800"
-                              : "#D3D3D3"
-                          }
-                        />
-                      ))}
-                    </div>
-                    {/* <div className="d-sm-flex pt-sm-4 pt-0 justify-content-between">
-                      <div>
-                        <h5>American, Breakfast & brunch, Seafood</h5>
-                        <h5>
-                          <span className="" style={{ color: "#04C585" }}>
-                            Open
-                          </span>
-                          <h4 className="mt-2">
-                            <span style={{ color: "black" }}>
-                              {businessData.fromTime} A.M to
-                            </span>
-                            <span style={{ color: "#F10000" }}>
-                              {businessData.toTime} P.M
-                            </span>
-                          </h4>
-                        </h5>
-                      </div>
-                    </div> */}
-                  </Col>
-                </Row>
-              </Container>
-            </BootstrapCarousel.Caption>
-          </BootstrapCarousel.Item>
-        ))
-      ) : (
-        <BootstrapCarousel.Item>
-          <Image src="/slide1.png" alt="Default Slide" className="w-100" />
-          {/* Add the same caption content as above here */}
-        </BootstrapCarousel.Item>
-      )}
-    </BootstrapCarousel>
-  );
-}
+    <div className="position-relative">
+      {/* Cover Photo Section */}
+      <div className="position-relative" style={{ height: "350px" }}>
+        <img
+          src={businessData?.images?.[0] || "/api/placeholder/1200/350"}
+          alt="Cover"
+          className="w-100 h-100 object-fit-cover"
+        />
+      </div>
 
-export default CarouselComponent;
+      {/* Profile Section */}
+      <Container className="position-relative">
+        <Row
+          className="align-items-end justify-content-between"
+          style={{ marginTop: "-2rem" }}
+        >
+          {/* Profile Picture & Name */}
+          <Col className="d-flex align-items-end">
+            <div className="position-relative me-4">
+              <img
+                src={businessData?.logo || "/api/placeholder/168/168"}
+                alt="Profile"
+                style={{
+                  width: "168px",
+                  height: "168px",
+                  borderRadius: "50%",
+                  border: "4px solid white",
+                  backgroundColor: "white",
+                }}
+              />
+            </div>
+            <div className="mb-3">
+              <h1 className="fs-2 fw-bold text-dark">
+                {businessData?.businessName || "Business Name"}
+              </h1>
+              <p className="text-secondary">
+                {businessData?.followers || 0} Reviews •{" "}
+              </p>
+            </div>
+          </Col>
+
+          {/* Action Buttons */}
+          <Col xs="auto" className="mb-3">
+            <div className="d-flex gap-2">
+              <Button variant="primary" className="d-flex align-items-center">
+                <FaFacebookMessenger className="me-2" />
+                Message
+              </Button>
+              <Button variant="light" className="d-flex align-items-center">
+                <FaPhone className="me-2" />
+                Call
+              </Button>
+              <Button
+                variant="outline-primary"
+                className="d-flex align-items-center"
+              >
+                <MdEmail className="me-2" />
+                Email
+              </Button>
+              <Button
+                variant="outline-primary"
+                className="d-flex align-items-center"
+              >
+                <MdEmail className="me-2" />
+                Whatsapp
+              </Button>
+              <Button
+                variant="outline-primary"
+                className="d-flex align-items-center"
+              >
+                <MdEmail className="me-2" />
+                Website
+              </Button>
+            </div>
+          </Col>
+        </Row>
+
+        {/* Navigation Bar */}
+        {/* <Nav className="border-top mt-4">
+          <Nav.Item>
+            <Nav.Link
+              className="px-3 py-3 text-secondary border-bottom border-transparent"
+              style={{ ":hover": { borderColor: "#dee2e6" } }}
+            >
+              Home
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              className="px-3 py-3 text-secondary border-bottom border-transparent"
+              style={{ ":hover": { borderColor: "#dee2e6" } }}
+            >
+              About
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              className="px-3 py-3 text-secondary border-bottom border-transparent"
+              style={{ ":hover": { borderColor: "#dee2e6" } }}
+            >
+              Photos
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              className="px-3 py-3 text-secondary border-bottom border-transparent"
+              style={{ ":hover": { borderColor: "#dee2e6" } }}
+            >
+              Videos
+            </Nav.Link>
+          </Nav.Item>
+        </Nav> */}
+      </Container>
+    </div>
+  );
+};
+
+export default FacebookStyleHeader;

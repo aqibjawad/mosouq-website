@@ -29,3 +29,15 @@
   opacity: 1 !important;
   z-index: 10; /* Ensure it is above other elements */
 }
+
+.logo-container {
+  position: relative;
+  width: 50%;
+  overflow: hidden;
+}
+
+.logo-half {
+  width: 200%;
+  max-width: none;
+  margin-left: -50%;
+}

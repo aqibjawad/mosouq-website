@@ -228,7 +228,7 @@ const BusinessDetails = () => {
     }, {}) || {};
 
   return (
-    <div className="property" style={{ marginTop: "10rem" }}>
+    <div className="property" style={{ marginTop: "1rem" }}>
       <CarouselComponent
         businessData={businesses}
         businessReviewsData={businessReviews}
@@ -237,7 +237,7 @@ const BusinessDetails = () => {
       <Container fluid className=" py-4 px-3 px-md-5">
         <Row className="g-5">
           <Col lg={8}>
-            <div className=" top_btn">
+            {/* <div className=" top_btn"> 
               <button
                 className="px-4 border py-2 rounded-3 bg-white text-dark d-flex align-items-center"
                 onClick={handleShow}
@@ -263,7 +263,7 @@ const BusinessDetails = () => {
                 </div>
                 Follow
               </button>
-            </div>
+            </div> */}
             <div
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
@@ -602,94 +602,6 @@ const BusinessDetails = () => {
           </Col>
 
           <Col lg={4}>
-            <div className=" bg-white p-4 rounded-3 border">
-              <div className="">
-                <h5 className=" m-0"> {businesses.businessName} </h5>
-
-                <p>Information written by the company</p>
-
-                <img src={businesses.logo} alt="" className=" w-100" />
-
-                {/* <p className="">{businesses.description}</p> */}
-              </div>
-
-              <div className=" pt-3">
-                <h5 className=" m-0">Contact</h5>
-
-                <ul className="pt-4">
-                  {/* Email Section */}
-                  <li>
-                    <div>
-                      <MdEmail size={24} className="mr-2" />
-                    </div>
-                    <Link
-                      style={{ color: "black", textDecoration: "none" }}
-                      to="#"
-                      onClick={handleViewEmail}
-                    >
-                      {showEmail
-                        ? businesses?.email
-                        : businesses?.email
-                        ? businesses.email.slice(0, 3) + "***"
-                        : "N/A"}
-                    </Link>
-                  </li>
-
-                  {/* Phone Section */}
-                  <li>
-                    <div>
-                      <MdPhone size={24} className="mr-2" />
-                    </div>
-                    <Link
-                      style={{ color: "black", textDecoration: "none" }}
-                      to="#"
-                      onClick={handleViewPhone}
-                    >
-                      {showPhone
-                        ? businesses?.phone
-                        : businesses?.phone
-                        ? businesses.phone.slice(0, 3) + "***"
-                        : "N/A"}
-                    </Link>
-                  </li>
-
-                  <li>
-                    <div>
-                      <FaWhatsapp size={24} className="mr-2" />
-                    </div>
-                    <Link
-                      style={{ color: "black", textDecoration: "none" }}
-                      to={`https://wa.me/${businesses?.phone}`}
-                      className="text-sm"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      WhatsApp
-                    </Link>
-                  </li>
-
-                  {/* Location Section */}
-                  {/* <li className="">
-                    <div>
-                      <img src="/location.png" alt="Location" />
-                    </div>
-                    <p className="mt-3">
-                      <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                          businesses?.location || ""
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        Business Location
-                      </a>
-                    </p>
-                  </li> */}
-                </ul>
-              </div>
-            </div>
-
             <div className=" bg-white p-4 rounded-3 border">
               <h4 className=" m-0">Request quote & availability</h4>
               <p className="">Request your right away and availability</p>
