@@ -1,43 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Container } from "react-bootstrap";
-import { BsChevronDown } from "react-icons/bs";
-
-import { GET } from "../../apicontrollers/apiController";
-
-import SearchBar from "../../components/searchbar";
-
-import { Link } from "react-router-dom";
-
-import "./index.css";
+import { Row, Col, Card, Container, Spinner } from "react-bootstrap";
 import { MdArrowDropDown } from "react-icons/md";
+import { Link } from "react-router-dom";
+import SearchBar from "../../components/searchbar";
+import { GET } from "../../apicontrollers/apiController";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
-  const [subcategories, setSubCategories] = useState();
-
+  const [subcategories, setSubCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
   useEffect(() => {
-    GET("category/get-categories").then((result) => {
-      setCategories(result);
-    });
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [categoriesResult, subcategoriesResult] = await Promise.all([
+          GET("category/get-categories"),
+          GET("subcategory/get-subcategories")
+        ]);
+        setCategories(categoriesResult);
+        setSubCategories(subcategoriesResult);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      setIsLoading(false);
+    };
 
-    GET("subcategory/get-subcategories").then((result) => {
-      setSubCategories(result);
-    });
+    fetchData();
   }, []);
 
   const toggleExpand = (index) => {
-    if (expandedIndex === index) {
-      setExpandedIndex(-1);
-    } else {
-      setExpandedIndex(index);
-    }
+    setExpandedIndex(expandedIndex === index ? -1 : index);
   };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <img src="/mosouq-logo.png" />
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <div className=" py-5 text-center mt-5">
+      <div className="py-5 text-center mt-5">
         <div className="pt-4" style={{ fontWeight: "700", fontSize: "62px" }}>
           Categories
         </div>
@@ -49,10 +59,10 @@ const Category = () => {
       <Container
         style={{ backgroundColor: "#FAFAFA" }}
         fluid
-        className="  px-3 mb-5 px-md-5"
+        className="px-3 mb-5 px-md-5"
       >
-        <Row className="  mx-auto">
-          <Col lg={9} className=" mx-auto">
+        <Row className="mx-auto">
+          <Col lg={9} className="mx-auto">
             <div className="" style={{ marginTop: "-4.5rem" }}>
               <SearchBar />
             </div>
@@ -63,7 +73,7 @@ const Category = () => {
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <div className="custom-div-container bg-white">
                 <div
-                  className="custom-div px-3 border-0  justify-content-between d-flex align-items-center p-2"
+                  className="custom-div px-3 border-0 justify-content-between d-flex align-items-center p-2"
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
@@ -88,10 +98,7 @@ const Category = () => {
                 {expandedIndex === index && (
                   <Card.Body className="subcategories">
                     {subcategories
-                      .filter(
-                        (subcategory) =>
-                          subcategory.category._id === category._id
-                      )
+                      .filter((subcategory) => subcategory.category._id === category._id)
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link

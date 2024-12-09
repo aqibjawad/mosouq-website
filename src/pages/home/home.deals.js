@@ -34,35 +34,7 @@ const HomeDeals = () => {
     GET("deal/get-deals").then((result) => {
       setDeals(result);
     });
-
-    // Get user's current location
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     setCurrentLocation({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //     });
-    //   });
-    // }
   }, []);
-
-  // useEffect(() => {
-  //   if (currentLocation && deals.length > 0) {
-  //     // Filter deals based on distance from current location
-  //     const maxDistance = 50; // maximum distance in kilometers
-  //     const filtered = deals.filter((deal) => {
-  //       const [dealLat, dealLon] = deal.location.split(",").map(Number);
-  //       const distance = calculateDistance(
-  //         currentLocation.latitude,
-  //         currentLocation.longitude,
-  //         dealLat,
-  //         dealLon
-  //       );
-  //       return distance <= maxDistance;
-  //     });
-  //     setFilteredDeals(filtered);
-  //   }
-  // }, [currentLocation, deals]);
 
   return (
     <div style={{ marginTop: "7rem", overflow: "hidden" }}>
@@ -129,7 +101,11 @@ const HomeDeals = () => {
                     }}
                   >
                     <img
-                      src={businesses.deal_image}
+                      src={
+                        businesses.images && businesses.images[0]
+                          ? businesses.images[0]
+                          : businesses.deal_image
+                      }
                       style={{
                         objectFit: "contain",
                         width: "100%",
@@ -169,7 +145,7 @@ const HomeDeals = () => {
                         marginLeft: "10px",
                       }}
                     >
-                      {businesses.name}
+                      {businesses.name.slice(0,50)}
                     </div>
                   </div>
 

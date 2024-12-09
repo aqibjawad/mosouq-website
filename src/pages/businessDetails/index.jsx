@@ -579,7 +579,7 @@ const BusinessDetails = () => {
                           <div>
                             {businesses.isOpen24_7 ? (
                               <span className="text-green-600">
-                                Open 24 Hours a Day 7 Days a Week
+                                Open 24 Hours
                               </span>
                             ) : dayData ? (
                               <span className="text-green-600">
