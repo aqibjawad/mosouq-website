@@ -19,18 +19,21 @@ const Header = () => {
         className=" px-3 px-md-5  justify-content-between align-items-center d-flex"
       >
         {/* logo */}
-        <Link style={{textDecoration:"none"}}  to={'/'} className="logo">
+        <Link style={{ textDecoration: "none" }} to={"/"} className="logo">
           <div className="mosouq-logo"> Mosouq </div>
         </Link>
 
         {/* menu bar */}
 
         <nav className={`nav-links px-3 ${menuOpen ? "open" : ""}`}>
-        <Link to="/" onClick={toggleMenu}>
+          <Link to="/" onClick={toggleMenu}>
             Home
           </Link>
           <Link to="/categories" onClick={toggleMenu}>
             Categories
+          </Link>
+          <Link to="/deals" onClick={toggleMenu}>
+            Deals
           </Link>
           <Link to="/about" onClick={toggleMenu}>
             About

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import SearchBar from "../../components/searchbar";
 import { GET } from "../../apicontrollers/apiController";
 
+import "./index.css";
+
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);

@@ -3,21 +3,27 @@ import { FiSearch } from "react-icons/fi";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "./index.css";
 import { GET } from "../../apicontrollers/apiController";
-
 import { Link } from "react-router-dom";
 
 const SearchBar = () => {
-  const [search, setSearch] = useState(""); // State for search input
+  const [search, setSearch] = useState("");
   const [results, setResults] = useState({
     businessProfiles: [],
     categories: [],
     subCategories: [],
-  }); // State for storing API results
+  });
 
   useEffect(() => {
     if (search) {
       GET(`business-profile/searchAll?query=${search}`).then((result) => {
         setResults(result);
+      });
+    } else {
+      // Clear results when search is empty
+      setResults({
+        businessProfiles: [],
+        categories: [],
+        subCategories: [],
       });
     }
   }, [search]);
@@ -34,6 +40,15 @@ const SearchBar = () => {
     }
   };
 
+  const handleClear = () => {
+    setSearch("");
+    setResults({
+      businessProfiles: [],
+      categories: [],
+      subCategories: [],
+    });
+  };
+
   return (
     <Container className="search-container">
       <div className="search-bar">
@@ -45,6 +60,11 @@ const SearchBar = () => {
           value={search}
           onChange={handleInputChange}
         />
+        {search && (
+          <button className="clear-button" onClick={handleClear}>
+            ✕
+          </button>
+        )}
         <button className="search-button" onClick={handleSearch}>
           Search
         </button>
@@ -53,27 +73,30 @@ const SearchBar = () => {
         {/* Render business profiles */}
         {results.businessProfiles.length > 0 && (
           <div className="section">
-            <h2>Business Profiles</h2>
             {results.businessProfiles.map((profile) => (
-              <Card key={profile._id} className="result-card mb-3">
-                <Row noGutters>
-                  <Col md={6}>
-                    {/* Placeholder image */}
-                    <img
-                      variant="left"
-                      src={profile.image || "default-image-url.jpg"}
-                      alt={profile.name}
-                      className="result-image"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Card.Body>
-                      <Card.Title>{profile.name}</Card.Title>
-                    </Card.Body>
-                  </Col>
-                </Row>
-              </Card>
+              <Link style={{textDecoration:"none", color:"black"}} to={`/business/${profile.businessName}/${profile._id}`}>
+                <Card
+                  style={{ marginLeft: "1rem" }}
+                  key={profile._id}
+                  className="result-card mb-3"
+                >
+                  <Row noGutters>
+                    <Col md={3}>
+                      <Card.Img
+                        variant="left"
+                        src={profile.logo || "default-image-url.jpg"}
+                        alt={profile.name}
+                        className="custom-img"
+                      />
+                    </Col>
+                    <Col md={9}>
+                      <Card.Body>
+                        <Card.Title>{profile.businessName}</Card.Title>
+                      </Card.Body>
+                    </Col>
+                  </Row>
+                </Card>
+              </Link>
             ))}
           </div>
         )}
@@ -81,39 +104,30 @@ const SearchBar = () => {
         {/* Render categories */}
         {results.categories.length > 0 && (
           <div className="section">
-            {results.categories.map((category, index) => (
-              <div className="" key={category._id}>
-                <Row noGutters>
-                  <Col key={index}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    lg={3}
-                    className="mb-4"
-                  >
-                    <div className="card-div-cont">
-                      <div className="custom-div-cont px-3 border-0  justify-content-between d-flex align-items-center p-2">
-                        <Link
-                          to={`/business/${category.name}/${category.id}`}
-                          style={{ color: "black", textDecoration: "none" }}
-                        >
-                          <div className="g-3 d-flex align-items-center">
-                            <div className="me-3">
-                              <img
-                                src={category.category_image}
-                                className="custom-img"
-                                alt={category.name}
-                              />
-                            </div>
-                            <div className="custom-text">{category.name}</div>
-                          </div>
-                        </Link>
-
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
+            {results.categories.map((category) => (
+              <Link style={{textDecoration:"none", color:"black"}} to={`/business/${category.name}/${category._id}`}>
+                <Card
+                  style={{ marginLeft: "1rem" }}
+                  key={category._id}
+                  className="result-card mb-3"
+                >
+                  <Row noGutters>
+                    <Col md={3}>
+                      <Card.Img
+                        variant="left"
+                        src={category.category_image || "default-image-url.jpg"}
+                        alt={category.name}
+                        className="custom-img"
+                      />
+                    </Col>
+                    <Col md={9}>
+                      <Card.Body>
+                        <Card.Title>{category.name}</Card.Title>
+                      </Card.Body>
+                    </Col>
+                  </Row>
+                </Card>
+              </Link>
             ))}
           </div>
         )}
@@ -121,23 +135,26 @@ const SearchBar = () => {
         {/* Render subcategories */}
         {results.subCategories.length > 0 && (
           <div className="section">
-            <h2>Subcategories</h2>
             {results.subCategories.map((subCategory) => (
-              <Card key={subCategory._id} className="result-card mb-3">
+              <Card
+                style={{ marginLeft: "1rem" }}
+                key={subCategory._id}
+                className="result-card mb-3"
+              >
                 <Row noGutters>
                   <Col md={3}>
-                    {/* Placeholder image */}
                     <Card.Img
                       variant="left"
-                      src={subCategory.image || "default-image-url.jpg"}
-                      alt={subCategory.name}
-                      className="result-image"
+                      src={
+                        subCategory.subcategory_image || "default-image-url.jpg"
+                      }
+                      alt={subCategory.sub_name}
+                      className="custom-img"
                     />
                   </Col>
                   <Col md={9}>
                     <Card.Body>
-                      <Card.Title>{subCategory.name}</Card.Title>
-                      {/* Add more subcategory details here */}
+                      <Card.Title>{subCategory.sub_name}</Card.Title>
                     </Card.Body>
                   </Col>
                 </Row>

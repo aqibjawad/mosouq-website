@@ -23,17 +23,17 @@ const HomeBusiness = () => {
             className="text-center"
             style={{ fontWeight: "600", fontSize: "32px" }}
           >
-            Trusted by the biggest companies
+            Our Trusted Brands
           </div>
 
-          <div
+          {/* <div
             className="text-center"
             style={{ fontWeight: "400", fontSize: "17px" }}
           >
             We're not just a service provider; we're your trusted partner,
             dedicated to understanding and <br /> surpassing your expectations
             with tailored solutions
-          </div>
+          </div> */}
         </div>
 
         <div>
