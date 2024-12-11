@@ -49,7 +49,7 @@ const HomeBanner = () => {
             <Row className=" mx-auto">
               <Col lg={9} className=" mx-auto">
                 <img
-                  src="/banner4.jpg"
+                  src="/banner4..png"
                   alt="Outer"
                   className=" w-100 mt-3 logo_first"
                 />
