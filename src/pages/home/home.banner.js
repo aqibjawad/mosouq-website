@@ -6,7 +6,10 @@ import "./index.css";
 
 const HomeBanner = () => {
   return (
-    <div id="home-banner" className=" py-4 d-flex justify-content-between align-items-center  pt-5">
+    <div
+      id="home-banner"
+      className=" py-4 d-flex justify-content-between align-items-center  pt-5"
+    >
       <Container fluid className="  px-md-5    pt-5  px-3">
         <Row className=" align-items-center ">
           <Col lg={5} md={12} sm={12} className=" align-items-center mb-lg-0">
@@ -43,21 +46,20 @@ const HomeBanner = () => {
           </Col>
 
           <Col lg={7} md={12} sm={12} className="d-flex justify-content-center">
-             <Row className=" mx-auto">
+            <Row className=" mx-auto">
               <Col lg={9} className=" mx-auto">
-              <img
-              src="/banner.jpg"
-              alt="Outer"
-              className=" w-100 mt-3 logo_first"
-              
-            />
-            <img
-              src="/mobile_view.png"
-              alt="Outer"
-              className=" w-100 mt-3 logo_second mt-lg-5"
-            />
+                <img
+                  src="/banner4.jpg"
+                  alt="Outer"
+                  className=" w-100 mt-3 logo_first"
+                />
+                <img
+                  src="/banner4.png"
+                  alt="Outer"
+                  className=" w-100 mt-3 logo_second mt-lg-5"
+                />
               </Col>
-             </Row>
+            </Row>
           </Col>
         </Row>
       </Container>
