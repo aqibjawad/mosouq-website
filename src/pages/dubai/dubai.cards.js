@@ -1,41 +1,56 @@
 import React, { useState, useEffect } from "react";
-
 import { Row, Col, Card, Button } from "react-bootstrap";
 import ReactStars from "react-stars";
 
-import { GET } from "../../apicontrollers/apiController";
-
 const DealCards = () => {
-
-
   const [dubai, setDubai] = useState([]);
-
-  const fetchData = async () => {
-      GET("dubai/get-dubai").then((result) => {
-          setDubai(result);
-      });
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      fetchData();
+    fetch(
+      "https://public-api.wordpress.com/wp/v2/sites/fawadexe.wordpress.com/posts"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setDubai(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
   }, []);
+
+  const extractImageSrc = (content) => {
+    try {
+      const match = content.match(/data-orig-file="([^"]+)"/);
+      return match ? match[1] : "https://via.placeholder.com/400x300";
+    } catch (error) {
+      return "https://via.placeholder.com/400x300";
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Row style={{ overflow: "hidden" }}>
-      {dubai.map((dubaii, index) => (
+      {dubai.map((item, index) => (
         <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
           <Card className="h-100">
             <img
-              src={dubaii.dubai_image}
+              src={extractImageSrc(item.content.rendered)}
               style={{ objectFit: "contain", width: "100%", padding: "10px" }}
-              alt="Banner"
+              alt={item.title.rendered}
             />
             <Card.Body className="d-flex flex-column">
               <Card.Title>
                 <Row>
                   <Col>
-                    <div className="card-title-text" style={{ color: "#404EED", fontSize: "12px" }}>
-                      {deal.name}
+                    <div
+                      className="card-title-text"
+                      style={{ color: "#404EED", fontSize: "12px" }}
+                    >
+                      {item.title.rendered}
                     </div>
                   </Col>
                   <Col className="d-flex justify-content-center align-items-center">
@@ -57,7 +72,10 @@ const DealCards = () => {
                           size={20}
                           edit={false}
                         />
-                        <div className="rating-text" style={{ fontSize: "12px", marginLeft: "10px" }}>
+                        <div
+                          className="rating-text"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        >
                           4.3 (200+)
                         </div>
                       </div>
@@ -66,8 +84,11 @@ const DealCards = () => {
                 </Row>
               </Card.Title>
               <Card.Text>
-                <div className="card-text-title" style={{ fontSize: "18px", fontWeight: "600" }}>
-                  Fish Bleach Taverna
+                <div
+                  className="card-text-title"
+                  style={{ fontSize: "18px", fontWeight: "600" }}
+                >
+                  {item.title.rendered}
                 </div>
                 <div
                   className="card-text-subtitle"
@@ -77,10 +98,17 @@ const DealCards = () => {
                     color: "#4D4D4D",
                   }}
                 >
-                  Dubai Marina (Marisa Dubai)
+                  {item.excerpt.rendered
+                    .replace(/<\/?[^>]+(>|$)/g, "")
+                    .substring(0, 100)}
+                  ...
                 </div>
               </Card.Text>
-              <Button className="mt-auto" style={{ width: "100%" }} variant="primary">
+              <Button
+                className="mt-auto"
+                style={{ width: "100%" }}
+                variant="primary"
+              >
                 Request Consultation
               </Button>
             </Card.Body>
