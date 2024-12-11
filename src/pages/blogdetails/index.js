@@ -1,203 +1,112 @@
 import React, { useState, useEffect } from "react";
 
-import { Col, Card, Button, Badge, Row, ListGroup } from "react-bootstrap";
-import { Star, Clock, Users, ChevronRight } from "lucide-react";
-
-import HomeDeals from "../home/home.deals";
-import LocationSection from "./location";
+import { Row, Col } from "react-bootstrap";
 
 import { useParams } from "react-router-dom";
 
-import { GET } from "../../apicontrollers/apiController";
-
-const hotelData = [
-  {
-    id: 1,
-    name: "Al Jaddaf Rotana Suite Hotel",
-    location: "Al Jaddaf Dubai",
-    rating: 5,
-    people: 2,
-    score: 4.6,
-    reviews: 7,
-    image: "/api/placeholder/400/300",
-  },
-  // Add more hotels as needed
-];
+import parse from "html-react-parser";
 
 const BlogDetails = () => {
-  const [quantity, setQuantity] = useState(1);
-
   const { id } = useParams();
 
-  const [deals, setDeals] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState(null);
-  const [filteredDeals, setFilteredDeals] = useState([]);
+  const [dubai, setDubai] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    GET(`deal/get-deal/${id}`).then((result) => {
-      setDeals(result);
-    });
+    fetch(
+      `https://public-api.wordpress.com/wp/v2/sites/fawadexe.wordpress.com/posts/${id}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setDubai(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
 
-  // Function to get thumbnail images
-  const getThumbnails = () => {
-    if (deals.images && deals.images.length > 0) {
-      // If more than 5 images, slice to first 5
-      return deals.images.slice(0, 5);
+  const extractImageSrc = (content) => {
+    try {
+      // Parse the HTML content
+      const parsed = parse(content);
+
+      // If parsed content is an array, find the figure/img element
+      if (Array.isArray(parsed)) {
+        for (let element of parsed) {
+          // Check if element is a figure with img
+          if (element?.props?.children?.props?.src) {
+            return element.props.children.props.src;
+          }
+          // Check if element is directly an img
+          if (element?.props?.src) {
+            return element.props.src;
+          }
+        }
+      }
+      // If content contains data-orig-file attribute, extract that
+      const match = content.match(/data-orig-file="([^"]+)"/);
+      if (match && match[1]) {
+        return match[1];
+      }
+
+      return "https://via.placeholder.com/400x300"; // Fallback image
+    } catch (error) {
+      console.error("Error extracting image:", error);
+      return "https://via.placeholder.com/400x300"; // Fallback image
     }
-    // Fallback to placeholder if no images
-    return [
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-    ];
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
-    <div style={{ marginTop: "10rem" }}>
-      {/* Main Product Section */}
-      <Row className="mb-4">
-        <Col md={6}>
-          <Card>
-            <Card.Img
-              variant="top"
-              src={
-                deals.images && deals.images[0]
-                  ? deals.images[0]
-                  : deals.deal_image
-              }
-              alt="Luxury Getaways Gift Box"
-            />
-
-            {/* Thumbnail Images */}
-            <Row className="p-2">
-              {getThumbnails().map((image, num) => (
-                <Col key={num} xs={2}>
-                  <img
-                    src={image}
-                    alt={`Thumbnail ${num + 1}`}
-                    className="img-fluid"
-                  />
-                </Col>
-              ))}
-            </Row>
-          </Card>
-        </Col>
-
-        <Col md={6}>
-          <h1>{deals.businessName}</h1>
-          <h2>{deals.name}</h2>
-          {/* <h2>{deals.description}</h2> */}
-
-          <div className="d-flex align-items-center gap-3 mb-3">
-            <Badge bg="light" text="dark">
-              <Clock size={16} /> One Night
-            </Badge>
-            <Badge bg="light" text="dark">
-              <Users size={16} /> 2 People
-            </Badge>
-            <Badge bg="light" text="dark">
-              <Star size={16} /> 4.9 (36)
-            </Badge>
-          </div>
-
-          <div className="d-flex align-items-center gap-3 mb-4">
-            <h3 className="m-0">AED {deals.price || 0}</h3>
-            <span className="text-decoration-line-through text-muted">
-              AED {deals.price1 || 0}
-            </span>
-            <Badge bg="danger"> {deals.discount || 0} % OFF</Badge>
-          </div>
-
-          <div className="mb-4">
-            <Button variant="outline-danger"> order </Button>
-          </div>
-
-          <div className="bg-light p-3 rounded mb-4">
-            <p className="mb-2">4 interest-free payments of AED 124.75</p>
-            <p className="mb-0">
-              Or split in 4 payments of AED 124.75 - No late fees
-            </p>
-          </div>
-
-          <Card className="mb-4">
-            <Card.Header>
-              <h4 className="m-0">What is included</h4>
-            </Card.Header>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                The gift box includes a one-night stay with breakfast for two at
-                a luxury hotel across the UAE
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Buy now and book later within 12 months
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Free Wi-Fi in public areas and all hotel rooms
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Unlimited use of recreational facilities subject to availability
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Hotels Grid */}
-      <h3
-        className="mb-4"
-        style={{ paddingLeft: "5rem", paddingRight: "5rem" }}
+    <div>
+      <div
+        style={{ marginTop: "10rem", marginLeft: "4rem", marginRight: "4rem" }}
       >
-        {deals.description}
-      </h3>
-      {/* <Row className="g-4">
-        {hotelData.map((hotel) => (
-          <Col key={hotel.id} md={6} lg={3}>
-            <Card>
-              <Card.Img variant="top" src={hotel.image} />
-              <Card.Body>
-                <Card.Title>{hotel.name}</Card.Title>
-                <div className="d-flex align-items-center gap-2 mb-2">
-                  {[...Array(hotel.rating)].map((_, i) => (
-                    <Star key={i} size={16} fill="gold" stroke="gold" />
-                  ))}
-                </div>
-                <p className="mb-1">{hotel.location}</p>
-                <div className="d-flex align-items-center gap-2">
-                  <Users size={16} />
-                  <span>{hotel.people} People</span>
-                  <span>•</span>
-                  <Star size={16} />
-                  <span>
-                    {hotel.score}/5 ({hotel.reviews})
-                  </span>
-                </div>
-              </Card.Body>
-            </Card>
+        <div
+          style={{ fontWeight: "700", fontSize: "64px", textAlign: "center" }}
+        >
+          {dubai.title?.rendered}
+        </div>
+
+        <div
+          style={{
+            fontWeight: "400",
+            fontSize: "24px",
+            color: "#454545",
+            textAlign: "center",
+          }}
+        >
+          {dubai.excerpt?.rendered?.replace(/<\/?[^>]+(>|$)/g, "")}
+        </div>
+
+        <Row>
+          <Col className="mt-5 mb-5" lg={6} md={6} sm={12}>
+            <div>
+              <img
+                className="image-blog-details"
+                src={extractImageSrc(dubai.content?.rendered)}
+                alt={dubai.title?.rendered}
+              />
+
+              <div className="blog-detail-head">{dubai.title?.rendered}</div>
+
+              <div className="blog-detail-descrp">
+                {parse(dubai.content?.rendered || "")}
+              </div>
+            </div>
           </Col>
-        ))}
-      </Row> */}
-
-      {/* <div className="text-center mt-4">
-        <Button variant="primary">
-          See More <ChevronRight size={16} />
-        </Button>
-      </div> */}
-
-      <Row>
-        <Col xs={12} md={4}>
-          <div className="rounded shadow-sm p-3 mb-3">
-            <LocationSection dealData={deals} />
-          </div>
-        </Col>
-        {/* <Col xs={12} md={12}>
-          <div className="rounded shadow-sm p-3 mb-3">
-            <HomeDeals />
-          </div>
-        </Col> */}
-      </Row>
+        </Row>
+      </div>
     </div>
   );
 };

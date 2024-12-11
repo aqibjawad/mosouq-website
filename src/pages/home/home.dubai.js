@@ -6,6 +6,7 @@ import Marquee from "react-fast-marquee";
 import parse from "html-react-parser";
 
 const ExploreDubai = () => {
+  
   const [dubai, setDubai] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -81,9 +82,9 @@ const ExploreDubai = () => {
       </Container>
 
       <Container fluid className="p-0 ml-5">
-        <div>
-          <Marquee className="mt-5 ml-5">
-            {dubai.map((item, index) => (
+        <Marquee className="mt-5 ml-5">
+          {dubai.map((item, index) => (
+            <Link to={`/blog-details/${item.id}`}>
               <div key={index} className="image-container mx-3">
                 <img
                   src={extractImageSrc(item.content.rendered)}
@@ -117,9 +118,9 @@ const ExploreDubai = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </Marquee>
-        </div>
+            </Link>
+          ))}
+        </Marquee>
       </Container>
     </div>
   );

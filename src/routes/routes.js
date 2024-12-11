@@ -3,7 +3,9 @@ import Contact from "../pages/contact/index"
 import Category from "../pages/categories";
 import AboutAndContact from "../pages/about/job.about";
 import Blog from "../pages/blogs";
-import BlogDetails from "../pages/blogdetails";
+import BlogDetails from "../pages/blogDetails"
+
+import DealDetails from "../pages/dealdetails";
 import Jobs from "../pages/about/job.about"; 
 import SignUpForm from "../pages/auth/auth.signup";
 import Login from "../pages/auth/auth.signin";
@@ -11,9 +13,11 @@ import Deals from "../pages/deals";
 import UserProfile from "../pages/user/profile";
 import EditUser from "../pages/user/edit.user";
 import CategoryDetails from "../pages/categorydetails";
+
 import Businesses from "../pages/category/index";
 import BusinessListing from "../pages/businessListing";
 import BusinessDetails from "../pages/businessDetails";
+
 const routes = [
 
   { path: "/", element: <Home />, exact: "true", type: "public" },
@@ -33,6 +37,8 @@ const routes = [
   { path: "/blogs", element: <Blog />, exact: "true", type: "public" },
   
   { path: "/blog-details/:id", element: <BlogDetails />, exact: "true", type: "public" },
+  
+  { path: "/deal-details/:id", element: <DealDetails />, exact: "true", type: "public" },
 
   { path: "/deals", element: <Deals />, exact: "true", type: "public" },
 
