@@ -94,6 +94,7 @@ const BlogDetails = () => {
             <div>
               <img
                 className="image-blog-details"
+                style={{height:"500px"}}
                 src={extractImageSrc(dubai.content?.rendered)}
                 alt={dubai.title?.rendered}
               />
