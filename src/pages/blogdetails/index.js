@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import parse from "html-react-parser";
 
-const BlogDetails = () => {
+const DetailsBlogs = () => {
   const { id } = useParams();
 
   const [dubai, setDubai] = useState([]);
@@ -129,4 +129,4 @@ const BlogDetails = () => {
   );
 };
 
-export default BlogDetails;
+export default DetailsBlogs;

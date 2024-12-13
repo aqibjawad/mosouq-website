@@ -3,8 +3,7 @@ import Contact from "../pages/contact/index";
 import Category from "../pages/categories";
 import AboutAndContact from "../pages/about/job.about";
 import Blog from "../pages/blogs";
-import BlogDetails from "../pages/blogDetails/index";
-
+import DetailsBlogs from "../pages/blogDetails";
 import DealDetails from "../pages/dealdetails";
 import Jobs from "../pages/about/job.about";
 import SignUpForm from "../pages/auth/auth.signup";
@@ -42,7 +41,7 @@ const routes = [
 
   {
     path: "/blog-details/:id",
-    element: <BlogDetails />,
+    element: <DetailsBlogs />,
     exact: "true",
     type: "public",
   },
