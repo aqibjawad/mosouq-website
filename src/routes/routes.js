@@ -4,7 +4,7 @@ import Category from "../pages/categories";
 import AboutAndContact from "../pages/about/job.about";
 import Blog from "../pages/blogs";
 // import BlogDetails from "../pages/blogDetails";
-import BlogDetails from "../pages/blogDetails/index.js";
+import BlogDetails from "../pages/blogDetails/index";
 
 import DealDetails from "../pages/dealdetails";
 import Jobs from "../pages/about/job.about";
