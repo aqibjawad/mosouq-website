@@ -73,15 +73,15 @@ const BlogDetails = () => {
         style={{ marginTop: "10rem", marginLeft: "4rem", marginRight: "4rem" }}
       >
         <div
-          style={{ fontWeight: "700", fontSize: "64px", textAlign: "center" }}
+          style={{ fontWeight: "700", fontSize: "25px", textAlign: "center" }}
         >
-          {dubai.title?.rendered}
+          {dubai.title?.rendered.replace(/&nbsp;/g, " ")}
         </div>
 
         <div
           style={{
             fontWeight: "400",
-            fontSize: "24px",
+            fontSize: "20px",
             color: "#454545",
             textAlign: "center",
           }}
@@ -90,20 +90,37 @@ const BlogDetails = () => {
         </div>
 
         <Row>
-          <Col className="mt-5 mb-5" lg={6} md={6} sm={12}>
+          <Col className="mt-5 mb-5" lg={8} md={6} sm={12}>
             <div>
-              <img
+              {/* <img
                 className="image-blog-details"
-                style={{height:"500px"}}
                 src={extractImageSrc(dubai.content?.rendered)}
                 alt={dubai.title?.rendered}
-              />
-
-              <div className="blog-detail-head">{dubai.title?.rendered}</div>
+              /> */}
 
               <div className="blog-detail-descrp">
                 {parse(dubai.content?.rendered || "")}
               </div>
+            </div>
+          </Col>
+
+          <Col className="mt-5 mb-5" lg={4} md={6} sm={12}>
+            <div>
+              <img
+                className="image-blog-details"
+                src="https://placehold.co/500x600"
+                alt={dubai.title?.rendered}
+              />
+
+            </div>
+
+            <div className="mt-5">
+              <img
+                className="image-blog-details"
+                src="https://placehold.co/500x700"
+                alt={dubai.title?.rendered}
+              />
+
             </div>
           </Col>
         </Row>

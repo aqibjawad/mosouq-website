@@ -1,22 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import CarouselComponent from "../../components/carousel";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { IoStar } from "react-icons/io5";
 import { Rating } from "react-simple-star-rating";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-
-import { Loader } from "@googlemaps/js-api-loader";
 
 import { useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { POST, GET } from "../../apicontrollers/apiController";
-
-import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
-
-import { FaWhatsapp } from "react-icons/fa";
 
 import LocationSection from "./location";
 
@@ -229,41 +222,14 @@ const BusinessDetails = () => {
 
   return (
     <div className="property" style={{ marginTop: "1rem" }}>
-      <CarouselComponent
-        businessData={businesses}
-        businessReviewsData={businessReviews}
-      />
-
       <Container fluid className=" py-4 px-3 px-md-5">
         <Row className="g-5">
           <Col lg={8}>
-            {/* <div className=" top_btn"> 
-              <button
-                className="px-4 border py-2 rounded-3 bg-white text-dark d-flex align-items-center"
-                onClick={handleShow}
-              >
-                <IoStar size={30} color="gray" className="pe-2" /> Leave a
-                Review
-              </button>
-              <button className=" px-4  text-dark  border py-2 rounded-3 bg-white d-flex  align-items-center">
-                <div className=" pe-2">
-                  <img src="/w_camera.png" alt="" />
-                </div>
-                Add photo
-              </button>
-              <button className=" px-4  text-dark  border py-2 rounded-3 bg-white d-flex  align-items-center">
-                <div className=" pe-2">
-                  <img src="/save.png" alt="" />
-                </div>
-                save
-              </button>
-              <button className=" px-4  text-dark  border py-2 rounded-3 bg-white d-flex  align-items-center">
-                <div className=" pe-2">
-                  <AiOutlinePlus />
-                </div>
-                Follow
-              </button>
-            </div> */}
+            <CarouselComponent
+              businessData={businesses}
+              businessReviewsData={businessReviews}
+            />
+
             <div
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
@@ -333,43 +299,7 @@ const BusinessDetails = () => {
                 </Col>
               </Row>
             </div>
-            {/* <div
-              className=" py-5"
-              style={{ borderBottom: "1px solid #F1F1F1" }}
-            >
-              <div className="d-flex pb-4 align-items-center justify-content-between">
-                <div>
-                  <h2>Menu</h2>
-                  <p className=" m-0">Updated Menu of Resturant</p>
-                </div>
-                <div>
-                  <span className="">View full menu</span>
-                </div>
-              </div>
-              <Row>
-                <Col lg={4}>
-                  <Image src="/photo1.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <Image src="/photo2.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <Image src="/photo3.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-              </Row>
-            </div> */}
+
             <Modal show={show} onHide={handleClose} className="w-100" centered>
               <Modal.Header className="border-0" closeButton>
                 <Modal.Title>Overall Rating</Modal.Title>
@@ -463,37 +393,7 @@ const BusinessDetails = () => {
                 </div>
               ))}
             </div>
-            {/* <div className="pt-4">
-              <Row>
-                {businessReviews.map((review, index) => (
-                  <Col lg={6} key={index}>
-                    <div className="bg-white rounded-3 p-4 mb-3">
-                      <div className="d-flex align-items-center pb-3 justify-content-between">
-                        <div className="d-flex align-items-center">
-                        <span>{review.user.name}</span>
-                          <div className="rating me-2">
-                            {[...Array(5)].map((_, i) => (
-                              <IoStar
-                                key={i}
-                                size={20}
-                                color={
-                                  i < parseInt(review.rating)
-                                    ? "#FFB800"
-                                    : "#D3D3D3"
-                                }
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <span>{review.rating}</span>
-                      </div>
-                      <h6 className="m-0 mb-2">{review.title}</h6>
-                      <p>{review.description}</p>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            </div> */}
+
             {approvedReviews && approvedReviews.length > 0 ? (
               <div className="pt-4">
                 <Row>

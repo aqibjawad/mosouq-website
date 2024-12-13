@@ -82,42 +82,6 @@ const FacebookStyleHeader = ({ businessData }) => {
             </div>
           </Col>
         </Row>
-
-        {/* Navigation Bar */}
-        {/* <Nav className="border-top mt-4">
-          <Nav.Item>
-            <Nav.Link
-              className="px-3 py-3 text-secondary border-bottom border-transparent"
-              style={{ ":hover": { borderColor: "#dee2e6" } }}
-            >
-              Home
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="px-3 py-3 text-secondary border-bottom border-transparent"
-              style={{ ":hover": { borderColor: "#dee2e6" } }}
-            >
-              About
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="px-3 py-3 text-secondary border-bottom border-transparent"
-              style={{ ":hover": { borderColor: "#dee2e6" } }}
-            >
-              Photos
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="px-3 py-3 text-secondary border-bottom border-transparent"
-              style={{ ":hover": { borderColor: "#dee2e6" } }}
-            >
-              Videos
-            </Nav.Link>
-          </Nav.Item>
-        </Nav> */}
       </Container>
     </div>
   );
