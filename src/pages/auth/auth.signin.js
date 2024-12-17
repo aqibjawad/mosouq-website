@@ -39,8 +39,12 @@ const Login = () => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
+      // const result = await axios.post(
+      //   `https://apis.mosouq.ae/api/user/login-user`,
+      //   formData
+      // );
       const result = await axios.post(
-        `https://apis.mosouq.ae/api/user/login-user`,
+        `http://localhost:5000/api/user/login-user`,
         formData
       );
       if (check === 0) {

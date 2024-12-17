@@ -14,6 +14,8 @@ import { POST, GET } from "../../apicontrollers/apiController";
 
 import LocationSection from "./location";
 
+import RequestForm from "./requestForm";
+
 const BusinessDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -223,8 +225,12 @@ const BusinessDetails = () => {
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpen = () => setShowModal(true);
+
   return (
-    <div className="property" style={{ marginTop: "1rem" }}>
+    <div className="property" style={{ marginTop: "8rem" }}>
       <FacebookStyleHeader
         businessData={businesses}
         businessReviewsData={businessReviews}
@@ -262,22 +268,6 @@ const BusinessDetails = () => {
               className=" py-5"
               style={{ borderBottom: "1px solid #F1F1F1" }}
             >
-              {/* <div className="d-flex pb-4 align-items-center justify-content-between">
-                <div>
-                  <h2>Recent Uploaded Photos</h2>
-                  <p className=" m-0">
-                    Pictures of business uploaded by consumers
-                  </p>
-                </div>
-                <div>
-                  <button className=" px-4    border py-3 rounded-3 bg-white d-flex  align-items-center">
-                    <div className=" pe-2">
-                      <img src="/w_camera.png" alt="" />
-                    </div>
-                    All photo
-                  </button>
-                </div>
-              </div> */}
               <Row>
                 <Col lg={4}>
                   <Image src="/photo1.png" className="w-100" alt="" />
@@ -290,43 +280,6 @@ const BusinessDetails = () => {
                 </Col>
               </Row>
             </div>
-            {/* <div
-              className=" py-5"
-              style={{ borderBottom: "1px solid #F1F1F1" }}
-            >
-              <div className="d-flex pb-4 align-items-center justify-content-between">
-                <div>
-                  <h2>Menu</h2>
-                  <p className=" m-0">Updated Menu of Resturant</p>
-                </div>
-                <div>
-                  <span className="">View full menu</span>
-                </div>
-              </div>
-              <Row>
-                <Col lg={4}>
-                  <Image src="/photo1.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <Image src="/photo2.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <Image src="/photo3.png" className="w-100" alt="" />
-                  <div className=" pt-2">
-                    <h5 className=" m-0 fs-5">Dish 1</h5>
-                    <p className=" m-0">Pictures of business uploaded</p>
-                  </div>
-                </Col>
-              </Row>
-            </div> */}
             <Modal show={show} onHide={handleClose} className="w-100" centered>
               <Modal.Header className="border-0" closeButton>
                 <Modal.Title>Overall Rating</Modal.Title>
@@ -353,7 +306,7 @@ const BusinessDetails = () => {
                 </div>
 
                 <div className="pt-3">
-                  <label className="mb-2">Product review</label>
+                  <label className="mb-2">Review</label>
                   <textarea
                     className="form-control"
                     value={reviewDescription}
@@ -420,37 +373,6 @@ const BusinessDetails = () => {
                 </div>
               ))}
             </div>
-            {/* <div className="pt-4">
-              <Row>
-                {businessReviews.map((review, index) => (
-                  <Col lg={6} key={index}>
-                    <div className="bg-white rounded-3 p-4 mb-3">
-                      <div className="d-flex align-items-center pb-3 justify-content-between">
-                        <div className="d-flex align-items-center">
-                        <span>{review.user.name}</span>
-                          <div className="rating me-2">
-                            {[...Array(5)].map((_, i) => (
-                              <IoStar
-                                key={i}
-                                size={20}
-                                color={
-                                  i < parseInt(review.rating)
-                                    ? "#FFB800"
-                                    : "#D3D3D3"
-                                }
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <span>{review.rating}</span>
-                      </div>
-                      <h6 className="m-0 mb-2">{review.title}</h6>
-                      <p>{review.description}</p>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            </div> */}
             {approvedReviews && approvedReviews.length > 0 ? (
               <div className="pt-4">
                 <Row>
@@ -490,16 +412,6 @@ const BusinessDetails = () => {
             )}
 
             <div className="pt-5">
-              {/* <div className="d-flex pb-4 align-items-center justify-content-between">
-                <div>
-                  <h2>Location & Hours</h2>
-                  <div>
-                    <LocationSection businesses={businesses} />
-                  </div>
-                </div>
-          
-              </div> */}
-
               {/* Location and Hours in a Row */}
               <div className="d-flex flex-wrap gap-4">
                 {/* Location Section */}
@@ -563,7 +475,7 @@ const BusinessDetails = () => {
               <h4 className=" m-0">Request quote & availability</h4>
               <p className="">Request your right away and availability</p>
 
-              <button className=" w-100 py-2 button btn">
+              <button className=" w-100 py-2 button btn" onClick={handleOpen}>
                 Request a quote & availability
               </button>
 
@@ -639,6 +551,8 @@ const BusinessDetails = () => {
               </div>
             </div>
           </Col>
+
+          <RequestForm show={showModal} handleClose={handleClose} />
         </Row>
       </Container>
     </div>

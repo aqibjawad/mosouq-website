@@ -40,7 +40,7 @@ const routes = [
   { path: "/blogs", element: <Blog />, exact: "true", type: "public" },
 
   {
-    path: "/blog-details/:id",
+    path: "/blog-details/:title/:id",
     element: <DetailsBlogs />,
     exact: "true",
     type: "public",
@@ -56,7 +56,7 @@ const routes = [
   { path: "/deals", element: <Deals />, exact: "true", type: "public" },
 
   {
-    path: "/business-details/:id",
+    path: "/business-details/:category/:name/:id",
     element: <BusinessDetails />,
     exact: "true",
     type: "public",
