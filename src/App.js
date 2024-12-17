@@ -9,7 +9,7 @@ import {
   Outlet,
   useLocation,
 } from "react-router-dom";
-
+ 
 import AuthorizedLayout from "./layout/authroize.layout";
 import WebsiteLayout from "./layout/website.layout";
 
