@@ -17,6 +17,9 @@ import LocationSection from "./location";
 import RequestForm from "./requestForm";
 
 const BusinessDetails = () => {
+
+  const userString = localStorage.getItem("user");
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -280,6 +283,7 @@ const BusinessDetails = () => {
                 </Col>
               </Row>
             </div>
+
             <Modal show={show} onHide={handleClose} className="w-100" centered>
               <Modal.Header className="border-0" closeButton>
                 <Modal.Title>Overall Rating</Modal.Title>
@@ -552,7 +556,7 @@ const BusinessDetails = () => {
             </div>
           </Col>
 
-          <RequestForm show={showModal} handleClose={handleClose} />
+          <RequestForm businessData={businesses} show={showModal} handleClose={handleClose} />
         </Row>
       </Container>
     </div>

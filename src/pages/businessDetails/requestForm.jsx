@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { POST } from "../../apicontrollers/apiController";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const RequestForm = ({ show, handleClose }) => {
+const RequestForm = ({ show, handleClose, businessData }) => {
+
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     date: "",
     time: "",
+    businessId: "",
+    userId: "",
+    phone: "",
     userName: "",
     userEmail: "",
-    userPhone: "",
   });
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-
     if (userData) {
-      setFormData((prev) => ({
-        ...prev,
-        userName: userData.name || "",
-        userEmail: userData.email || "",
-        userPhone: userData.phone || "",
+      setFormData((prevData) => ({
+        ...prevData,
+        userId: userData._id,
+        phone: userData.phone,
+        businessId: businessData?._id,
+        userName: userData.name,
+        userEmail: userData.email,
+        phone: userData.phone,
       }));
     }
-  }, []);
+  }, [businessData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +41,7 @@ const RequestForm = ({ show, handleClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.date || !formData.time) {
@@ -39,8 +49,13 @@ const RequestForm = ({ show, handleClose }) => {
       return;
     }
 
-    console.log("Form submitted:", formData);
-    handleClose?.();
+    try {
+      const response = await POST("requestForm/create-form", formData);
+      toast.success("Your request has been submitted successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Failed to submit request. Please try again.");
+    }
   };
 
   return (
