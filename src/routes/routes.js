@@ -55,8 +55,15 @@ const routes = [
 
   { path: "/deals", element: <Deals />, exact: "true", type: "public" },
 
+  // {
+  //   path: "/business-details/:category/:name/:id",
+  //   element: <BusinessDetails />,
+  //   exact: "true",
+  //   type: "public",
+  // },
+
   {
-    path: "/business-details/:category/:name/:id",
+    path: "/business-details/:id",
     element: <BusinessDetails />,
     exact: "true",
     type: "public",

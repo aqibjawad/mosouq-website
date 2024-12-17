@@ -4,9 +4,7 @@ import { POST } from "../../apicontrollers/apiController";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const RequestForm = ({ show, handleClose, businessData }) => {
-
-
+const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     date: "",
@@ -20,18 +18,20 @@ const RequestForm = ({ show, handleClose, businessData }) => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData) {
-      setFormData((prevData) => ({
-        ...prevData,
-        userId: userData._id,
-        phone: userData.phone,
-        businessId: businessData?._id,
-        userName: userData.name,
-        userEmail: userData.email,
-        phone: userData.phone,
-      }));
+    if (!userData) {
+      navigate("/login");
+      return;
     }
-  }, [businessData]);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      userId: userData._id,
+      phone: userData.phone,
+      businessId: businessData?._id,
+      userName: userData.name,
+      userEmail: userData.email,
+    }));
+  }, [businessData, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,13 +45,14 @@ const RequestForm = ({ show, handleClose, businessData }) => {
     e.preventDefault();
 
     if (!formData.date || !formData.time) {
-      alert("Please fill in all required fields");
+      toast.error("Please fill in all required fields");
       return;
     }
 
     try {
       const response = await POST("requestForm/create-form", formData);
       toast.success("Your request has been submitted successfully");
+      handleRequestModalClose(); // Close modal after successful submission
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to submit request. Please try again.");
@@ -59,7 +60,7 @@ const RequestForm = ({ show, handleClose, businessData }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={handleRequestModalClose} centered>
       <Modal.Header closeButton className="bg-primary text-white">
         <Modal.Title>Request Details</Modal.Title>
       </Modal.Header>
@@ -95,10 +96,10 @@ const RequestForm = ({ show, handleClose, businessData }) => {
             <Form.Label className="text-muted">Phone Number</Form.Label>
             <Form.Control
               type="tel"
-              name="userPhone"
-              value={formData.userPhone}
-              readOnly
-              className="bg-white border-secondary"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="border-secondary"
               style={{ fontWeight: "500" }}
             />
           </Form.Group>
@@ -135,7 +136,7 @@ const RequestForm = ({ show, handleClose, businessData }) => {
       </Modal.Body>
 
       <Modal.Footer className="border-top">
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={handleRequestModalClose}>
           Cancel
         </Button>
         <Button variant="primary" onClick={handleSubmit}>

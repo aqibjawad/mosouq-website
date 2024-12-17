@@ -28,14 +28,10 @@ const CategoryDetails = ({ name }) => {
         if (subResult && subResult.length > 0) {
           setBusinesses(subResult);
           setDataSource("subcategory");
-        } else {
-          // Optional: Add handling for no results in either category or subcategory
-          setBusinesses([]);
         }
       })
       .catch((error) => {
         console.error("Error fetching businesses:", error);
-        setBusinesses([]); // Reset businesses on error
       })
       .finally(() => {
         setIsLoading(false);
@@ -74,59 +70,81 @@ const CategoryDetails = ({ name }) => {
 
       {businesses.map((business, index) => (
         <Link
-          to={`/business-details/${
-            business.category.name
-          }/${business.businessName.replace(/\s+/g, "-").toLowerCase()}/${
-            business.businessId
-          }`}
+          to={`/business-details/${business.businessId}`}
           key={index}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <Row>
-            {businesses.map((business, index) => (
-              <Col key={index} lg={6} sm={12}>
-                <div
-                  className="p-4 border rounded-lg shadow-lg"
-                  style={{
-                    marginTop: "2rem",
-                    marginBottom: "5rem",
-                  }}
-                >
+          <div
+            className="p-4 border rounded-lg shadow-lg max-w-xl"
+            style={{
+              marginTop: "2rem",
+              marginBottom: "5rem",
+              marginLeft: "3rem",
+              marginRight: "4rem",
+            }}
+          >
+            <Row>
+              <Col lg={3} sm={12}>
+                <img
+                  src={business.logo}
+                  alt={"Business Image"}
+                  className="h-16 rounded-lg"
+                  style={{ width: "100%" }}
+                />
+              </Col>
+
+              <Col lg={9} sm={12}>
+                <div className="flex flex-col">
+                  <h2 className="text-2xl font-bold flex items-center">
+                    {business.businessName}
+                  </h2>
+                  <div className="text-gray-500">
+                    250 reviews &bull; <span className="font-bold">Good</span>
+                  </div>
+                  <div className="flex items-center">
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiOutlineStar className="text-yellow-500" />
+                    <span className="ml-2 text-gray-700">4.8</span>
+                  </div>
+                  <p className="text-gray-700 mt-2">{business.description}</p>
+
+                  <div className="text-gray-500">
+                    <Link to={business.website}>Website</Link>
+                  </div>
                   <Row>
-                    <Col lg={3} sm={12}>
-                      <img
-                        src={business.logo}
-                        alt="Business Image"
-                        className="h-16 rounded-lg"
-                        style={{ width: "100%" }}
-                      />
+                    <Col lg={3} md={4} sm={12}>
+                      <div className="text-gray-500 text-sm">
+                        {business.fromTime} AM - {business.toTime} PM
+                      </div>
                     </Col>
-                    <Col lg={9} sm={12}>
-                      <div className="flex flex-col">
-                        <h2 className="text-2xl font-bold flex items-center">
-                          {business.businessName}
-                        </h2>
-                        <div className="text-gray-500">
-                          250 reviews &bull;{" "}
-                          <span className="font-bold">Good</span>
-                        </div>
-                        <div className="flex items-center">
-                          {[...Array(4)].map((_, i) => (
-                            <AiFillStar key={i} className="text-yellow-500" />
-                          ))}
-                          <AiOutlineStar className="text-yellow-500" />
-                          <span className="ml-2 text-gray-700">4.8</span>
-                        </div>
-                        <div className="text-gray-500 mt-3">
-                          <Link to={business.website}>Website</Link>
-                        </div>
+                    <Col lg={8} md={4} sm={12}>
+                      <div className="text-gray-400 text-xs">
+                        <Row>
+                          <Col>Hours updated over 4 months ago</Col>
+                          <Col>
+                            <div
+                              style={{
+                                background: "#B9DCFF99",
+                                width: "90px",
+                                height: "23px",
+                                textAlign: "center",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              See Hours
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
                     </Col>
                   </Row>
                 </div>
               </Col>
-            ))}
-          </Row>
+            </Row>
+          </div>
         </Link>
       ))}
     </>

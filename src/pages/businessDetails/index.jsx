@@ -17,7 +17,6 @@ import LocationSection from "./location";
 import RequestForm from "./requestForm";
 
 const BusinessDetails = () => {
-
   const userString = localStorage.getItem("user");
 
   const { id } = useParams();
@@ -231,6 +230,10 @@ const BusinessDetails = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpen = () => setShowModal(true);
+
+    const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const handleRequestModalClose = () => setRequestModalOpen(false);
+  const handleRequestModalOpen = () => setRequestModalOpen(true);
 
   return (
     <div className="property" style={{ marginTop: "8rem" }}>
@@ -479,7 +482,7 @@ const BusinessDetails = () => {
               <h4 className=" m-0">Request quote & availability</h4>
               <p className="">Request your right away and availability</p>
 
-              <button className=" w-100 py-2 button btn" onClick={handleOpen}>
+              <button className=" w-100 py-2 button btn" onClick={handleRequestModalOpen}>
                 Request a quote & availability
               </button>
 
@@ -556,7 +559,11 @@ const BusinessDetails = () => {
             </div>
           </Col>
 
-          <RequestForm businessData={businesses} show={showModal} handleClose={handleClose} />
+          <RequestForm
+            businessData={businesses}
+            show={requestModalOpen}
+            handleClose={handleRequestModalClose}
+          />
         </Row>
       </Container>
     </div>
