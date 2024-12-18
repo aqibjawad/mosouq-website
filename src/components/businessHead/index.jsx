@@ -25,14 +25,14 @@ const FacebookStyleHeader = ({ businessData }) => {
           style={{ marginTop: "-2rem" }}
         >
           {/* Profile Picture & Name */}
-          <Col className="d-flex align-items-end">
-            <div className="position-relative me-4">
+          <Col item lg={5} className="d-flex align-items-end">
+            <div className="position-relative">
               <img
                 src={businessData?.logo || "/api/placeholder/168/168"}
                 alt="Profile"
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: "170px",
+                  height: "170px",
                   borderRadius: "50%",
                   backgroundColor: "white",
                   objectFit:"contain",
@@ -43,7 +43,7 @@ const FacebookStyleHeader = ({ businessData }) => {
             </div>
             <div className="mb-3">
               <h1 className="fs-2 fw-bold text-dark">
-                {businessData?.businessName || "Business Name"}
+                {businessData?.authDetails?.name || "Business Name"}
               </h1>
               <p className="text-secondary">
                 {businessData?.followers || 0} Reviews •{" "}
@@ -52,9 +52,9 @@ const FacebookStyleHeader = ({ businessData }) => {
           </Col>
 
           {/* Action Buttons */}
-          <Col xs="auto" className="mb-3">
+          <Col lg={7} className="" style={{marginBottom:"4rem"}}>
             <div className="row g-2">
-              <div className="col-6 col-md-4">
+              <div className="col-6 col-md-2">
                 <Button
                   variant="primary"
                   className="d-flex align-items-center w-100"
@@ -63,7 +63,7 @@ const FacebookStyleHeader = ({ businessData }) => {
                   Message
                 </Button>
               </div>
-              <div className="col-6 col-md-4">
+              <div className="col-6 col-md-2">
                 <Button
                   variant="light"
                   className="d-flex align-items-center w-100"
@@ -72,7 +72,7 @@ const FacebookStyleHeader = ({ businessData }) => {
                   Call
                 </Button>
               </div>
-              <div className="col-6 col-md-4">
+              <div className="col-6 col-md-2">
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center w-100"
@@ -81,7 +81,7 @@ const FacebookStyleHeader = ({ businessData }) => {
                   Email
                 </Button>
               </div>
-              <div className="col-6 col-md-4">
+              <div className="col-6 col-md-3">
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center w-100"
@@ -90,7 +90,7 @@ const FacebookStyleHeader = ({ businessData }) => {
                   Whatsapp
                 </Button>
               </div>
-              <div className="col-6 col-md-4">
+              <div className="col-6 col-md-2">
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center w-100"

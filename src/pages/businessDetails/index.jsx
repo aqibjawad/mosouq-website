@@ -231,12 +231,12 @@ const BusinessDetails = () => {
 
   const handleOpen = () => setShowModal(true);
 
-    const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
   const handleRequestModalClose = () => setRequestModalOpen(false);
   const handleRequestModalOpen = () => setRequestModalOpen(true);
 
   return (
-    <div className="property" style={{ marginTop: "8rem" }}>
+    <div className="property" style={{ marginTop: "7rem" }}>
       <FacebookStyleHeader
         businessData={businesses}
         businessReviewsData={businessReviews}
@@ -253,18 +253,15 @@ const BusinessDetails = () => {
               <div className="d-flex pb-4 align-items-center justify-content-between">
                 <div>
                   <h2>Our Services</h2>
-                  <div style={{ fontSize: "20px" }} className=" m-0">
+                  <div className=" m-0">
                     {isHTML(businesses.description) ? (
                       <div
                         dangerouslySetInnerHTML={{
                           __html: businesses.description,
                         }}
-                        style={{ fontSize: "20px" }}
                       />
                     ) : (
-                      <p style={{ fontSize: "20px" }}>
-                        {businesses.description}
-                      </p>
+                      <p>{businesses.description}</p>
                     )}
                   </div>
                 </div>
@@ -482,7 +479,10 @@ const BusinessDetails = () => {
               <h4 className=" m-0">Request quote & availability</h4>
               <p className="">Request your right away and availability</p>
 
-              <button className=" w-100 py-2 button btn" onClick={handleRequestModalOpen}>
+              <button
+                className=" w-100 py-2 button btn"
+                onClick={handleRequestModalOpen}
+              >
                 Request a quote & availability
               </button>
 

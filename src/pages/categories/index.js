@@ -10,7 +10,7 @@ import "./index.css";
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); 
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Spinner } from "react-bootstrap";
+import { Row, Col, Spinner, Card } from "react-bootstrap";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GET } from "../../apicontrollers/apiController";
 import { useParams, Link } from "react-router-dom";
@@ -67,86 +67,75 @@ const CategoryDetails = ({ name }) => {
     <>
       <div className="cat-Head">Near San Francisco, California</div>
       <div className="cat-descrp">Top 10 Contractors</div>
-
-      {businesses.map((business, index) => (
-        <Link
-          to={`/business-details/${business.businessId}`}
-          key={index}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <div
-            className="p-4 border rounded-lg shadow-lg max-w-xl"
-            style={{
-              marginTop: "2rem",
-              marginBottom: "5rem",
-              marginLeft: "3rem",
-              marginRight: "4rem",
-            }}
-          >
-            <Row>
-              <Col lg={3} sm={12}>
-                <img
-                  src={business.logo}
-                  alt={"Business Image"}
-                  className="h-16 rounded-lg"
-                  style={{ width: "100%" }}
-                />
-              </Col>
-
-              <Col lg={9} sm={12}>
-                <div className="flex flex-col">
-                  <h2 className="text-2xl font-bold flex items-center">
-                    {business.businessName}
-                  </h2>
-                  <div className="text-gray-500">
-                    250 reviews &bull; <span className="font-bold">Good</span>
-                  </div>
-                  <div className="flex items-center">
-                    <AiFillStar className="text-yellow-500" />
-                    <AiFillStar className="text-yellow-500" />
-                    <AiFillStar className="text-yellow-500" />
-                    <AiFillStar className="text-yellow-500" />
-                    <AiOutlineStar className="text-yellow-500" />
-                    <span className="ml-2 text-gray-700">4.8</span>
-                  </div>
-                  <p className="text-gray-700 mt-2">{business.description}</p>
-
-                  <div className="text-gray-500">
-                    <Link to={business.website}>Website</Link>
-                  </div>
-                  <Row>
-                    <Col lg={3} md={4} sm={12}>
-                      <div className="text-gray-500 text-sm">
-                        {business.fromTime} AM - {business.toTime} PM
-                      </div>
+      <Row>
+        {businesses.map((business, index) => (
+          <Col lg={5} md={6} sm={12} key={index} className="mb-5">
+            <Link
+              to={`/business-details/${business.businessId}`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Card className="">
+                <Card.Body>
+                  <Row className="align-items-center">
+                    <Col xs={4}>
+                      <img
+                        src={business.logo}
+                        alt="Business Image"
+                        className="img-fluid rounded"
+                        style={{
+                          width: "100%",
+                          height: "60px",
+                          objectFit: "contain",
+                        }}
+                      />
                     </Col>
-                    <Col lg={8} md={4} sm={12}>
-                      <div className="text-gray-400 text-xs">
-                        <Row>
-                          <Col>Hours updated over 4 months ago</Col>
-                          <Col>
-                            <div
-                              style={{
-                                background: "#B9DCFF99",
-                                width: "90px",
-                                height: "23px",
-                                textAlign: "center",
-                                borderRadius: "4px",
-                              }}
-                            >
-                              See Hours
-                            </div>
-                          </Col>
-                        </Row>
+
+                    <Col xs={8}>
+                      <h6 className="mb-1 fw-bold text-truncate">
+                        {business?.authDetails?.name}
+                      </h6>
+
+                      <div className="small text-muted d-flex align-items-center gap-1">
+                        <span>250 reviews</span>
+                        <span>•</span>
+                        <span className="fw-bold">Good</span>
+                      </div>
+
+                      <div className="d-flex align-items-center gap-1">
+                        <AiFillStar
+                          style={{ color: "#ffc107", fontSize: "14px" }}
+                        />
+                        <AiFillStar
+                          style={{ color: "#ffc107", fontSize: "14px" }}
+                        />
+                        <AiFillStar
+                          style={{ color: "#ffc107", fontSize: "14px" }}
+                        />
+                        <AiFillStar
+                          style={{ color: "#ffc107", fontSize: "14px" }}
+                        />
+                        <AiOutlineStar
+                          style={{ color: "#ffc107", fontSize: "14px" }}
+                        />
+                        <span className="ms-1 text-muted small">4.8</span>
+                      </div>
+
+                      <div className="small">
+                        <Link
+                          to={business.website}
+                          className="text-decoration-none"
+                        >
+                          Website
+                        </Link>
                       </div>
                     </Col>
                   </Row>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Link>
-      ))}
+                </Card.Body>
+              </Card>
+            </Link>
+          </Col>
+        ))}
+      </Row>
     </>
   );
 };

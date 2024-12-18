@@ -110,7 +110,7 @@ const HomeDeals = () => {
                         objectFit: "contain",
                         width: "100%",
                         padding: "10px",
-                        height: "180px",
+                        height: "200px",
                       }}
                       alt="Banner"
                     />
@@ -121,7 +121,6 @@ const HomeDeals = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      marginTop: "10px",
                     }}
                   >
                     <div
@@ -138,46 +137,18 @@ const HomeDeals = () => {
                         4.3 (200+)
                       </div>
                     </div>
-                    <div
-                      style={{
-                        color: "#404EED",
-                        fontSize: "12px",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      {businesses.name.slice(0,50)}
-                    </div>
                   </div>
 
                   <div
                     style={{
-                      fontSize: "14px",
-                      fontWeight: "600",
+                      color: "black",
+                      fontSize: "16px",
+                      marginLeft: "10px",
                       marginTop: "10px",
                     }}
                   >
-                    {businesses.description.slice(0, 100)}...
+                    {businesses.name}
                   </div>
-
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#4D4D4D",
-                      marginTop: "5px",
-                    }}
-                  >
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        businesses.location
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "#4D4D4D", textDecoration: "none" }}
-                    >
-                      {businesses.location}
-                    </a>
-                  </div>
-
                   <Button
                     style={{ width: "100%", marginTop: "10px" }}
                     variant="primary"

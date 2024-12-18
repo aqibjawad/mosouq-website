@@ -9,6 +9,8 @@ import { MdArrowDropDown } from "react-icons/md";
 import "./home.pagination.css";
 
 const HomeCategory = () => {
+
+  
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 

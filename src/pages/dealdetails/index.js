@@ -20,8 +20,11 @@ import { GET } from "../../apicontrollers/apiController";
 
 import { IoStar } from "react-icons/io5";
 
+import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
+
 const DealDetails = () => {
-  const [quantity, setQuantity] = useState(1);
+  const [similarDeals, setSimilarDeals] = useState([]);
 
   const { id } = useParams();
 
@@ -47,26 +50,26 @@ const DealDetails = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    GET(`deal/get-deal/${id}`).then((result) => {
-      setDeals(result);
-    });
-  }, []);
+    GET(`deal/get-deal/${id}`)
+      .then((result) => {
+        setDeals(result);
 
-  // Function to get thumbnail images
-  const getThumbnails = () => {
-    if (deals.images && deals.images.length > 0) {
-      // If more than 5 images, slice to first 5
-      return deals.images.slice(0, 5);
-    }
-    // Fallback to placeholder if no images
-    return [
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-      "/api/placeholder/100/100",
-    ];
-  };
+        GET(`deal/get-deal-type/${result.type}`)
+          .then((similarResult) => {
+            // Filter out the current deal from similar deals
+            const filteredSimilarDeals = similarResult.data.filter(
+              (deal) => deal._id !== id
+            );
+            setSimilarDeals(filteredSimilarDeals);
+          })
+          .catch((error) => {
+            console.error("Error fetching similar deals:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching deal details:", error);
+      });
+  }, [id]);
 
   const handleRating = (rating) => {
     console.log(`Selected rating: ${rating}`);
@@ -78,31 +81,95 @@ const DealDetails = () => {
     handleClose();
   };
 
+  const getThumbnails = () => {
+    // Use images array if available, otherwise fallback to deal_image
+    const images =
+      deals.images && deals.images.length ? deals.images : [deals.deal_image];
+
+    return images;
+  };
+
+  const [activeImage, setActiveImage] = useState(null);
+
+  useEffect(() => {
+    const thumbnails = getThumbnails();
+    if (thumbnails.length > 0) {
+      setActiveImage(thumbnails[0]);
+    }
+  }, [deals]);
+
+  const handleThumbnailClick = (image) => {
+    setActiveImage(image);
+  };
+
+  if (!activeImage) {
+    return null;
+  }
+  const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
+
   return (
-    <div style={{ marginTop: "10rem" }}>
+    <div style={{ marginTop: "7rem", marginLeft: "7rem", marginRight: "7rem" }}>
+      <h1>{deals.name}</h1>
       {/* Main Product Section */}
       <Row className="mb-4">
         <Col md={6}>
           <Card>
-            <Card.Img
-              variant="top"
-              src={
-                deals.images && deals.images[0]
-                  ? deals.images[0]
-                  : deals.deal_image
-              }
-              alt="Luxury Getaways Gift Box"
-            />
+            <div
+              className="main-image-container"
+              style={{
+                height: "400px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Card.Img
+                variant="top"
+                src={activeImage}
+                alt="Luxury Getaways Gift Box"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
 
             {/* Thumbnail Images */}
-            <Row className="p-2">
+            <Row
+              className="p-2"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {getThumbnails().map((image, num) => (
                 <Col key={num} xs={2}>
-                  <img
-                    src={image}
-                    alt={`Thumbnail ${num + 1}`}
-                    className="img-fluid"
-                  />
+                  <div
+                    style={{
+                      height: "80px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      opacity: activeImage === image ? 1 : 0.6,
+                      border: activeImage === image ? "2px solid blue" : "none",
+                    }}
+                    onClick={() => handleThumbnailClick(image)}
+                  >
+                    <img
+                      src={image}
+                      alt={`Thumbnail ${num + 1}`}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
                 </Col>
               ))}
             </Row>
@@ -110,13 +177,9 @@ const DealDetails = () => {
         </Col>
 
         <Col md={6}>
-          <h1>{deals.businessName}</h1>
-          <h2>{deals.name}</h2>
+          <h2>{deals.BusinessName}</h2>
 
-          <div className="d-flex align-items-center gap-3 mb-3">
-            <Badge bg="light" text="dark">
-              <Clock size={16} /> One Night
-            </Badge>
+          <div className="d-flex align-items-center mb-3">
             <Badge bg="light" text="dark">
               <Users size={16} /> 2 People
             </Badge>
@@ -125,7 +188,7 @@ const DealDetails = () => {
             </Badge>
           </div>
 
-          <div className="d-flex align-items-center gap-3 mb-4">
+          <div className="d-flex align-items-center mb-4">
             <h3 className="m-0">AED {deals.price || 0}</h3>
             <span className="text-decoration-line-through text-muted">
               AED {deals.price1 || 0}
@@ -137,52 +200,140 @@ const DealDetails = () => {
             <Button variant="outline-danger"> order </Button>
           </div>
 
-          <Card style={{ width: "100%", marginLeft:"-10rem" }} className="mb-4">
-            <Card.Header>
-              <h4 className="m-0">What is included</h4>
-            </Card.Header>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                The gift box includes a one-night stay with breakfast for two at
-                a luxury hotel across the UAE
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Buy now and book later within 12 months
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Free Wi-Fi in public areas and all hotel rooms
-              </ListGroup.Item>
-              <ListGroup.Item>
-                Unlimited use of recreational facilities subject to availability
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
+          <div>
+            <img
+              className="image-blog-details"
+              src="https://placehold.co/700x380"
+            />
+          </div>
         </Col>
       </Row>
 
       {/* Hotels Grid */}
-      <h3
-        className="mb-4"
-        style={{ paddingLeft: "5rem", paddingRight: "5rem" }}
-      >
-        {deals.description}
+      <h3 className="mb-4">
+        {isHTML(deals.description) ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: deals.description,
+            }}
+            style={{ fontSize: "20px" }}
+          />
+        ) : (
+          <p style={{ fontSize: "20px" }}>{deals.description}</p>
+        )}
       </h3>
 
-      <Row style={{ paddingLeft: "5rem", paddingRight: "5rem" }}>
+      <Row>
         <Col xs={12} md={4}>
           <div className="rounded shadow-sm p-3 mb-3">
             <LocationSection dealData={deals} />
           </div>
         </Col>
-        {/* <Col xs={12} md={12}>
-          <div className="rounded shadow-sm p-3 mb-3">
-            <HomeDeals />
-          </div>
-        </Col> */}
+        <Col xs={12} md={8}>
+          <Row
+            className="mt-4 cat-container"
+            style={{ marginLeft: "3rem", marginRight: "3rem" }}
+          >
+            {similarDeals.map((businesses, index) => (
+              <Col key={index} xs={12} sm={6} md={4} lg={6} className="mb-4">
+                <Link
+                  to={`/deal-details/${businesses._id}`}
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      height: "400px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "relative",
+                        textAlign: "right",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={
+                          businesses.images && businesses.images[0]
+                            ? businesses.images[0]
+                            : businesses.deal_image
+                        }
+                        style={{
+                          objectFit: "contain",
+                          width: "100%",
+                          padding: "10px",
+                          height: "200px",
+                        }}
+                        alt="Banner"
+                      />
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#B9DCFF99",
+                          padding: "5px",
+                          borderRadius: "5px",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ReactStars
+                          count={1}
+                          value={1}
+                          size={20}
+                          edit={false}
+                        />
+                        <div style={{ fontSize: "12px", marginLeft: "5px" }}>
+                          4.3 (200+)
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        color: "black",
+                        fontSize: "16px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {businesses.name}
+                    </div>
+                    <Button
+                      style={{ width: "100%", marginTop: "10px" }}
+                      variant="primary"
+                    >
+                      <Link
+                        to={businesses.consultation}
+                        target="_black"
+                        style={{ color: "white", textDecoration: "none" }}
+                      >
+                        Request Consultation
+                      </Link>
+                    </Button>
+                  </div>
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        </Col>
       </Row>
 
       {/* Reviews Section */}
-      <div style={{ paddingLeft: "5rem", paddingRight: "5rem" }}>
+      <div>
         <div className="bg-white rounded-3 p-3">
           <div className="d-flex justify-content-between">
             <div>
