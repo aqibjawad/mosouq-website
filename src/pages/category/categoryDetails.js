@@ -60,7 +60,10 @@ const CategoryDetails = ({ name }) => {
         {businesses.map((business, index) => (
           <Col lg={5} md={6} sm={12} key={index} className="mb-5">
             <Link
-              to={`/business-details/${business.businessId}`}
+              to={`/business-details/${business?.authDetails?.company.replace(
+                /\s+/g,
+                "-"
+              )}/${business.businessId}`}
               style={{ textDecoration: "none", color: "black" }}
             >
               <Card className="">
