@@ -14,6 +14,7 @@ import EditUser from "../pages/user/edit.user";
 import CategoryDetails from "../pages/categorydetails";
 
 import Businesses from "../pages/category/index";
+import SubCategoryDetails from "../pages/category/subCategoryDetails";
 import BusinessListing from "../pages/businessListing";
 import BusinessDetails from "../pages/businessDetails";
 
@@ -95,6 +96,13 @@ const routes = [
   {
     path: "/business/:name/:id",
     element: <Businesses />,
+    exact: "true",
+    type: "public",
+  },
+
+  {
+    path: "/businesses/:name/:id",
+    element: <SubCategoryDetails />,
     exact: "true",
     type: "public",
   },

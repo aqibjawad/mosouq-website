@@ -203,7 +203,7 @@ const DealDetails = () => {
           <div>
             <img
               className="image-blog-details"
-              src="https://placehold.co/700x380"
+              src="https://placehold.co/300x250"
             />
           </div>
         </Col>

@@ -12,22 +12,11 @@ const CategoryDetails = ({ name }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    // Try category API first
     GET(`business-profile/category-business?category=${id}`)
       .then((result) => {
         if (result && result.length > 0) {
           setBusinesses(result);
           setDataSource("category");
-        } else {
-          // If no results, try subcategory API
-          return GET(`business-profile/subcategory-business?subcategory=${id}`);
-        }
-        return result;
-      })
-      .then((subResult) => {
-        if (subResult && subResult.length > 0) {
-          setBusinesses(subResult);
-          setDataSource("subcategory");
         }
       })
       .catch((error) => {

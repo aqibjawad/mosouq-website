@@ -124,7 +124,7 @@ const HomeCategory = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/business/${subcategory.sub_name}/${subcategory._id}`}
+                            to={`/businesses/${subcategory.sub_name}/${subcategory._id}`}
                             style={{
                               textDecoration: "none",
                               color: "black",

@@ -476,24 +476,23 @@ const BusinessDetails = () => {
 
           <Col lg={4}>
             <div className=" bg-white p-4 rounded-3 border">
-              <h4 className=" m-0">Request quote & availability</h4>
-              <p className="">Request your right away and availability</p>
-
               <button
                 className=" w-100 py-2 button btn"
                 onClick={handleRequestModalOpen}
               >
-                Request a quote & availability
+                Appointment / Reservation
               </button>
 
               <div className=" pt-4">
                 <h6 className=" m-0">Backed by Mosouq Guaranteed</h6>
                 <p className=" pt-2 m-0">
-                  Aardy.com Travel Insurance Marketplace allows you to compare
-                  and purchase the best Travel Insurance from all major
-                  providers. Would you like to visit each travel protection
-                  carrier directly? Of course not. So, enjoy an easy experience
-                  and find the best travel insurance with Aardy... Learn more
+                  Advertising with Mosouq.ae gives brands exceptional visibility
+                  and access to a large, engaged audience in the UAE. With
+                  targeted ads, featured placements, and promotional campaigns,
+                  businesses can effectively showcase their products, boost
+                  sales, and build brand recognition. Mosouq.ae’s platform
+                  ensures your message reaches the right audience, maximizing
+                  your impact and ROI.
                 </p>
               </div>
             </div>
