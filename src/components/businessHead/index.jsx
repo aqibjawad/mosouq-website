@@ -35,9 +35,9 @@ const FacebookStyleHeader = ({ businessData }) => {
                   height: "170px",
                   borderRadius: "50%",
                   backgroundColor: "white",
-                  objectFit:"contain",
+                  objectFit: "contain",
                   paddingLeft: "25px",
-                  paddingRight: "25px" 
+                  paddingRight: "25px",
                 }}
               />
             </div>
@@ -53,59 +53,58 @@ const FacebookStyleHeader = ({ businessData }) => {
 
           {/* Action Buttons */}
           <Col lg={7} className="" style={{ marginBottom: "4rem" }}>
-  <div className="row g-2">
-    <div className="col-6 col-md-2">
-      <Button
-        variant="primary"
-        className="d-flex align-items-center justify-content-center w-100"
-      >
-        <FaFacebookMessenger className="me-2" />
-        Message
-      </Button>
-    </div>
-    <div className="col-6 col-md-2">
-      <Button
-        variant="light"
-        className="d-flex align-items-center justify-content-center w-100"
-      >
-        <FaPhone className="me-2" />
-        Call
-      </Button>
-    </div>
-    <div className="col-6 col-md-2">
-      <Button
-        variant="outline-primary"
-        className="d-flex align-items-center justify-content-center w-100"
-      >
-        <MdEmail className="me-2" />
-        Email
-      </Button>
-    </div>
-    <div className="col-6 col-md-2">
-      <Button
-        variant="outline-primary"
-        className="d-flex align-items-center justify-content-center w-100"
-      >
-        <MdEmail className="me-2" />
-        Whatsapp
-      </Button>
-    </div>
-    <div className="col-6 col-md-2">
-      <Button
-        variant="outline-primary"
-        className="d-flex align-items-center justify-content-center w-100"
-        as="a"
-        href={businessData.website}
-        target="_blank" // Opens in a new tab
-        rel="noopener noreferrer" // Security best practices
-      >
-        <MdEmail className="me-2" />
-        Website
-      </Button>
-    </div>
-  </div>
-</Col>
-
+            <div className="row g-2">
+              <div className="col-6 col-md-2">
+                <Button
+                  variant="primary"
+                  className="d-flex align-items-center justify-content-center w-100"
+                >
+                  <FaFacebookMessenger className="me-2" />
+                  Message
+                </Button>
+              </div>
+              <div className="col-6 col-md-2">
+                <Button
+                  variant="light"
+                  className="d-flex align-items-center justify-content-center w-100"
+                >
+                  <FaPhone className="me-2" />
+                  Call
+                </Button>
+              </div>
+              <div className="col-6 col-md-2">
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center justify-content-center w-100"
+                >
+                  <MdEmail className="me-2" />
+                  Email
+                </Button>
+              </div>
+              <div className="col-6 col-md-2">
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center justify-content-center w-100"
+                >
+                  <MdEmail className="me-2" />
+                  Whatsapp
+                </Button>
+              </div>
+              <div className="col-6 col-md-2">
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center justify-content-center w-100"
+                  as="a"
+                  href={businessData.website}
+                  target="_blank" // Opens in a new tab
+                  rel="noopener noreferrer" // Security best practices
+                >
+                  <MdEmail className="me-2" />
+                  Website
+                </Button>
+              </div>
+            </div>
+          </Col>
         </Row>
       </Container>
     </div>
