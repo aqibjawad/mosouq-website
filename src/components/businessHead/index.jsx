@@ -1,6 +1,11 @@
 import React from "react";
 import { Container, Row, Col, Button, Card, Nav } from "react-bootstrap";
-import { FaFacebookMessenger, FaSearch, FaThumbsUp } from "react-icons/fa";
+import {
+  FaFacebookMessenger,
+  FaSearch,
+  FaThumbsUp,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
@@ -67,6 +72,12 @@ const FacebookStyleHeader = ({ businessData }) => {
                 <Button
                   variant="light"
                   className="d-flex align-items-center justify-content-center w-100"
+                  as="a"
+                  href={`tel:${
+                    businessData?.authDetails?.phone ||
+                    businessData?.phone ||
+                    ""
+                  }`}
                 >
                   <FaPhone className="me-2" />
                   Call
@@ -76,6 +87,12 @@ const FacebookStyleHeader = ({ businessData }) => {
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center justify-content-center w-100"
+                  as="a"
+                  href={`mailto:${
+                    businessData?.authDetails?.email ||
+                    businessData?.email ||
+                    ""
+                  }`}
                 >
                   <MdEmail className="me-2" />
                   Email
@@ -85,8 +102,16 @@ const FacebookStyleHeader = ({ businessData }) => {
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center justify-content-center w-100"
+                  as="a"
+                  href={`https://wa.me/${
+                    businessData?.authDetails?.phone?.replace(/[^\d]/g, "") ||
+                    businessData?.phone?.replace(/[^\d]/g, "") ||
+                    ""
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <MdEmail className="me-2" />
+                  <FaWhatsapp className="me-2" />
                   Whatsapp
                 </Button>
               </div>
@@ -95,9 +120,11 @@ const FacebookStyleHeader = ({ businessData }) => {
                   variant="outline-primary"
                   className="d-flex align-items-center justify-content-center w-100"
                   as="a"
-                  href={businessData.website}
+                  href={
+                    businessData.website ||
+                    businessData?.authDetails?.website
+                  }
                   target="_blank" // Opens in a new tab
-                  rel="noopener noreferrer" // Security best practices
                 >
                   <MdEmail className="me-2" />
                   Website

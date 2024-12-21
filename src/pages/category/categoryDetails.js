@@ -27,6 +27,8 @@ const CategoryDetails = ({ name }) => {
       });
   }, [id]);
 
+  const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
+
   // Loader component
   const LoaderComponent = () => (
     <div
@@ -56,78 +58,68 @@ const CategoryDetails = ({ name }) => {
     <>
       <div className="cat-Head">Near San Francisco, California</div>
       <div className="cat-descrp">Top 10 Contractors</div>
-      <Row>
-        {businesses.map((business, index) => (
-          <Col lg={5} md={6} sm={12} key={index} className="mb-5">
-            <Link
-              to={`/business-details/${business?.authDetails?.company.replace(
-                /\s+/g,
-                "-"
-              )}/${business.businessId}`}
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <Card className="">
-                <Card.Body>
-                  <Row className="align-items-center">
-                    <Col xs={4}>
-                      <img
-                        src={business.logo}
-                        alt="Business Image"
-                        className="img-fluid rounded"
-                        style={{
-                          width: "100%",
-                          height: "60px",
-                          objectFit: "contain",
+      {businesses.map((business, index) => (
+        <Link
+          to={`/business-details/${business?.authDetails?.company.replace(
+            /\s+/g,
+            "-"
+          )}/${business.businessId}`}
+          key={index}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div
+            className="p-4 border rounded-lg shadow-lg max-w-xl"
+            style={{
+              marginTop: "2rem",
+              marginBottom: "5rem",
+              marginLeft: "3rem",
+              marginRight: "4rem",
+            }}
+          >
+            <Row>
+              <Col lg={3} sm={12}>
+                <img
+                  src={business.logo}
+                  alt={"Business Image"}
+                  className="h-16 rounded-lg"
+                  style={{ width: "100%" }}
+                />
+              </Col>
+
+              <Col lg={9} sm={12}>
+                <div className="flex flex-col">
+                  <h2 className="text-2xl font-bold flex items-center">
+                    {business.businessName}
+                  </h2>
+                  <div className="text-gray-500">
+                    250 reviews &bull; <span className="font-bold">Good</span>
+                  </div>
+                  <div className="flex items-center">
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiFillStar className="text-yellow-500" />
+                    <AiOutlineStar className="text-yellow-500" />
+                    <span className="ml-2 text-gray-700">4.8</span>
+                  </div>
+                  <p className="text-gray-700 mt-2">
+                    {" "}
+                    {isHTML(business.description) ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: business.description.slice(0,500),
                         }}
                       />
-                    </Col>
-
-                    <Col xs={8}>
-                      <h6 className="mb-1 fw-bold text-truncate">
-                        {business?.authDetails?.name}
-                      </h6>
-
-                      <div className="small text-muted d-flex align-items-center gap-1">
-                        <span>250 reviews</span>
-                        <span>•</span>
-                        <span className="fw-bold">Good</span>
-                      </div>
-
-                      <div className="d-flex align-items-center gap-1">
-                        <AiFillStar
-                          style={{ color: "#ffc107", fontSize: "14px" }}
-                        />
-                        <AiFillStar
-                          style={{ color: "#ffc107", fontSize: "14px" }}
-                        />
-                        <AiFillStar
-                          style={{ color: "#ffc107", fontSize: "14px" }}
-                        />
-                        <AiFillStar
-                          style={{ color: "#ffc107", fontSize: "14px" }}
-                        />
-                        <AiOutlineStar
-                          style={{ color: "#ffc107", fontSize: "14px" }}
-                        />
-                        <span className="ms-1 text-muted small">4.8</span>
-                      </div>
-
-                      <div className="small">
-                        <Link
-                          to={business.website}
-                          className="text-decoration-none"
-                        >
-                          Website
-                        </Link>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
-        ))}
-      </Row>
+                    ) : (
+                      <p>{business.description}</p>
+                    )}
+                  </p>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Link>
+      ))}
     </>
   );
 };
