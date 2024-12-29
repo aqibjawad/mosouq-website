@@ -496,7 +496,7 @@ const BusinessDetails = () => {
                 </button>
 
                 <div className=" pt-4">
-                  <h6 className=" m-0">Backed by Mosouq Guaranteed</h6>
+                  <h6 className=" m-0"> Powered by Mosouq! </h6>
                   <p className=" pt-2 m-0">
                     Advertising with Mosouq.ae gives brands exceptional
                     visibility and access to a large, engaged audience in the
