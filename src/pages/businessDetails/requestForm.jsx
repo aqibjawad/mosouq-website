@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import { POST } from "../../apicontrollers/apiController";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
+const RequestForm = ({ show, handleClose, businessData }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     date: "",
     time: "",
@@ -13,7 +14,7 @@ const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
     userId: "",
     phone: "",
     userName: "",
-    userEmail: "",
+    email: "",
   });
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
       phone: userData.phone,
       businessId: businessData?._id,
       userName: userData.name,
-      userEmail: userData.email,
+      email: userData.email,
     }));
   }, [businessData, navigate]);
 
@@ -49,18 +50,22 @@ const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
       return;
     }
 
+    setIsLoading(true);
     try {
       const response = await POST("requestForm/create-form", formData);
+      console.log(response);
       toast.success("Your request has been submitted successfully");
-      handleRequestModalClose(); // Close modal after successful submission
+      handleClose();
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to submit request. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Modal show={show} onHide={handleRequestModalClose} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton className="bg-primary text-white">
         <Modal.Title>Request Details</Modal.Title>
       </Modal.Header>
@@ -84,8 +89,9 @@ const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
             <Form.Label className="text-muted">Email Address</Form.Label>
             <Form.Control
               type="email"
-              name="userEmail"
-              value={formData.userEmail}
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               readOnly
               className="bg-white border-secondary"
               style={{ fontWeight: "500" }}
@@ -136,11 +142,25 @@ const RequestForm = ({ show, handleRequestModalClose, businessData }) => {
       </Modal.Body>
 
       <Modal.Footer className="border-top">
-        <Button variant="secondary" onClick={handleRequestModalClose}>
+        <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
-          Submit Request
+        <Button variant="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="me-2"
+              />
+              Submitting...
+            </>
+          ) : (
+            "Submit Request"
+          )}
         </Button>
       </Modal.Footer>
     </Modal>

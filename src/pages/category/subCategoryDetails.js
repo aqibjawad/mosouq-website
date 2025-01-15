@@ -89,7 +89,7 @@ const SubCategoryDetails = ({ name }) => {
               <Col lg={9} sm={12}>
                 <div className="flex flex-col">
                   <h2 className="text-2xl font-bold flex items-center">
-                    {business.businessName}
+                    {business?.authDetails?.company}
                   </h2>
                   <div className="text-gray-500">
                     250 reviews &bull; <span className="font-bold">Good</span>
@@ -107,7 +107,7 @@ const SubCategoryDetails = ({ name }) => {
                     {isHTML(business.description) ? (
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: business.description.slice(0,700),
+                          __html: business.description.slice(0, 700),
                         }}
                       />
                     ) : (
