@@ -5,7 +5,7 @@ import HomeCategory from "./home.category";
 import HomeReview from "./home.reviews";
 
 import HomePartners from "./home.partners";
-import HomeTrending from "./home.trending";
+// import HomeTrending from "./home.trending";
 
 import HomeDeals from "./home.deals";
 
@@ -25,7 +25,7 @@ const Home =()=>{
 
             <HomePartners />
 
-            <HomeTrending />
+            {/* <HomeTrending /> */}
 
             <HomeDeals />
             
