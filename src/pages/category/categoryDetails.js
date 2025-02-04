@@ -60,7 +60,7 @@ const CategoryDetails = ({ name }) => {
       <div className="cat-descrp">Top 10 Contractors</div>
       {businesses.map((business, index) => (
         <Link
-          to={`/business-details/${business?.authDetails?.company.replace(
+          to={`/business/${business?.category?.name}/business-details/${business?.authDetails?.company.replace(
             /\s+/g,
             "-"
           )}/${business.businessId}`}

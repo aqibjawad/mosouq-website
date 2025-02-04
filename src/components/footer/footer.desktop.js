@@ -116,6 +116,12 @@ const Footer = () => {
                   <li>
                     <a href="/error">Chrome App</a>
                   </li>
+                  <li>
+                    <a href="/error">Legal</a>
+                  </li>
+                  <li>
+                    <a href="/error">Privacy Policy</a>
+                  </li>
                 </ul>
               </div>
             </Col>
@@ -123,26 +129,6 @@ const Footer = () => {
             <Col className="footer-column" lg={3} md={3} sm={12}>
               <h3>Business</h3>
               <div>
-                {/* <div
-                  className=" mt-3"
-                  style={{
-                    textAlign: "justify",
-                    fontSize: "16px",
-                    color: "#DCDCDCCC",
-                  }}
-                >
-                  Mosouq.ae is a dynamic online marketplace designed to bring
-                  customers in the UAE an exceptional shopping experience.
-                  Offering a wide range of high-quality products across multiple
-                  categories, including electronics, fashion, home essentials,
-                  and more, Mosouq strives to meet the diverse needs of its
-                  customers. With a commitment to reliability, competitive
-                  pricing, and a user-friendly platform, the brand aims to
-                  become a go-to destination for convenient, secure, and
-                  satisfying online shopping. Mosouq is dedicated to enhancing
-                  the digital retail landscape, delivering top-notch service
-                  with a local touch.
-                </div> */}
                 <ul>
                   <li>
                     <a href="/business-signup">Mosouq Business</a>
@@ -168,24 +154,6 @@ const Footer = () => {
       <div className="footer-bottom py-3 px-3 px-md-5">
         <Container fluid>
           <ul className="p-0">
-            <li>
-              <a href="#">Legal</a>
-            </li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="#">Terms & Conditions</a>
-            </li>
-            <li>
-              <a href="#">Guidelines for Reviewers</a>
-            </li>
-            <li>
-              <a href="#">System status</a>
-            </li>
-            <li>
-              <a href="#">Modern Slavery Statement</a>
-            </li>
             <li className="">
               {" "}
               <p className="all_right pt-3">

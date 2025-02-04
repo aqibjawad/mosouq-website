@@ -91,7 +91,7 @@ const routes = [
     type: "public"
   },
   {
-    path: "/business-details/:name/:id",
+    path: "/business/:category/business-details/:name/:id",
     element: <PageWrapper title="Business Details"><BusinessDetails /></PageWrapper>,
     exact: "true",
     type: "public",

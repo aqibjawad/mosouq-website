@@ -14,19 +14,20 @@ const SearchBar = () => {
   });
 
   useEffect(() => {
-    if (search) {
+    // Only make API call if search has content
+    if (search.trim()) {
       GET(`business-profile/searchAll?query=${search}`).then((result) => {
         setResults(result);
       });
     } else {
-      // Clear results when search is empty
+      // Automatically clear results when search is empty
       setResults({
         businessProfiles: [],
         categories: [],
         subCategories: [],
       });
     }
-  }, [search]);
+  }, [search]); // Effect runs whenever search changes
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -40,15 +41,6 @@ const SearchBar = () => {
     }
   };
 
-  const handleClear = () => {
-    setSearch("");
-    setResults({
-      businessProfiles: [],
-      categories: [],
-      subCategories: [],
-    });
-  };
-
   return (
     <Container className="search-container">
       <div className="search-bar">
@@ -60,11 +52,6 @@ const SearchBar = () => {
           value={search}
           onChange={handleInputChange}
         />
-        {search && (
-          <button className="clear-button" onClick={handleClear}>
-            ✕
-          </button>
-        )}
         <button className="search-button" onClick={handleSearch}>
           Search
         </button>
@@ -74,7 +61,10 @@ const SearchBar = () => {
         {results.businessProfiles.length > 0 && (
           <div className="section">
             {results.businessProfiles.map((profile) => (
-              <Link style={{textDecoration:"none", color:"black"}} to={`/business/${profile.businessName}/${profile._id}`}>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to={`/business/${profile.businessName}/${profile._id}`}
+              >
                 <Card
                   style={{ marginLeft: "1rem" }}
                   key={profile._id}
@@ -105,7 +95,10 @@ const SearchBar = () => {
         {results.categories.length > 0 && (
           <div className="section">
             {results.categories.map((category) => (
-              <Link style={{textDecoration:"none", color:"black"}} to={`/business/${category.name}/${category._id}`}>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to={`/business/${category.name}/${category._id}`}
+              >
                 <Card
                   style={{ marginLeft: "1rem" }}
                   key={category._id}

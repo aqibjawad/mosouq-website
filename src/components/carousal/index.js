@@ -37,7 +37,6 @@ function CarouselComponent({ businessData }) {
                     <span>{businessData.rating || "No rating"}</span>
                   </div>
                   <h3>{businessData.name}</h3>
-                  <p>{businessData.description}</p>
                 </div>
               </div>
             </SwiperSlide>
@@ -46,14 +45,14 @@ function CarouselComponent({ businessData }) {
       ) : (
         <div className="no-images">
           <p>No images available</p>
-          <div className="carousel-caption">
+          {/* <div className="carousel-caption">
             <div className="rating">
               <IoStar color="gold" />
               <span>{businessData?.rating || "No rating"}</span>
             </div>
             <h3>{businessData?.name}</h3>
             <p>{businessData?.description}</p>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
