@@ -10,7 +10,7 @@ import "./index.css";
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Category = () => {
       try {
         const [categoriesResult, subcategoriesResult] = await Promise.all([
           GET("category/get-categories"),
-          GET("subcategory/get-subcategories")
+          GET("subcategory/get-subcategories"),
         ]);
         setCategories(categoriesResult);
         setSubCategories(subcategoriesResult);
@@ -38,7 +38,10 @@ const Category = () => {
 
   if (isLoading) {
     return (
-      <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <div
+        className="d-flex flex-column justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <img src="/mosouq-logo.png" />
         <Spinner animation="border" role="status" variant="primary">
           <span className="visually-hidden">Loading...</span>
@@ -79,7 +82,7 @@ const Category = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/business/${category.name}/${category._id}`}
+                    to={`/business-category/${category.name}/${category._id}`}
                     style={{ color: "black", textDecoration: "none" }}
                   >
                     <div className="g-3 d-flex align-items-center">
@@ -100,7 +103,10 @@ const Category = () => {
                 {expandedIndex === index && (
                   <Card.Body className="subcategories">
                     {subcategories
-                      .filter((subcategory) => subcategory.category._id === category._id)
+                      .filter(
+                        (subcategory) =>
+                          subcategory.category._id === category._id
+                      )
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link

@@ -20,7 +20,9 @@ import RequestForm from "./requestForm";
 const BusinessDetails = () => {
   const userString = localStorage.getItem("user");
 
-  const { id } = useParams();
+  const id = localStorage.getItem("selectedBusinessId");
+
+  // const { id } = useParams();
   const navigate = useNavigate();
 
   const allDays = [
@@ -240,7 +242,9 @@ const BusinessDetails = () => {
     <>
       <Helmet>
         <title>
-          {businesses ? `${businesses.authDetails.name} | MOSOUQ` : "Loading... | MOSOUQ"}
+          {businesses
+            ? `${businesses.authDetails.name} | MOSOUQ`
+            : "Loading... | MOSOUQ"}
         </title>
       </Helmet>
       <div className="property" style={{ marginTop: "7rem" }}>

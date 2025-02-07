@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Spinner, Card } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GET } from "../../apicontrollers/apiController";
 import { useParams, Link } from "react-router-dom";
@@ -29,6 +29,11 @@ const CategoryDetails = ({ name }) => {
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
+  const handleBusinessClick = (business) => {
+    // Save business ID to localStorage
+    localStorage.setItem("selectedBusinessId", business.businessId);
+  };
+
   // Loader component
   const LoaderComponent = () => (
     <div
@@ -49,7 +54,6 @@ const CategoryDetails = ({ name }) => {
     </div>
   );
 
-  // If loading, show loader
   if (isLoading) {
     return <LoaderComponent />;
   }
@@ -60,11 +64,11 @@ const CategoryDetails = ({ name }) => {
       <div className="cat-descrp">Top 10 Contractors</div>
       {businesses.map((business, index) => (
         <Link
-          to={`/business/${business?.category?.name}/business-details/${business?.authDetails?.company.replace(
-            /\s+/g,
-            "-"
-          )}/${business.businessId}`}
+          to={`/business/${
+            business?.category?.name
+          }/${business?.authDetails?.company.replace(/\s+/g, "-")}`}
           key={index}
+          onClick={() => handleBusinessClick(business)}
           style={{ textDecoration: "none", color: "black" }}
         >
           <div
@@ -103,11 +107,10 @@ const CategoryDetails = ({ name }) => {
                     <span className="ml-2 text-gray-700">4.8</span>
                   </div>
                   <p className="text-gray-700 mt-2">
-                    {" "}
                     {isHTML(business.description) ? (
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: business.description.slice(0,500),
+                          __html: business.description.slice(0, 500),
                         }}
                       />
                     ) : (
