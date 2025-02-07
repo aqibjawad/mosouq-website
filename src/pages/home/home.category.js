@@ -96,7 +96,7 @@ const HomeCategory = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/business/${category.name}/${category._id}`}
+                    to={`/business-category/${category.name}/${category._id}`}
                     style={{ color: "black", textDecoration: "none" }}
                   >
                     <div className="g-3 d-flex align-items-center">
