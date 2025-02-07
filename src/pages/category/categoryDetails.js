@@ -5,7 +5,8 @@ import { GET } from "../../apicontrollers/apiController";
 import { useParams, Link } from "react-router-dom";
 
 const CategoryDetails = ({ name }) => {
-  const { id } = useParams();
+  const id = localStorage.getItem("selectedCategoryId");
+
   const [businesses, setBusinesses] = useState([]);
   const [dataSource, setDataSource] = useState("category");
   const [isLoading, setIsLoading] = useState(true);

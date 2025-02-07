@@ -3,19 +3,13 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { GET } from "../../apicontrollers/apiController";
 import "./responsive.css";
-
 import { MdArrowDropDown } from "react-icons/md";
-
 import "./home.pagination.css";
 
 const HomeCategory = () => {
-
-  
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [subcategories, setSubCategories] = useState();
-
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
   useEffect(() => {
@@ -28,7 +22,7 @@ const HomeCategory = () => {
     });
   }, []);
 
-  const itemsPerPage = 12; // Change to 12 items per page
+  const itemsPerPage = 12;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedCategories = categories.slice(
     startIndex,
@@ -48,21 +42,31 @@ const HomeCategory = () => {
     }
   };
 
+  const handleCategoryClick = (category) => {
+    // Save category ID to localStorage
+    localStorage.setItem("selectedCategoryId", category._id);
+    localStorage.setItem("selectedCategoryName", category.name);
+  };
+
+  const handleSubcategoryClick = (subcategory) => {
+    // Save subcategory ID to localStorage
+    localStorage.setItem("selectedSubcategoryId", subcategory._id);
+    localStorage.setItem("selectedSubcategoryName", subcategory.sub_name);
+  };
 
   return (
     <div
       style={{
-        // marginTop: "7rem",
         overflow: "hidden",
         backgroundColor: "#FAFAFA",
         minHeight: "540px",
       }}
     >
-      <Container fluid className=" px-3 px-md-5">
+      <Container fluid className="px-3 px-md-5">
         <Row className="justify-content-between mt-4">
           <Col sm="6">
-            <h2 className=" m-0 text-black">Categories</h2>
-            <p className=" text-black ">Trusted Companies with user Reviews</p>
+            <h2 className="m-0 text-black">Categories</h2>
+            <p className="text-black">Trusted Companies with user Reviews</p>
           </Col>
           <Col sm="auto">
             <Link
@@ -92,12 +96,13 @@ const HomeCategory = () => {
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <div className="custom-div-container bg-white">
                 <div
-                  className="custom-div px-3 border-0  justify-content-between d-flex align-items-center p-2"
+                  className="custom-div px-3 border-0 justify-content-between d-flex align-items-center p-2"
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/business-category/${category.name}/${category._id}`}
+                    to={`/categories/${encodeURIComponent(category.name)}`}
                     style={{ color: "black", textDecoration: "none" }}
+                    onClick={() => handleCategoryClick(category)}
                   >
                     <div className="g-3 d-flex align-items-center">
                       <div className="me-3">
@@ -115,7 +120,7 @@ const HomeCategory = () => {
                 </div>
 
                 {expandedIndex === index && (
-                  <Card.Body className="subcategories"> 
+                  <Card.Body className="subcategories">
                     {subcategories
                       .filter(
                         (subcategory) =>
@@ -124,7 +129,9 @@ const HomeCategory = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/businesses/${subcategory.sub_name}/${subcategory._id}`}
+                            to={`/subcategories/${encodeURIComponent(
+                              subcategory.sub_name
+                            )}`}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -133,6 +140,7 @@ const HomeCategory = () => {
                               display: "flex",
                               alignItems: "center",
                             }}
+                            onClick={() => handleSubcategoryClick(subcategory)}
                           >
                             <img
                               className="sub-cat-image"

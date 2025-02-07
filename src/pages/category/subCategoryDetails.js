@@ -4,8 +4,9 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GET } from "../../apicontrollers/apiController";
 import { useParams, Link } from "react-router-dom";
 
-const SubCategoryDetails = ({ name }) => {
-  const { id } = useParams();
+const SubCategoryDetails = () => {
+  const id = localStorage.getItem("selectedSubcategoryId");
+
   const [businesses, setBusinesses] = useState([]);
   const [dataSource, setDataSource] = useState("subcategory");
   const [isLoading, setIsLoading] = useState(true);
@@ -60,10 +61,9 @@ const SubCategoryDetails = ({ name }) => {
       <div className="cat-descrp">Top 10 Contractors</div>
       {businesses.map((business, index) => (
         <Link
-          to={`/business-details/${business?.authDetails?.company.replace(
-            /\s+/g,
-            "-"
-          )}/${business.businessId}`}
+          to={`/business/${
+            business?.category?.name
+          }/${business?.authDetails?.company.replace(/\s+/g, "-")}`}
           key={index}
           style={{ textDecoration: "none", color: "black" }}
         >

@@ -50,6 +50,14 @@ const Category = () => {
     );
   }
 
+  const handleCategoryClick = (category) => {
+    localStorage.setItem("selectedCategoryId", category._id);
+  };
+
+  const handleSubcategoryClick = (subcategory) => {
+    localStorage.setItem("selectedSubcategoryId", subcategory._id);
+  };
+
   return (
     <div>
       <div className="py-5 text-center mt-5">
@@ -82,8 +90,9 @@ const Category = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/business-category/${category.name}/${category._id}`}
+                    to={`/categories/${encodeURIComponent(category.name)}`}
                     style={{ color: "black", textDecoration: "none" }}
+                    onClick={() => handleCategoryClick(category)}
                   >
                     <div className="g-3 d-flex align-items-center">
                       <div className="me-3">
@@ -110,7 +119,10 @@ const Category = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/businesses/${subcategory.sub_name}/${subcategory._id}`}
+                            to={`/subcategories/${encodeURIComponent(
+                              subcategory.sub_name
+                            )}`}
+                            onClick={() => handleSubcategoryClick(subcategory)}
                             style={{
                               textDecoration: "none",
                               color: "black",

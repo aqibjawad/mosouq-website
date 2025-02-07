@@ -32,103 +32,171 @@ const PageWrapper = ({ title, children }) => {
 const routes = [
   {
     path: "/",
-    element: <PageWrapper title="Home"><Home /></PageWrapper>,
+    element: (
+      <PageWrapper title="Home">
+        <Home />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/sign-up",
-    element: <PageWrapper title="Sign Up"><SignUpForm /></PageWrapper>,
+    element: (
+      <PageWrapper title="Sign Up">
+        <SignUpForm />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/login",
-    element: <PageWrapper title="Login"><Login /></PageWrapper>,
+    element: (
+      <PageWrapper title="Login">
+        <Login />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/contact",
-    element: <PageWrapper title="Contact Us"><Contact /></PageWrapper>,
+    element: (
+      <PageWrapper title="Contact Us">
+        <Contact />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/categories",
-    element: <PageWrapper title="Categories"><Category /></PageWrapper>,
+    element: (
+      <PageWrapper title="Categories">
+        <Category />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/about",
-    element: <PageWrapper title="About Us"><AboutAndContact /></PageWrapper>,
+    element: (
+      <PageWrapper title="About Us">
+        <AboutAndContact />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
   {
     path: "/jobs",
-    element: <PageWrapper title="Jobs"><Jobs /></PageWrapper>,
+    element: (
+      <PageWrapper title="Jobs">
+        <Jobs />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/blogs",
-    element: <PageWrapper title="Blogs"><Blog /></PageWrapper>,
+    element: (
+      <PageWrapper title="Blogs">
+        <Blog />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/deal-details/:id",
-    element: <PageWrapper title="Deal Details"><DealDetails /></PageWrapper>,
+    element: (
+      <PageWrapper title="Deal Details">
+        <DealDetails />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
   {
     path: "/deals",
-    element: <PageWrapper title="Deals"><Deals /></PageWrapper>,
+    element: (
+      <PageWrapper title="Deals">
+        <Deals />
+      </PageWrapper>
+    ),
     exact: "true",
-    type: "public"
+    type: "public",
   },
   {
     path: "/business/:category/:name",
-    element: <PageWrapper title="Business Details"><BusinessDetails /></PageWrapper>,
+    element: (
+      <PageWrapper title="Business Details">
+        <BusinessDetails />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
   {
     path: "/user-profile",
-    element: <PageWrapper title="User Profile"><UserProfile /></PageWrapper>,
+    element: (
+      <PageWrapper title="User Profile">
+        <UserProfile />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "private",
   },
   {
     path: "/edit-user/:id",
-    element: <PageWrapper title="Edit Profile"><EditUser /></PageWrapper>,
+    element: (
+      <PageWrapper title="Edit Profile">
+        <EditUser />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "private",
   },
   {
     path: "/cat-details/:id",
-    element: <PageWrapper title="Category Details"><CategoryDetails /></PageWrapper>,
+    element: (
+      <PageWrapper title="Category Details">
+        <CategoryDetails />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "private",
   },
   {
-    path: "/business-category/:name/:id",
-    element: <PageWrapper title="Business"><Businesses /></PageWrapper>,
+    path: "/categories/:name",
+    element: (
+      <PageWrapper title="Business">
+        <Businesses />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
   {
-    path: "/businesses/:name/:id",
-    element: <PageWrapper title="Businesses"><SubCategoryDetails /></PageWrapper>,
+    path: "/subcategories/:name",
+    element: (
+      <PageWrapper title="Businesses">
+        <SubCategoryDetails />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
   {
     path: "/business-listing",
-    element: <PageWrapper title="Business Listing"><BusinessListing /></PageWrapper>,
+    element: (
+      <PageWrapper title="Business Listing">
+        <BusinessListing />
+      </PageWrapper>
+    ),
     exact: "true",
     type: "public",
   },
