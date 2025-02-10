@@ -90,7 +90,11 @@ const Category = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/categories/${encodeURIComponent(category.name)}`}
+                    to={`/categories/${category.name
+                      .toLowerCase()
+                      .replace(/[&]/g, "and")
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/^-+|-+$/g, "")}`}
                     style={{ color: "black", textDecoration: "none" }}
                     onClick={() => handleCategoryClick(category)}
                   >
@@ -119,9 +123,11 @@ const Category = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/subcategories/${encodeURIComponent(
-                              subcategory.sub_name
-                            )}`}
+                            to={`/subcategories/${subcategory.sub_name
+                              .toLowerCase()
+                              .replace(/[&]/g, "and")
+                              .replace(/[^a-z0-9]+/g, "-")
+                              .replace(/^-+|-+$/g, "")}`}
                             onClick={() => handleSubcategoryClick(subcategory)}
                             style={{
                               textDecoration: "none",

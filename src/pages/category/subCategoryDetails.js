@@ -61,9 +61,10 @@ const SubCategoryDetails = () => {
       <div className="cat-descrp">Top 10 Contractors</div>
       {businesses.map((business, index) => (
         <Link
-          to={`/business/${
-            business?.category?.name
-          }/${business?.authDetails?.company.replace(/\s+/g, "-")}`}
+          to={`/business/${business?.subcategory?.sub_name?.replace(
+            /\s+/g,
+            "-"
+          )}/${business?.authDetails?.company?.replace(/\s+/g, "-")}`}
           key={index}
           style={{ textDecoration: "none", color: "black" }}
         >

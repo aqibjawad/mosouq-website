@@ -100,7 +100,12 @@ const HomeCategory = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/categories/${encodeURIComponent(category.name)}`}
+                    to={`/categories/${category.name
+                      .toLowerCase()
+                      .replace(/[&]/g, "and")
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/^-+|-+$/g, "")}`}
+                    className="text-black no-underline hover:text-gray-600 transition-colors"
                     style={{ color: "black", textDecoration: "none" }}
                     onClick={() => handleCategoryClick(category)}
                   >
@@ -129,9 +134,11 @@ const HomeCategory = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/subcategories/${encodeURIComponent(
-                              subcategory.sub_name
-                            )}`}
+                            to={`/subcategories/${subcategory.sub_name
+                              .toLowerCase()
+                              .replace(/[&]/g, "and")
+                              .replace(/[^a-z0-9]+/g, "-")
+                              .replace(/^-+|-+$/g, "")}`}
                             style={{
                               textDecoration: "none",
                               color: "black",

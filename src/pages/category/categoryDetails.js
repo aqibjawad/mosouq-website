@@ -65,9 +65,10 @@ const CategoryDetails = ({ name }) => {
       <div className="cat-descrp">Top 10 Contractors</div>
       {businesses.map((business, index) => (
         <Link
-          to={`/business/${
-            business?.category?.name
-          }/${business?.authDetails?.company.replace(/\s+/g, "-")}`}
+          to={`/business/${business?.category?.name.replace(
+            /\s+/g,
+            "-"
+          )}/${business?.authDetails?.company.replace(/\s+/g, "-")}`}
           key={index}
           onClick={() => handleBusinessClick(business)}
           style={{ textDecoration: "none", color: "black" }}
