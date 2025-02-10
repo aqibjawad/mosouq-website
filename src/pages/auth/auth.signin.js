@@ -39,14 +39,14 @@ const Login = () => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
-      // const result = await axios.post(
-      //   `https://apis.mosouq.ae/api/user/login-user`,
-      //   formData
-      // );
       const result = await axios.post(
-        `http://localhost:5000/api/user/login-user`,
+        `https://apis.mosouq.ae/api/user/login-user`,
         formData
       );
+      // const result = await axios.post(
+      //   `http://localhost:5000/api/user/login-user`,
+      //   formData
+      // );
       if (check === 0) {
         auth.activateToken(localStorage.setItem("token", result.data.token));
         console.log(auth.activateToken);

@@ -63,7 +63,7 @@ const HomeReview = () => {
                           marginRight: "1rem",
                         }}
                       />
-                      <h5> {review.user.name} </h5>
+                      <h5> {review?.user?.name} </h5>
                     </div>
                   </Col>
 

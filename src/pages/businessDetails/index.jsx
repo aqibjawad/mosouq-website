@@ -35,6 +35,9 @@ const BusinessDetails = () => {
     "sunday",
   ];
   const [businesses, setBusinesses] = useState("");
+
+  console.log(businesses.tags);
+
   const [approvedReviews, setApprovedReviews] = useState([]);
   const [businessReviews, setBusinessesReviews] = useState([]);
 
@@ -510,6 +513,23 @@ const BusinessDetails = () => {
                     Mosouq.ae’s platform ensures your message reaches the right
                     audience, maximizing your impact and ROI.
                   </p>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-3 border">
+                <div className="d-flex align-items-center">
+                  <div>
+                    <img src="/budget-estimate.png" alt="" />
+                  </div>
+                  <h5 className="ps-2 m-0">Tags!</h5>
+                </div>
+
+                <div className="pt-3">
+                  <button className="w-100 py-2 button btn2">
+                    {businesses.tags && businesses.tags.length > 0
+                      ? businesses.tags.join(", ") // Tags ko comma (,) se separate karke ek string bana raha hai
+                      : "No tags available"}
+                  </button>
                 </div>
               </div>
 
