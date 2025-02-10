@@ -10,9 +10,7 @@ const ExploreDubai = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(
-      "https://public-api.wordpress.com/wp/v2/sites/fawadexe.wordpress.com/posts"
-    )
+    fetch("https://blogs.mosouq.ae//wp-json/wp/v2/posts")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -90,14 +88,14 @@ const ExploreDubai = () => {
       <Container fluid className="px-md-5 px-3">
         <Row className="mt-5">
           <Col xs={12}>
-            <div className="d-flex justify-content-between align-items-start">
+            {/* <div className="d-flex justify-content-between align-items-start">
               <div>
                 <h2 className="fw-bold mb-2">Explore Dubai</h2>
               </div>
               <Link to="/" className="btn btn-primary">
                 View All
               </Link>
-            </div>
+            </div> */}
             <p className="text-muted mb-0">
               Discover amazing places in Dubai through our recommendations!
             </p>
