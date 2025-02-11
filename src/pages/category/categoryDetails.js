@@ -31,7 +31,6 @@ const CategoryDetails = ({ name }) => {
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
   const handleBusinessClick = (business) => {
-    // Save business ID to localStorage
     localStorage.setItem("selectedBusinessId", business.businessId);
   };
 

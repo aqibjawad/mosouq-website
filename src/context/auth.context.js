@@ -11,17 +11,14 @@ const AuthProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(value);
   const [userType, setUserType] = useState();
 
-  /* Verify if token is present or not */
   useEffect(() => {
-    if (token) {
-      verifyToken(token);
+    // Only verify token if there is one in localStorage
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      verifyToken(storedToken);
     } else {
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        verifyToken(localStorage.getItem("token"));
-      } else {
-        setIsAuthenticated(false);
-      }
+      setIsAuthenticated(false);
     }
   }, []);
 
@@ -38,9 +35,9 @@ const AuthProvider = (props) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token')
-    setIsAuthenticated(false)
-  }
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
 
   /* Function to verify if token is valid or not */
   const verifyToken = async (token) => {
@@ -59,7 +56,7 @@ const AuthProvider = (props) => {
     isAuthenticated,
     userType,
     setUserType,
-    logout
+    logout,
   };
   return <AuthContext.Provider value={authContextValue} {...props} />;
 };

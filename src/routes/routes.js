@@ -140,6 +140,7 @@ const routes = [
     exact: "true",
     type: "public",
   },
+  
   {
     path: "/user-profile",
     element: (
@@ -150,6 +151,7 @@ const routes = [
     exact: "true",
     type: "private",
   },
+
   {
     path: "/edit-user/:id",
     element: (
@@ -160,6 +162,7 @@ const routes = [
     exact: "true",
     type: "private",
   },
+
   {
     path: "/cat-details/:id",
     element: (
@@ -170,6 +173,7 @@ const routes = [
     exact: "true",
     type: "private",
   },
+
   {
     path: "/categories/:name",
     element: (

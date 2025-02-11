@@ -55,6 +55,10 @@ const SubCategoryDetails = () => {
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
+  const handleBusinessClick = (business) => {
+    localStorage.setItem("selectedBusinessId", business.businessId);
+  };
+
   return (
     <>
       <div className="cat-Head">Near San Francisco, California</div>
@@ -65,6 +69,7 @@ const SubCategoryDetails = () => {
             /\s+/g,
             "-"
           )}/${business?.authDetails?.company?.replace(/\s+/g, "-")}`}
+          onClick={() => handleBusinessClick(business)}
           key={index}
           style={{ textDecoration: "none", color: "black" }}
         >
