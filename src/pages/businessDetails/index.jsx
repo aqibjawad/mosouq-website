@@ -17,6 +17,8 @@ import LocationSection from "./location";
 
 import RequestForm from "./requestForm";
 
+import FAQSection from "./faqSection";
+
 const BusinessDetails = () => {
   const userString = localStorage.getItem("user");
 
@@ -36,7 +38,7 @@ const BusinessDetails = () => {
   ];
   const [businesses, setBusinesses] = useState("");
 
-  console.log(businesses.tags);
+  const [businessFaq, setBusinessFaq] = useState("");
 
   const [approvedReviews, setApprovedReviews] = useState([]);
   const [businessReviews, setBusinessesReviews] = useState([]);
@@ -59,6 +61,18 @@ const BusinessDetails = () => {
       setBusinesses(result);
     });
 
+    GET(`faqs/business/${id}`)
+      .then((result) => {
+        setBusinessFaq(result);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          console.log("No FAQs found for this business");
+          setBusinessFaq([]);
+        } else {
+          console.error("Error fetching FAQs:", error);
+        }
+      });
     fetchReviews();
   }, [id]);
 
@@ -433,6 +447,8 @@ const BusinessDetails = () => {
                   <p>No approved reviews available for this business yet.</p>
                 </div>
               )}
+
+              <FAQSection businessData={businesses} faqsList={businessFaq} />
 
               <div className="pt-5">
                 {/* Location and Hours in a Row */}

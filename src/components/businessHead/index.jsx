@@ -48,7 +48,7 @@ const FacebookStyleHeader = ({ businessData }) => {
             </div>
             <div className="mb-3">
               <h1 className="fs-2 fw-bold text-dark">
-                {businessData?.authDetails?.name || "Business Name"}
+                {businessData?.authDetails?.company || "Business Name"}
               </h1>
               <p className="text-secondary">
                 {businessData?.followers || 0} Reviews •{" "}
