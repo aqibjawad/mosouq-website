@@ -16,6 +16,7 @@ import Businesses from "../pages/category/index";
 import SubCategoryDetails from "../pages/category/subCategoryDetails";
 import BusinessListing from "../pages/businessListing";
 import BusinessDetails from "../pages/businessDetails";
+import SearchResults from "../components/searchbar/search";
 
 // Wrapper component to add dynamic titles
 const PageWrapper = ({ title, children }) => {
@@ -35,6 +36,16 @@ const routes = [
     element: (
       <PageWrapper title="Home">
         <Home />
+      </PageWrapper>
+    ),
+    exact: "true",
+    type: "public",
+  },
+  {
+    path: "/search-results",
+    element: (
+      <PageWrapper title="Search-Items">
+        <SearchResults />
       </PageWrapper>
     ),
     exact: "true",
@@ -140,7 +151,7 @@ const routes = [
     exact: "true",
     type: "public",
   },
-  
+
   {
     path: "/user-profile",
     element: (
