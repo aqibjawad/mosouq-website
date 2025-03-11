@@ -20,8 +20,6 @@ import RequestForm from "./requestForm";
 import FAQSection from "./faqSection";
 
 const BusinessDetails = () => {
-  const userString = localStorage.getItem("user");
-
   const id = localStorage.getItem("selectedBusinessId");
 
   // const { id } = useParams();
@@ -160,74 +158,6 @@ const BusinessDetails = () => {
   const [showPhone, setShowPhone] = useState(false);
 
   const userId = localStorage.getItem("userId");
-
-  const handleViewEmail = async (event) => {
-    event.preventDefault();
-
-    const userString = localStorage.getItem("user");
-    if (!userString) {
-      toast.error("User not logged in.");
-      return;
-    }
-
-    const user = JSON.parse(userString);
-    const userId = user?._id;
-
-    const statsEmailData = {
-      type: "email",
-      userId,
-      businessId: id, // Make sure `id` is defined correctly in your component
-    };
-
-    try {
-      // POST request to log the email view action
-      const res = await POST("businessStats/addRecord", statsEmailData);
-
-      if (!res.error) {
-        toast.success("Email viewed successfully!");
-        setShowEmail(true); // Show the email
-      } else {
-        toast.error(res.sqlMessage || "Failed to view email.");
-      }
-    } catch (error) {
-      console.error("Error viewing email:", error);
-      toast.error("Failed to view email. Please try again.");
-    }
-  };
-
-  const handleViewPhone = async (event) => {
-    event.preventDefault();
-
-    const userString = localStorage.getItem("user");
-    if (!userString) {
-      toast.error("User not logged in.");
-      return;
-    }
-
-    const user = JSON.parse(userString);
-    const userId = user?._id;
-
-    const statsPhoneData = {
-      type: "phone",
-      userId,
-      businessId: id, // Make sure `id` is defined correctly in your component
-    };
-
-    try {
-      // POST request to log the phone view action
-      const res = await POST("businessStats/addRecord", statsPhoneData);
-
-      if (!res.error) {
-        toast.success("Phone number viewed successfully!");
-        setShowPhone(true); // Show the phone number
-      } else {
-        toast.error(res.sqlMessage || "Failed to view phone number.");
-      }
-    } catch (error) {
-      console.error("Error viewing phone:", error);
-      toast.error("Failed to view phone. Please try again.");
-    }
-  };
 
   const formatTime = (time) => {
     if (!time) return "";

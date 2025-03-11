@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button, Card, Nav } from "react-bootstrap";
 import {
   FaFacebookMessenger,
@@ -8,10 +8,179 @@ import {
 } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { POST } from "../../apicontrollers/apiController";
 
 const FacebookStyleHeader = ({ businessData }) => {
+  const id = localStorage.getItem("selectedBusinessId");
+
+  const [showEmail, setShowEmail] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
+  const [showWhatsapp, setShowWhatsapp] = useState(false);
+  const [showWebsite, setShowWebsite] = useState(false);
+
+  const handleViewEmail = async (event) => {
+    event.preventDefault();
+
+    const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userString);
+
+      // Fallback if userId is not found
+      const userId = user.userId || user._id || user.id;
+
+      if (!userId) {
+        toast.error("Unable to retrieve user ID.");
+        return;
+      }
+
+      const statsEmailData = {
+        type: "email",
+        userId: userId,
+        businessId: id,
+      };
+
+      const res = await POST("businessStats/addRecord", statsEmailData);
+
+      if (!res.error) {
+        toast.success("Email viewed successfully!");
+        setShowEmail(true);
+      } else {
+        toast.error(res.sqlMessage || "Failed to view email.");
+      }
+    } catch (error) {
+      console.error("Error viewing email:", error);
+      toast.error("Failed to view email. Please try again.");
+    }
+  };
+
+  const handleViewPhone = async (event) => {
+    event.preventDefault();
+
+    const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userString);
+
+      // Fallback if userId is not found
+      const userId = user.userId || user._id || user.id;
+
+      if (!userId) {
+        toast.error("Unable to retrieve user ID.");
+        return;
+      }
+
+      const statsEmailData = {
+        type: "phone",
+        userId: userId,
+        businessId: id,
+      };
+
+      const res = await POST("businessStats/addRecord", statsEmailData);
+
+      if (!res.error) {
+        toast.success("Number viewed successfully!");
+        setShowPhone(true);
+      } else {
+        toast.error(res.sqlMessage || "Failed to view number.");
+      }
+    } catch (error) {
+      console.error("Error viewing number:", error);
+      toast.error("Failed to view number. Please try again.");
+    }
+  };
+
+  const handleViewWhatsApp = async (event) => {
+    event.preventDefault();
+
+    const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userString);
+
+      // Fallback if userId is not found
+      const userId = user.userId || user._id || user.id;
+
+      if (!userId) {
+        toast.error("Unable to retrieve user ID.");
+        return;
+      }
+
+      const statsEmailData = {
+        type: "whastapp",
+        userId: userId,
+        businessId: id,
+      };
+
+      const res = await POST("businessStats/addRecord", statsEmailData);
+
+      if (!res.error) {
+        toast.success("Number viewed successfully!");
+        setShowWhatsapp(true);
+      } else {
+        toast.error(res.sqlMessage || "Failed to view number.");
+      }
+    } catch (error) {
+      console.error("Error viewing number:", error);
+      toast.error("Failed to view number. Please try again.");
+    }
+  };
+
+  const handleVieWebsite = async (event) => {
+    event.preventDefault();
+
+    const userString = localStorage.getItem("user");
+    if (!userString) {
+      toast.error("User not logged in.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userString);
+
+      // Fallback if userId is not found
+      const userId = user.userId || user._id || user.id;
+
+      if (!userId) {
+        toast.error("Unable to retrieve user ID.");
+        return;
+      }
+
+      const statsEmailData = {
+        type: "website",
+        userId: userId,
+        businessId: id,
+      };
+
+      const res = await POST("businessStats/addRecord", statsEmailData);
+
+      if (!res.error) {
+        toast.success("Number viewed successfully!");
+        setShowWebsite(true);
+      } else {
+        toast.error(res.sqlMessage || "Failed to view number.");
+      }
+    } catch (error) {
+      console.error("Error viewing number:", error);
+      toast.error("Failed to view number. Please try again.");
+    }
+  };
+
   return (
     <div className="position-relative">
       {/* Cover Photo Section */}
@@ -68,36 +237,36 @@ const FacebookStyleHeader = ({ businessData }) => {
                   Message
                 </Button>
               </div>
+
               <div className="col-6 col-md-2">
                 <Button
                   variant="light"
                   className="d-flex align-items-center justify-content-center w-100"
-                  as="a"
-                  href={`tel:${
-                    businessData?.authDetails?.phone ||
-                    businessData?.phone ||
-                    ""
-                  }`}
+                  onClick={handleViewPhone}
                 >
                   <FaPhone className="me-2" />
-                  Call
+                  {showPhone
+                    ? businessData?.authDetails?.phone ||
+                      businessData?.phone ||
+                      "Call"
+                    : "Call"}
                 </Button>
               </div>
               <div className="col-6 col-md-2">
                 <Button
                   variant="outline-primary"
                   className="d-flex align-items-center justify-content-center w-100"
-                  as="a"
-                  href={`mailto:${
-                    businessData?.authDetails?.email ||
-                    businessData?.email ||
-                    ""
-                  }`}
+                  onClick={handleViewEmail}
                 >
                   <MdEmail className="me-2" />
-                  Email
+                  {showEmail
+                    ? businessData?.authDetails?.email ||
+                      businessData?.email ||
+                      "Email"
+                    : "Email"}
                 </Button>
               </div>
+
               <div className="col-6 col-md-2">
                 <Button
                   variant="outline-primary"
@@ -108,11 +277,16 @@ const FacebookStyleHeader = ({ businessData }) => {
                     businessData?.phone?.replace(/[^\d]/g, "") ||
                     ""
                   }`}
+                  onClick={handleViewWhatsApp}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaWhatsapp className="me-2" />
-                  Whatsapp
+                  {showWhatsapp
+                    ? businessData?.authDetails?.phone ||
+                      businessData?.phone ||
+                      "Call"
+                    : "Call"}
                 </Button>
               </div>
               <div className="col-6 col-md-2">
@@ -121,13 +295,17 @@ const FacebookStyleHeader = ({ businessData }) => {
                   className="d-flex align-items-center justify-content-center w-100"
                   as="a"
                   href={
-                    businessData.website ||
-                    businessData?.authDetails?.website
+                    businessData.website || businessData?.authDetails?.website
                   }
-                  target="_blank" // Opens in a new tab
+                  target="_blank"
+                  onClick={handleVieWebsite}
                 >
                   <MdEmail className="me-2" />
-                  Website
+                  {showWebsite
+                    ? businessData.website ||
+                      businessData?.authDetails?.website ||
+                      "Website"
+                    : "Website"}
                 </Button>
               </div>
             </div>
