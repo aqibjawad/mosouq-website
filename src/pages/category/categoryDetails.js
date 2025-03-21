@@ -9,25 +9,18 @@ import "./styles.css"; // Create this file for the CSS
 const TravelInsurancePage = () => {
   const [sortBy, setSortBy] = useState("Most relevant");
   const [activeFilter, setActiveFilter] = useState("Any");
-  const [location, setLocation] = useState("United States");
+  const [location, setLocation] = useState("All Locations");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const ITEMS_PER_PAGE = 10;
   // State to track which listing's reviews are open
   const [openReviews, setOpenReviews] = useState({});
 
-  const relatedCategories = [
-    { name: "Accident Insurance Company", count: 91 },
-    { name: "Auto Insurance Agency", count: 1674 },
-    { name: "Business Insurance Company", count: 810 },
-    { name: "Casualty and Multirisque Insurance Company", count: 16 },
-    { name: "Commercial Insurance Company", count: 153 },
-    { name: "Cycle Insurance Company", count: 14 },
-    { name: "Dental Insurance Agency", count: 44 },
-    { name: "Disability Insurance Company", count: 41 },
-    { name: "Funeral Insurance Company", count: 30 },
-    { name: "Gadget Insurance Company", count: 25 },
-  ];
+  // State for available locations
+  const [availableLocations, setAvailableLocations] = useState([]);
+  // State for filtered businesses
+  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+
   const id = localStorage.getItem("selectedCategoryId");
 
   const [businesses, setBusinesses] = useState([]);
@@ -116,9 +109,19 @@ const TravelInsurancePage = () => {
       .then((result) => {
         if (result && result.length > 0) {
           setBusinesses(result);
+          setFilteredBusinesses(result);
           setDataSource("category");
 
-          // Calculate total pages
+          // Extract unique areas from businesses
+          const areas = ["All Locations"];
+          result.forEach((business) => {
+            if (business.area && !areas.includes(business.area)) {
+              areas.push(business.area);
+            }
+          });
+          setAvailableLocations(areas);
+
+          // Calculate total pages based on filtered businesses
           const pages = Math.ceil(result.length / ITEMS_PER_PAGE);
           setTotalPages(pages);
         }
@@ -131,14 +134,37 @@ const TravelInsurancePage = () => {
       });
   }, [id]);
 
-  // Update displayed businesses when page changes or when businesses data changes
+  // Filter businesses when location changes
   useEffect(() => {
     if (businesses.length > 0) {
+      if (location === "All Locations") {
+        setFilteredBusinesses(businesses);
+      } else {
+        const filtered = businesses.filter(
+          (business) => business.area === location
+        );
+        setFilteredBusinesses(filtered);
+      }
+      // Reset to first page when filter changes
+      setPage(1);
+    }
+  }, [location, businesses]);
+
+  // Update displayed businesses when page changes or when filtered businesses change
+  useEffect(() => {
+    if (filteredBusinesses.length > 0) {
       const startIndex = (page - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
-      setDisplayedBusinesses(businesses.slice(startIndex, endIndex));
+      setDisplayedBusinesses(filteredBusinesses.slice(startIndex, endIndex));
+
+      // Update total pages based on filtered businesses
+      const pages = Math.ceil(filteredBusinesses.length / ITEMS_PER_PAGE);
+      setTotalPages(pages);
+    } else {
+      setDisplayedBusinesses([]);
+      setTotalPages(0);
     }
-  }, [page, businesses]);
+  }, [page, filteredBusinesses]);
 
   const isHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
 
@@ -300,50 +326,13 @@ const TravelInsurancePage = () => {
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               >
-                <option value="United States">United States</option>
+                {availableLocations.map((loc) => (
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="location-input">
-              <input
-                type="text"
-                placeholder="City or ZIP code"
-                className="input-field"
-              />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-4 border border-gray-200">
-            <div className="flex items-center justify-between w-full mb-4">
-              <Row>
-                <Col xs={8}>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    Related categories
-                  </h3>
-                </Col>
-                <Col xs={4}>
-                  <Link className="text-blue-500 hover:text-blue-700 text-sm font-medium transition-colors">
-                    Show all
-                  </Link>
-                </Col>
-              </Row>
-            </div>
-
-            <ul className="space-y-2">
-              <Row>
-                {relatedCategories.map((category, index) => (
-                  <Col xs={12} key={index}>
-                    <div className="d-flex justify-content-between align-items-center py-2 border-bottom">
-                      <a href="#" className="text-dark text-decoration-none">
-                        {category.name}
-                      </a>
-                      <Badge bg="light" text="dark" pill className="px-2 py-1">
-                        {category.count}
-                      </Badge>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            </ul>
           </div>
         </div>
 
@@ -351,14 +340,15 @@ const TravelInsurancePage = () => {
         <div className="listings-container">
           <div className="listings-header">
             <div className="results-count">
-              {businesses.length === 0
+              {filteredBusinesses.length === 0
                 ? "No results found"
                 : `${Math.min(
                     (page - 1) * ITEMS_PER_PAGE + 1,
-                    businesses.length
-                  )}-${Math.min(page * ITEMS_PER_PAGE, businesses.length)} of ${
-                    businesses.length
-                  } results`}
+                    filteredBusinesses.length
+                  )}-${Math.min(
+                    page * ITEMS_PER_PAGE,
+                    filteredBusinesses.length
+                  )} of ${filteredBusinesses.length} results`}
             </div>
             <div className="sort-container">
               <span className="sort-label">Sort by</span>
@@ -388,118 +378,148 @@ const TravelInsurancePage = () => {
           </div>
 
           <div className="listings-list">
-            {displayedBusinesses.map((listing) => (
-              <div key={listing.id} className="listing-card">
-                {listing.mostRelevant && (
-                  <div className="relevance-badge">MOST RELEVANT</div>
-                )}
+            {displayedBusinesses.length > 0 ? (
+              displayedBusinesses.map((listing, index) => (
+                <Link
+                  to={`/business/${listing?.category?.name.replace(
+                    /\s+/g,
+                    "-"
+                  )}/${listing?.authDetails?.company.replace(/\s+/g, "-")}`}
+                  key={index}
+                  onClick={() => handleBusinessClick(listing)}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div key={listing.id} className="listing-card">
+                    {listing.mostRelevant && (
+                      <div className="relevance-badge">MOST RELEVANT</div>
+                    )}
 
-                <div className="listing-content">
-                  <div className="listing-logo">
-                    <img
-                      src={listing.logo}
-                      alt={listing?.authDetails?.company}
-                    />
-                  </div>
-
-                  <div className="listing-details">
-                    <div className="listing-title">
-                      <h3 className="company-name">
-                        {listing?.authDetails?.company}
-                      </h3>
-                      <a
-                        href={`https://${
-                          listing.website || listing?.authDetails?.website
-                        }`}
-                        className="company-url"
-                      >
-                        {listing.website || listing?.authDetails?.website}
-                      </a>
-                    </div>
-
-                    <div className="listing-rating">
-                      <div className="stars">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="star">
-                            ★
-                          </span>
-                        ))}
+                    <div className="listing-content">
+                      <div className="listing-logo">
+                        <img
+                          src={listing.logo}
+                          alt={listing?.authDetails?.company}
+                        />
                       </div>
-                      <span className="trust-score">MosouqScore</span>
-                      <span className="divider">•</span>
-                      <span className="review-count">reviews</span>
-                    </div>
 
-                    <div className="listing-location">{listing.address}</div>
-
-                    <div className="listing-categories">
-                      {listing.tags.map((tags, idx) => (
-                        <span key={idx} className="category-tag">
-                          {tags || "No Tags Available"}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="listing-action">
-                      <button
-                        className="reviews-btn"
-                        onClick={() => toggleReviews(listing.id)}
-                      >
-                        Latest reviews
-                        <span className="dropdown-icon">
-                          {openReviews[listing.id] ? "▲" : "▼"}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Collapsible reviews section */}
-                <Collapse in={openReviews[listing.id]}>
-                  <div className="reviews-container">
-                    <div className="reviews-header">
-                      <h4>Latest Reviews</h4>
-                    </div>
-                    <div className="reviews-scroll-container">
-                      <Row
-                        className="flex-nowrap"
-                        style={{ overflowX: "auto", padding: "10px 0" }}
-                      >
-                        {dummyReviews.map((review) => (
-                          <Col
-                            key={review.id}
-                            xs={12}
-                            md={6}
-                            lg={4}
-                            xl={3}
-                            style={{ minWidth: "280px", padding: "0 10px" }}
+                      <div className="listing-details">
+                        <div className="listing-title">
+                          <h3 className="company-name">
+                            {listing?.authDetails?.company}
+                          </h3>
+                          <a
+                            href={`https://${
+                              listing.website || listing?.authDetails?.website
+                            }`}
+                            className="company-url"
                           >
-                            <Card className="review-card mb-3">
-                              <Card.Body>
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <h5 className="mb-0">{review.author}</h5>
-                                  <small className="text-muted">
-                                    {review.date}
-                                  </small>
-                                </div>
-                                <div className="mb-2">
-                                  {renderStars(review.rating)}
-                                </div>
-                                <Card.Text>{review.content}</Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </Col>
-                        ))}
-                      </Row>
+                            {listing.website || listing?.authDetails?.website}
+                          </a>
+                        </div>
+
+                        <div className="listing-rating">
+                          <div className="stars">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className="star">
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                          <span className="trust-score">MosouqScore</span>
+                          <span className="divider">•</span>
+                          <span className="review-count">reviews</span>
+                        </div>
+
+                        <div className="listing-location">
+                          {listing.area
+                            ? `${listing.area}, ${listing.city || "N/A"}`
+                            : listing.address}
+                        </div>
+
+                        <div className="listing-categories">
+                          {listing.tags.map((tags, idx) => (
+                            <span key={idx} className="category-tag">
+                              {tags || "No Tags Available"}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="listing-action">
+                          <button
+                            className="reviews-btn"
+                            onClick={() => toggleReviews(listing.id)}
+                          >
+                            Latest reviews
+                            <span className="dropdown-icon">
+                              {openReviews[listing.id] ? "▲" : "▼"}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Collapsible reviews section */}
+                    <Collapse in={openReviews[listing.id]}>
+                      <div className="reviews-container">
+                        <div className="reviews-header">
+                          <h4>Latest Reviews</h4>
+                        </div>
+                        <div className="reviews-scroll-container">
+                          <Row className="flex-wrap mx-0">
+                            {dummyReviews.slice(0, 4).map(
+                              (
+                                review // Showing only 4 reviews
+                              ) => (
+                                <Col
+                                  key={review.id}
+                                  xs={12}
+                                  md={6}
+                                  style={{ padding: "5px" }}
+                                >
+                                  <Card className="review-card mb-3">
+                                    <Card.Body className="p-3">
+                                      {" "}
+                                      {/* Smaller padding */}
+                                      <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 className="mb-0 fs-6">
+                                          {review.author}
+                                        </h5>{" "}
+                                        {/* Smaller font */}
+                                        <small className="text-muted">
+                                          {review.date}
+                                        </small>
+                                      </div>
+                                      <div className="mb-2">
+                                        {renderStars(review.rating)}
+                                      </div>
+                                      <Card.Text className="small">
+                                        {review.content}
+                                      </Card.Text>{" "}
+                                      {/* Smaller text */}
+                                    </Card.Body>
+                                  </Card>
+                                </Col>
+                              )
+                            )}
+                          </Row>
+                        </div>
+                      </div>
+                    </Collapse>
                   </div>
-                </Collapse>
+                </Link>
+              ))
+            ) : (
+              <div className="no-results">
+                <h3>No businesses found in {location}</h3>
+                <p>
+                  Try selecting a different location or removing some filters.
+                </p>
               </div>
-            ))}
+            )}
           </div>
 
-          {/* Conditional Pagination - only show if businesses > 10 */}
-          {businesses.length > ITEMS_PER_PAGE && (
+          {/* Conditional Pagination - only show if filtered businesses > 10 */}
+          {filteredBusinesses.length > ITEMS_PER_PAGE && (
             <div className="pagination">
               <div className="pagination-buttons">
                 {generatePaginationButtons()}

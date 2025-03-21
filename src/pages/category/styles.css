@@ -374,3 +374,35 @@ body {
     margin-bottom: 20px;
   }
 }
+
+/* Make review cards smaller */
+.review-card {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 220px; /* Limiting card width */
+  margin: 0 5px; /* Smaller margins between cards */
+}
+
+/* Fix spacing between cards */
+.reviews-scroll-container .row {
+  gap: 10px; /* Controls space between cards */
+  margin: 0; /* Remove default row margin */
+}
+
+/* Make sure Latest Reviews title stays visible */
+.reviews-header {
+  position: sticky;
+  top: 0;
+  background: #f9f9f9;
+  padding: 10px 0;
+  z-index: 10;
+  margin-bottom: 10px;
+}
+
+/* Show only 2 cards per row on medium screens */
+@media (min-width: 768px) {
+  .reviews-scroll-container .col-md-6 {
+    flex: 0 0 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+}
