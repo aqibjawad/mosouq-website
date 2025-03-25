@@ -21,6 +21,9 @@ const TravelInsurancePage = () => {
   // State for filtered businesses
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
 
+  // Track visible page buttons (for dynamic pagination)
+  const [visiblePageButtons, setVisiblePageButtons] = useState([1]);
+
   const id = localStorage.getItem("selectedCategoryId");
 
   const [businesses, setBusinesses] = useState([]);
@@ -124,6 +127,9 @@ const TravelInsurancePage = () => {
           // Calculate total pages based on filtered businesses
           const pages = Math.ceil(result.length / ITEMS_PER_PAGE);
           setTotalPages(pages);
+
+          // Initialize visible page buttons with just page 1
+          setVisiblePageButtons([1]);
         }
       })
       .catch((error) => {
@@ -134,21 +140,61 @@ const TravelInsurancePage = () => {
       });
   }, [id]);
 
-  // Filter businesses when location changes
+  // Apply rating filter to businesses
+  const applyRatingFilter = (businesses) => {
+    if (activeFilter === "Any") return businesses;
+
+    const minRating = parseInt(activeFilter.replace("+", ""));
+    return businesses.filter((business) => {
+      // Assuming each business has a rating property
+      // If not, you may need to adjust this logic based on your data structure
+      const rating = business.rating || 5; // Default to 5 if no rating
+      return rating >= minRating;
+    });
+  };
+
+  // Apply sorting to businesses
+  const applySorting = (businesses) => {
+    switch (sortBy) {
+      case "Highest rated":
+        return [...businesses].sort(
+          (a, b) => (b.rating || 0) - (a.rating || 0)
+        );
+      case "Most reviewed":
+        return [...businesses].sort(
+          (a, b) => (b.reviewCount || 0) - (a.reviewCount || 0)
+        );
+      case "Most relevant":
+      default:
+        // Add your relevance sorting logic here
+        return businesses;
+    }
+  };
+
+  // Filter businesses when location or filter changes
   useEffect(() => {
     if (businesses.length > 0) {
-      if (location === "All Locations") {
-        setFilteredBusinesses(businesses);
-      } else {
-        const filtered = businesses.filter(
-          (business) => business.area === location
-        );
-        setFilteredBusinesses(filtered);
+      let filtered = [...businesses];
+
+      // Apply location filter
+      if (location !== "All Locations") {
+        filtered = filtered.filter((business) => business.area === location);
       }
+
+      // Apply rating filter
+      filtered = applyRatingFilter(filtered);
+
+      // Apply sorting
+      filtered = applySorting(filtered);
+
+      setFilteredBusinesses(filtered);
       // Reset to first page when filter changes
       setPage(1);
+
+      // Reset visible page buttons to just page 1
+      setVisiblePageButtons([1]);
     }
-  }, [location, businesses]);
+  }, [location, activeFilter, sortBy, businesses]);
 
   // Update displayed businesses when page changes or when filtered businesses change
   useEffect(() => {
@@ -176,23 +222,52 @@ const TravelInsurancePage = () => {
     if (newPage >= 1 && newPage <= totalPages) {
       setPage(newPage);
       window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // If the new page isn't in our visible buttons, add it
+      if (!visiblePageButtons.includes(newPage)) {
+        // Keep existing buttons and add the new page
+        const updatedButtons = [...visiblePageButtons, newPage].sort(
+          (a, b) => a - b
+        );
+        setVisiblePageButtons(updatedButtons);
+      }
+    }
+  };
+
+  // Handle next button click to add the next page to visible buttons
+  const handleNextClick = () => {
+    const nextPage = page + 1;
+    if (nextPage <= totalPages) {
+      setPage(nextPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Add the next page to visible buttons if it's not already there
+      if (!visiblePageButtons.includes(nextPage)) {
+        const updatedButtons = [...visiblePageButtons, nextPage].sort(
+          (a, b) => a - b
+        );
+        setVisiblePageButtons(updatedButtons);
+      }
     }
   };
 
   // Toggle reviews for a specific listing
-  const toggleReviews = (listingId) => {
+  const toggleReviews = (listingId, event) => {
+    // Stop the event from propagating to the parent Link element
+    event.preventDefault();
+    event.stopPropagation();
+
     setOpenReviews((prev) => ({
       ...prev,
       [listingId]: !prev[listingId],
     }));
   };
 
-  // Generate pagination buttons
+  // Generate pagination buttons with dynamic growth
   const generatePaginationButtons = () => {
     if (totalPages <= 1) return null; // No pagination if only one page
 
     const buttons = [];
-    const maxVisibleButtons = 4;
 
     // Previous button
     buttons.push(
@@ -206,52 +281,29 @@ const TravelInsurancePage = () => {
       </button>
     );
 
-    // Page number buttons
-    if (totalPages <= maxVisibleButtons) {
-      // Show all pages if there are few
-      for (let i = 1; i <= totalPages; i++) {
-        buttons.push(
-          <button
-            key={i}
-            className={`page-btn number-btn ${page === i ? "active-page" : ""}`}
-            onClick={() => handlePageChange(i)}
-          >
-            {i}
-          </button>
-        );
-      }
-    } else {
-      // Show limited pages with ellipsis
-      let startPage = Math.max(1, page - 1);
-      let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
-
-      // Adjust start if we're at the end
-      if (endPage === totalPages) {
-        startPage = Math.max(1, endPage - maxVisibleButtons + 1);
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        buttons.push(
-          <button
-            key={i}
-            className={`page-btn number-btn ${page === i ? "active-page" : ""}`}
-            onClick={() => handlePageChange(i)}
-          >
-            {i}
-          </button>
-        );
-      }
-    }
+    // Visible page number buttons
+    visiblePageButtons.forEach((pageNum) => {
+      buttons.push(
+        <button
+          key={pageNum}
+          className={`page-btn number-btn ${
+            page === pageNum ? "active-page" : ""
+          }`}
+          onClick={() => handlePageChange(pageNum)}
+        >
+          {pageNum}
+        </button>
+      );
+    });
 
     // Next button
     buttons.push(
       <button
         key="next"
         className="page-btn next-btn"
-        onClick={() => handlePageChange(page + 1)}
+        onClick={handleNextClick}
         disabled={page === totalPages}
       >
-        Next
       </button>
     );
 
@@ -381,15 +433,15 @@ const TravelInsurancePage = () => {
             {displayedBusinesses.length > 0 ? (
               displayedBusinesses.map((listing, index) => (
                 <Link
-                  to={`/business/${listing?.category?.name.replace(
+                  to={`/business/${listing?.category?.name?.replace(
                     /\s+/g,
                     "-"
-                  )}/${listing?.authDetails?.company.replace(/\s+/g, "-")}`}
+                  )}/${listing?.authDetails?.company?.replace(/\s+/g, "-")}`}
                   key={index}
                   onClick={() => handleBusinessClick(listing)}
                   style={{ textDecoration: "none" }}
                 >
-                  <div key={listing.id} className="listing-card">
+                  <div key={listing.id || index} className="listing-card">
                     {listing.mostRelevant && (
                       <div className="relevance-badge">MOST RELEVANT</div>
                     )}
@@ -397,23 +449,36 @@ const TravelInsurancePage = () => {
                     <div className="listing-content">
                       <div className="listing-logo">
                         <img
-                          src={listing.logo}
-                          alt={listing?.authDetails?.company}
+                          src={listing.logo || "/default-logo.png"}
+                          alt={listing?.authDetails?.company || "Company"}
+                          onError={(e) => {
+                            e.target.src = "/default-logo.png";
+                            e.target.onerror = null;
+                          }}
                         />
                       </div>
 
                       <div className="listing-details">
                         <div className="listing-title">
                           <h3 className="company-name">
-                            {listing?.authDetails?.company}
+                            {listing?.authDetails?.company ||
+                              listing?.businessName ||
+                              "Business Name"}
                           </h3>
                           <a
                             href={`https://${
-                              listing.website || listing?.authDetails?.website
+                              listing.website ||
+                              listing?.authDetails?.website ||
+                              "#"
                             }`}
                             className="company-url"
+                            onClick={(e) => e.stopPropagation()}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
-                            {listing.website || listing?.authDetails?.website}
+                            {listing.website ||
+                              listing?.authDetails?.website ||
+                              "N/A"}
                           </a>
                         </div>
 
@@ -433,25 +498,33 @@ const TravelInsurancePage = () => {
                         <div className="listing-location">
                           {listing.area
                             ? `${listing.area}, ${listing.city || "N/A"}`
-                            : listing.address}
+                            : listing.address || "N/A"}
                         </div>
 
                         <div className="listing-categories">
-                          {listing.tags.map((tags, idx) => (
-                            <span key={idx} className="category-tag">
-                              {tags || "No Tags Available"}
+                          {listing.tags && listing.tags.length > 0 ? (
+                            listing.tags.map((tag, idx) => (
+                              <span key={idx} className="category-tag">
+                                {tag || "No Tags Available"}
+                              </span>
+                            ))
+                          ) : (
+                            <span className="category-tag">
+                              No Tags Available
                             </span>
-                          ))}
+                          )}
                         </div>
 
                         <div className="listing-action">
                           <button
                             className="reviews-btn"
-                            onClick={() => toggleReviews(listing.id)}
+                            onClick={(e) =>
+                              toggleReviews(listing.id || index, e)
+                            }
                           >
                             Latest reviews
                             <span className="dropdown-icon">
-                              {openReviews[listing.id] ? "▲" : "▼"}
+                              {openReviews[listing.id || index] ? "▲" : "▼"}
                             </span>
                           </button>
                         </div>
@@ -459,7 +532,7 @@ const TravelInsurancePage = () => {
                     </div>
 
                     {/* Collapsible reviews section */}
-                    <Collapse in={openReviews[listing.id]}>
+                    <Collapse in={openReviews[listing.id || index]}>
                       <div className="reviews-container">
                         <div className="reviews-header">
                           <h4>Latest Reviews</h4>
@@ -518,10 +591,13 @@ const TravelInsurancePage = () => {
             )}
           </div>
 
-          {/* Conditional Pagination - only show if filtered businesses > 10 */}
-          {filteredBusinesses.length > ITEMS_PER_PAGE && (
+          {/* Now always show pagination if there are multiple pages */}
+          {totalPages > 1 && (
             <div className="pagination">
-              <div className="pagination-buttons">
+              <div
+                className="pagination-buttons"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 {generatePaginationButtons()}
               </div>
             </div>
