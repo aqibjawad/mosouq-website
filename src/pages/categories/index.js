@@ -36,6 +36,14 @@ const Category = () => {
     setExpandedIndex(expandedIndex === index ? -1 : index);
   };
 
+  const createUrlSlug = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/[&]/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
+
   if (isLoading) {
     return (
       <div
@@ -123,12 +131,9 @@ const Category = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/subcategories/${subcategory.sub_name
-                              .toLowerCase()
-                              .replace(/[&]/g, "and")
-                              .replace(/[^a-z0-9]+/g, "-")
-                              .replace(/^-+|-+$/g, "")}`}
-                            onClick={() => handleSubcategoryClick(subcategory)}
+                            to={`/${createUrlSlug(
+                              category.name
+                            )}/${createUrlSlug(subcategory.sub_name)}`}
                             style={{
                               textDecoration: "none",
                               color: "black",

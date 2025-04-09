@@ -23,6 +23,8 @@ const TravelInsurancePage = () => {
 
   const id = localStorage.getItem("selectedSubcategoryId");
 
+  const category = localStorage.getItem("selectedCategoryName");
+
   const [businesses, setBusinesses] = useState([]);
   const [displayedBusinesses, setDisplayedBusinesses] = useState([]);
   const [dataSource, setDataSource] = useState("subcategory");

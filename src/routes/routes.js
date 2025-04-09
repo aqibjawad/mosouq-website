@@ -196,7 +196,7 @@ const routes = [
     type: "public",
   },
   {
-    path: "/subcategories/:name",
+    path: "/:category/:name",
     element: (
       <PageWrapper title="Businesses">
         <SubCategoryDetails />

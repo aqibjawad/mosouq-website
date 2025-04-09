@@ -52,6 +52,19 @@ const HomeCategory = () => {
     // Save subcategory ID to localStorage
     localStorage.setItem("selectedSubcategoryId", subcategory._id);
     localStorage.setItem("selectedSubcategoryName", subcategory.sub_name);
+
+    // Also save the parent category information
+    localStorage.setItem("selectedCategoryId", subcategory.category._id);
+    localStorage.setItem("selectedCategoryName", subcategory.category.name);
+  };
+
+  // Helper function to create clean URL slugs
+  const createUrlSlug = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/[&]/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   };
 
   return (
@@ -100,11 +113,7 @@ const HomeCategory = () => {
                   onClick={() => toggleExpand(index)}
                 >
                   <Link
-                    to={`/categories/${category.name
-                      .toLowerCase()
-                      .replace(/[&]/g, "and")
-                      .replace(/[^a-z0-9]+/g, "-")
-                      .replace(/^-+|-+$/g, "")}`}
+                    to={`/categories/${createUrlSlug(category.name)}`}
                     className="text-black no-underline hover:text-gray-600 transition-colors"
                     style={{ color: "black", textDecoration: "none" }}
                     onClick={() => handleCategoryClick(category)}
@@ -134,11 +143,9 @@ const HomeCategory = () => {
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>
                           <Link
-                            to={`/subcategories/${subcategory.sub_name
-                              .toLowerCase()
-                              .replace(/[&]/g, "and")
-                              .replace(/[^a-z0-9]+/g, "-")
-                              .replace(/^-+|-+$/g, "")}`}
+                            to={`/${createUrlSlug(
+                              category.name
+                            )}/${createUrlSlug(subcategory.sub_name)}`}
                             style={{
                               textDecoration: "none",
                               color: "black",
