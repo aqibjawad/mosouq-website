@@ -67,6 +67,22 @@ const HomeCategory = () => {
       .replace(/^-+|-+$/g, "");
   };
 
+  // Helper function to convert image URLs to WebP format
+  const convertToWebP = (imageUrl) => {
+    if (!imageUrl) return imageUrl;
+
+    // Check if the URL already ends with .webp
+    if (imageUrl.toLowerCase().endsWith(".webp")) {
+      return imageUrl;
+    }
+
+    // Extract the base URL without file extension
+    const baseUrl = imageUrl.split(/\.[^.]+$/)[0];
+
+    // Return the URL with .webp extension
+    return `${baseUrl}.webp`;
+  };
+
   return (
     <div
       style={{
@@ -121,7 +137,7 @@ const HomeCategory = () => {
                     <div className="g-3 d-flex align-items-center">
                       <div className="me-3">
                         <img
-                          src={category.category_image}
+                          src={convertToWebP(category.category_image)}
                           className="custom-img"
                           alt={category.name}
                         />
@@ -158,7 +174,7 @@ const HomeCategory = () => {
                           >
                             <img
                               className="sub-cat-image"
-                              src={subcategory.subcategory_image}
+                              src={convertToWebP(subcategory.subcategory_image)}
                               alt={subcategory.sub_name}
                             />
                             <div className="sub-cat-name">
