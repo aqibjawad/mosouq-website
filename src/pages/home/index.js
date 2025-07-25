@@ -11,30 +11,28 @@ import HomeDeals from "./home.deals";
 
 import HomeBusiness from "./home.business";
 
-import ExploreDubai from "./home.dubai";
+// import ExploreDubai from "./home.dubai";
 
-const Home =()=>{
-    return(
-        <div>
+const Home = () => {
+  return (
+    <div>
+      <HomeBanner />
 
-            <HomeBanner />
+      <HomeCategory />
 
-            <HomeCategory />
+      <HomeBusiness />
 
-            <HomeBusiness />
+      <HomePartners />
 
-            <HomePartners />
+      {/* <HomeTrending /> */}
 
-            {/* <HomeTrending /> */}
+      <HomeDeals />
 
-            <HomeDeals />
-            
-            <HomeReview /> 
+      <HomeReview />
 
-            <ExploreDubai />
-            
-        </div>
-    )
-}
+      {/* <ExploreDubai /> */}
+    </div>
+  );
+};
 
-export default Home
+export default Home;

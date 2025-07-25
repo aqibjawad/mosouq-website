@@ -9,16 +9,18 @@ import "./home.pagination.css";
 const HomeCategory = () => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [subcategories, setSubCategories] = useState();
+  const [subcategories, setSubCategories] = useState([]); // Initialize as empty array
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
   useEffect(() => {
     GET("category/get-categories").then((result) => {
-      setCategories(result);
+      // Ensure result is an array before setting
+      setCategories(Array.isArray(result) ? result : []);
     });
 
     GET("subcategory/get-subcategories").then((result) => {
-      setSubCategories(result);
+      // Ensure result is an array before setting
+      setSubCategories(Array.isArray(result) ? result : []);
     });
   }, []);
 
@@ -154,7 +156,7 @@ const HomeCategory = () => {
                     {subcategories
                       .filter(
                         (subcategory) =>
-                          subcategory.category._id === category._id
+                          subcategory.category?._id === category._id
                       )
                       .map((subcategory, subIndex) => (
                         <div className="sub-cat-container" key={subIndex}>

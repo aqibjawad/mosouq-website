@@ -8,12 +8,60 @@ import { Link } from "react-router-dom";
 
 const HomeBusiness = () => {
   const [partner, setPartner] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    GET("company/get-companies").then((result) => {
-      setPartner(result);
-    });
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        const result = await GET("company/get-companies");
+
+        // Ensure result is an array
+        if (Array.isArray(result)) {
+          setPartner(result);
+        } else if (result && Array.isArray(result.data)) {
+          // In case the API returns { data: [...] }
+          setPartner(result.data);
+        } else {
+          console.warn("API response is not an array:", result);
+          setPartner([]);
+        }
+      } catch (err) {
+        console.error("Error fetching partners:", err);
+        setError(err.message);
+        setPartner([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="logos-carousel">
+        <Container>
+          <div className="text-center" style={{ padding: "3rem 0" }}>
+            Loading partners...
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="logos-carousel">
+        <Container>
+          <div className="text-center" style={{ padding: "3rem 0" }}>
+            Error loading partners: {error}
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="logos-carousel">
@@ -25,39 +73,44 @@ const HomeBusiness = () => {
           >
             Our Trusted Brands
           </div>
-
-          {/* <div
-            className="text-center"
-            style={{ fontWeight: "400", fontSize: "17px" }}
-          >
-            We're not just a service provider; we're your trusted partner,
-            dedicated to understanding and <br /> surpassing your expectations
-            with tailored solutions
-          </div> */}
         </div>
 
         <div>
-          <Marquee
-            className="mt-5"
-            gradient={false}
-            style={{ overflow: "hidden" }}
-          >
-            {partner.map((partners, index) => (
-              <Link to={partners.link} target="_blank">
-                <div
+          {/* Only render Marquee if we have partners */}
+          {Array.isArray(partner) && partner.length > 0 ? (
+            <Marquee
+              className="mt-5"
+              gradient={false}
+              style={{ overflow: "hidden" }}
+            >
+              {partner.map((partners, index) => (
+                <Link
                   key={index}
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ margin: "0 5rem" }}
+                  to={partners.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <img
-                    style={{ maxWidth: "100%", height:'100px' }}
-                    src={partners.companies_image}
-                    alt="Logo 1"
-                  />
-                </div>
-              </Link> 
-            ))}
-          </Marquee>
+                  <div
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ margin: "0 5rem" }}
+                  >
+                    <img
+                      style={{ maxWidth: "100%", height: "100px" }}
+                      src={partners.companies_image}
+                      alt={`Partner ${index + 1}`}
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                      }}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </Marquee>
+          ) : (
+            <div className="text-center mt-5">
+              No partners available at the moment.
+            </div>
+          )}
         </div>
       </Container>
     </div>
